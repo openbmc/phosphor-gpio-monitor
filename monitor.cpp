@@ -22,6 +22,8 @@ namespace phosphor
 namespace gpio
 {
 
+using namespace phosphor::logging;
+
 // Populate the file descriptor for passed in device
 int Monitor::openDevice()
 {
@@ -35,6 +37,28 @@ int Monitor::openDevice()
         throw std::runtime_error("Failed to open device");
     }
     return fd;
+}
+
+// Attaches the FD to event loop and registers the callback handler
+void Monitor::registerCallback()
+{
+    auto r = sd_event_add_io(event.get(), nullptr, (FD)(),
+                             EPOLLIN, callbackHandler, this);
+    if (r < 0)
+    {
+        log<level::ERR>("Failed to register callback handler",
+                entry("ERROR=%s", strerror(-r)));
+        throw std::runtime_error("Failed to register callback handler");
+    }
+}
+
+// Callback handler when there is an activity on the FD
+int Monitor::processEvents(sd_event_source* es, int fd,
+                           uint32_t revents, void* userData)
+{
+    // TODO. This calls into starting configured target
+    log<level::INFO>("Callback handler called");
+    return 0;
 }
 
 } // namespace gpio

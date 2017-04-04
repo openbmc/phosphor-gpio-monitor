@@ -38,7 +38,7 @@ class FileDescriptor
             }
         }
 
-        int operator()(int)
+        int operator()()
         {
             return fd;
         }
