@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string>
 #include <systemd/sd-event.h>
+#include <sdbusplus/bus.hpp>
 namespace phosphor
 {
 namespace gpio
@@ -49,7 +50,8 @@ class Monitor
               state(state),
               target(target),
               event(event),
-              callbackHandler(handler)
+              callbackHandler(handler),
+              bus(sdbusplus::bus::new_default())
         {
             // Populate the file descriptor for passed in device
             openDevice();
@@ -84,6 +86,12 @@ class Monitor
         static int processEvents(sd_event_source* es, int fd,
                                  uint32_t revents, void* userData);
 
+        /** @brief Returns the completion state of this handler */
+        inline auto completed() const
+        {
+            return complete;
+        }
+
     private:
         /** @brief Absolute path of GPIO input device */
         const std::string& path;
@@ -106,11 +114,23 @@ class Monitor
         /** @brief Callback handler when the FD has some data */
         sd_event_io_handler_t callbackHandler;
 
-        /** @brief Populate the file descriptor for passed in device */
+        /** @brief sdbusplus handler */
+        sdbusplus::bus::bus bus;
+
+        /** @brief Completion indicator */
+        bool complete = false;
+
+        /** @brief Opens the device and populates the descriptor */
         void openDevice();
 
         /** @brief attaches FD to events and sets up callback handler */
         void registerCallback();
+
+        /** @brief Analyzes the GPIO event and starts configured target
+         *
+         *  @return - For now, returns zero
+         */
+        int analyzeEvent();
 };
 
 } // namespace gpio
