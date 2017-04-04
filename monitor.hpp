@@ -4,6 +4,7 @@
 #include <string>
 #include <linux/input.h>
 #include <systemd/sd-event.h>
+#include <sdbusplus/bus.hpp>
 #include "file.hpp"
 namespace phosphor
 {
@@ -86,6 +87,12 @@ class Monitor
         static int processEvents(sd_event_source* es, int fd,
                                  uint32_t revents, void* userData);
 
+        /** @brief Returns the completion state of this handler */
+        inline auto completed() const
+        {
+            return complete;
+        }
+
     private:
         /** @brief Absolute path of GPIO input device */
         const std::string& path;
@@ -111,11 +118,20 @@ class Monitor
         /** @brief File descriptor manager */
         FileDescriptor fd;
 
+        /** @brief Completion indicator */
+        bool complete = false;
+
         /** @brief Opens the device and populates the descriptor */
         int openDevice();
 
         /** @brief attaches FD to events and sets up callback handler */
         void registerCallback();
+
+        /** @brief Analyzes the GPIO event and starts configured target
+         *
+         *  @return - For now, returns zero
+         */
+        int analyzeEvent();
 };
 
 } // namespace gpio
