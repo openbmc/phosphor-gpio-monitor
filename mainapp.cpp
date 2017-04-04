@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include "argument.hpp"
+#include "monitor.hpp"
 
 static void exitWithError(const char* err, char** argv)
 {
@@ -44,7 +45,6 @@ int main(int argc, char** argv)
     {
         exitWithError("Key not specified.", argv);
     }
-    // TODO : Convert key to integer
 
     // Parse out assertion polarity interested in
     // Its either 1 or 0 for press / release
@@ -53,12 +53,15 @@ int main(int argc, char** argv)
     {
         exitWithError("Polarity not specified.", argv);
     }
-    // TODO : Convert polarity to integer
 
     // Parse out target argument. It is fine if the caller does not
     // pass this if they are not interested in calling into any target
     // on meeting a condition.
     auto target = (options)["target"];
+
+    // Create a GPIO monitor object and let it do all the rest
+    phosphor::gpio::Monitor monitor(path, std::stoi(key),
+                                    std::stoi(polarity),target);
 
     return 0;
 }
