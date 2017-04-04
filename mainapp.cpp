@@ -16,9 +16,12 @@
 
 #include <iostream>
 #include <string>
+#include <systemd/sd-event.h>
+#include <phosphor-logging/log.hpp>
 #include "argument.hpp"
 #include "monitor.hpp"
 
+using namespace phosphor::logging;
 static void exitWithError(const char* err, char** argv)
 {
     phosphor::gpio::ArgumentParser::usage(argv);
@@ -59,9 +62,21 @@ int main(int argc, char** argv)
     // on meeting a condition.
     auto target = (options)["target"];
 
-    // Create a GPIO monitor object and let it do all the rest
+    sd_event* event = nullptr;
+    auto r = sd_event_default(&event);
+    if (r < 0)
+    {
+        log<level::ERR>("Error creating a default sd_event handler");
+        return r;
+    }
+    phosphor::gpio::EventPtr eventP{event};
+    event = nullptr;
+
+    // Create a monitor object and let it do all the rest
     phosphor::gpio::Monitor monitor(path, std::stoi(key),
-                                    std::stoi(polarity),target);
+                                    std::stoi(polarity), target, eventP);
+    // Wait for events
+    sd_event_loop(eventP.get());
 
     return 0;
 }
