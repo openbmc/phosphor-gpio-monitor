@@ -13,3 +13,5 @@ phosphor_gpio_monitor_LDFLAGS = $(SYSTEMD_LIBS) \
 phosphor_gpio_monitor_CFLAGS = $(SYSTEMD_CFLAGS) \
                                $(SDBUSPLUS_CFLAGS) \
                                $(PHOSPHOR_LOGGING_CFLAGS)
+
+SUBDIRS = test
