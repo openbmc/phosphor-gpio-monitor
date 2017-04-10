@@ -62,37 +62,96 @@ void Monitor::registerCallback()
     }
 }
 
+// Initializes the event device with the fd
+void Monitor::initEvDev()
+{
+    if (device)
+    {
+        // Init can be done only once per device
+        return;
+    }
+
+    struct libevdev* evdev = nullptr;
+    auto rc = libevdev_new_from_fd((fd)(), &evdev);
+    if (rc < 0)
+    {
+        log<level::ERR>("Failed to initialize evdev");
+        throw std::runtime_error("Failed to initialize evdev");
+    }
+
+    // Packing in the unique_ptr
+    device.reset(evdev);
+    evdev = nullptr;
+}
+
 // Callback handler when there is an activity on the FD
 int Monitor::processEvents(sd_event_source* es, int fd,
                            uint32_t revents, void* userData)
 {
     log<level::INFO>("GPIO line altered");
     auto monitor = static_cast<Monitor*>(userData);
-    // TODO : Need a way to check if the GPIO state change is what we wanted
-    return monitor->analyzeEvent();
+
+    // Initialize libevdev for this. Doing it here enables
+    // gtest to use this infrastructure on arbitrary device
+    // than /dev/input/
+    monitor->initEvDev();
+    monitor->analyzeEvent();
+    return 0;
 }
 
 // Analyzes the GPIO event
-int Monitor::analyzeEvent()
+void Monitor::analyzeEvent()
 {
-    if(!target.empty())
+    // Data returned
+    struct input_event ev{};
+    int rc = 0;
+
+    // While testing, observed that not having a loop here was leading
+    // into events being missed.
+    while (rc >= 0)
     {
-        auto bus = sdbusplus::bus::new_default();
-        auto method = bus.new_method_call(SYSTEMD_SERVICE,
-                                          SYSTEMD_ROOT,
-                                          SYSTEMD_INTERFACE,
-                                          "StartUnit");
-        method.append(target);
-        method.append("replace");
+        // Wait until no more events are available on the device.
+        rc = libevdev_next_event(device.get(),
+                                 LIBEVDEV_READ_FLAG_NORMAL, &ev);
+        if (rc < 0)
+        {
+            // There was an error waiting for events, mostly that there are no
+            // events to be read.. So continue waiting...
+            return;
+        };
 
-        // If there is any error, an exception would be thrown from here.
-        bus.call_noreply(method);
-    }
+        if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
+        {
+            if (ev.type == EV_SYN && ev.code == SYN_REPORT)
+            {
+                continue;
+            }
+            else if (ev.code == key && ev.value == polarity)
+            {
+                // If the code/value is what we are interested in, declare done.
+                // User supplied systemd unit
+                if (!target.empty())
+                {
+                    auto bus = sdbusplus::bus::new_default();
+                    auto method = bus.new_method_call(SYSTEMD_SERVICE,
+                                                      SYSTEMD_ROOT,
+                                                      SYSTEMD_INTERFACE,
+                                                      "StartUnit");
+                    method.append(target);
+                    method.append("replace");
 
-    // This marks the completion of handling the checkstop and app can exit
-    complete = true;
+                    bus.call_noreply(method);
+                }
 
-    return 0;
+                // This marks the completion of handling the gpio assertion
+                // and the app can exit
+                complete = true;
+                return;
+            }
+        }
+    };
+
+    return;
 }
 
 } // namespace gpio
