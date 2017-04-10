@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string>
 #include <linux/input.h>
+#include <libevdev/libevdev.h>
 #include <systemd/sd-event.h>
 #include <sdbusplus/bus.hpp>
 #include "file.hpp"
@@ -20,6 +21,16 @@ struct EventDeleter
     }
 };
 using EventPtr = std::unique_ptr<sd_event, EventDeleter>;
+
+/* Need a custom deleter for freeing up evdev struct */
+struct EvdevDeleter
+{
+    void operator()(struct libevdev* device) const
+    {
+        libevdev_free(device);
+    }
+};
+using EvdevPtr = std::unique_ptr<struct libevdev, EvdevDeleter>;
 
 /** @class Monitor
  *  @brief Responsible for catching GPIO state change
@@ -109,6 +120,9 @@ class Monitor
         /** @brief sdbusplus handler */
         sdbusplus::bus::bus bus;
 
+        /** event structure */
+        EvdevPtr device;
+
         /** @brief Completion indicator */
         bool complete = false;
 
@@ -122,7 +136,10 @@ class Monitor
          *
          *  @return - For now, returns zero
          */
-        int analyzeEvent();
+        int analyzeEvent(const struct input_event& ev);
+
+        /** @brief Initializes evdev handle with the fd */
+        void initEvDev();
 };
 
 } // namespace gpio
