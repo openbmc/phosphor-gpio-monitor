@@ -2,6 +2,7 @@
 
 #include <unistd.h>
 #include <string>
+#include <libevdev/libevdev.h>
 #include <systemd/sd-event.h>
 #include <sdbusplus/bus.hpp>
 namespace phosphor
@@ -46,6 +47,11 @@ class Monitor
 
         ~Monitor()
         {
+            if (device)
+            {
+                libevdev_free(device);
+            }
+
             if (fd != -1)
             {
                 close(fd);
@@ -98,6 +104,9 @@ class Monitor
         /** @brief sdbusplus handler */
         sdbusplus::bus::bus bus;
 
+        /** event structure */
+        struct libevdev *device = nullptr;
+
         /** @brief Completion indicator */
         bool complete = false;
 
@@ -111,7 +120,10 @@ class Monitor
          *
          *  @return - For now, returns zero
          */
-        int analyzeEvent();
+        int analyzeEvent(const struct input_event& ev);
+
+        /** @brief Initializes evdev handle with the fd */
+        void initEvDev();
 };
 
 } // namespace gpio

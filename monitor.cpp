@@ -56,6 +56,23 @@ void Monitor::registerCallback()
     }
 }
 
+// Initializes the event device with the fd
+void Monitor::initEvDev()
+{
+    if (device)
+    {
+        // Init can be done only once per device
+        return;
+    }
+
+    auto rc = libevdev_new_from_fd(fd, &device);
+    if (rc < 0)
+    {
+        log<level::ERR>("Failed to initialize evdev");
+        throw std::runtime_error("Failed to initialize evdev");
+    }
+}
+
 // Callback handler when there is an activity on the FD
 int Monitor::processEvents(sd_event_source* es, int fd,
                            uint32_t revents, void* userData)
@@ -63,13 +80,38 @@ int Monitor::processEvents(sd_event_source* es, int fd,
     log<level::INFO>("GPIO line altered");
     auto monitor = static_cast<Monitor*>(userData);
 
-    // TODO : Need a way to check if the GPIO state change is what we wanted
-    return monitor->analyzeEvent();
+    // Initialize libevdev for this. Doing it here enables
+    // gtest to use this infrastructure on arbitrary device
+    // than /dev/input/
+    monitor->initEvDev();
+
+    // Data returned
+    struct input_event ev {};
+
+    // Wait until no more events are available on the device.
+    // If there are multiple events to be read, rather than looping here,
+    // take the advantage of polling to call us.
+    auto rc = libevdev_next_event(monitor->device,
+                                  LIBEVDEV_READ_FLAG_NORMAL, &ev);
+    if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
+    {
+        return monitor->analyzeEvent(ev);
+    }
+
+    // If we fail to read, then its fine to keep waiting than aborting.
+    log<level::ERR>("Reading event failed. Continuing to wait");
+    return 0;
 }
 
 // Analyzes the GPIO event
-int Monitor::analyzeEvent()
+int Monitor::analyzeEvent(const struct input_event& ev)
 {
+    // If the code is what we are interested in, declare its done.
+    if (ev.code != state)
+    {
+        return 0;
+    }
+
     auto method = bus.new_method_call(SYSTEMD_SERVICE,
                                       SYSTEMD_ROOT,
                                       SYSTEMD_INTERFACE,
