@@ -23,6 +23,10 @@ PKG_CHECK_MODULES([PHOSPHOR_LOGGING], [phosphor-logging],, [AC_MSG_ERROR([Could 
 PKG_CHECK_MODULES([SDBUSPLUS], [sdbusplus],, [AC_MSG_ERROR([Could not find sdbusplus...openbmc/sdbusplus package required])])
 PKG_CHECK_MODULES([PHOSPHOR_DBUS_INTERFACES], [phosphor-dbus-interfaces],, [AC_MSG_ERROR([Could not find phosphor-dbus-interfaces...openbmc/phosphor-dbus-interfaces package required])])
 
+#TODO: Can not do a check for PKG at the moment.
+AC_CHECK_LIB([evdev], [libevdev_next_event], ,[AC_MSG_ERROR([Could not find libevdev...libevdev package required])])
+AC_CHECK_HEADER([libevdev-1.0/libevdev/libevdev.h], [], ,[AC_MSG_ERROR([Could not find libevdev.h...libevdev package required])])
+
 # Target to be started when the GPIO state changes
 AC_ARG_VAR(TARGET_UNIT, [systemd target to be started when the GPIO changes state])
 AS_IF([test "x$TARGET_UNIT" == "x"], [TARGET_UNIT="obmc-gpio-asserted@0.target"])

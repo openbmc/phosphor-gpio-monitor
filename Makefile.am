@@ -9,9 +9,12 @@ phosphor_gpio_monitor_SOURCES = \
 
 phosphor_gpio_monitor_LDFLAGS = $(SYSTEMD_LIBS) \
                                 $(SDBUSPLUS_LIBS) \
-                                $(PHOSPHOR_LOGGING_LIBS)
+                                $(PHOSPHOR_LOGGING_LIBS) \
+                                $(EVDEV_LIBS)
+
 phosphor_gpio_monitor_CFLAGS = $(SYSTEMD_CFLAGS) \
                                $(SDBUSPLUS_CFLAGS) \
-                               $(PHOSPHOR_LOGGING_CFLAGS)
+                               $(PHOSPHOR_LOGGING_CFLAGS) \
+                               $(EVDEV_CFLAGS)
 
 SUBDIRS = test
