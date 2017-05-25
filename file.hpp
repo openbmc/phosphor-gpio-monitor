@@ -15,7 +15,7 @@ class FileDescriptor
         int fd = -1;
 
     public:
-        FileDescriptor() = delete;
+        FileDescriptor() = default;
         FileDescriptor(const FileDescriptor&) = delete;
         FileDescriptor& operator=(const FileDescriptor&) = delete;
         FileDescriptor(FileDescriptor&&) = delete;
@@ -41,6 +41,16 @@ class FileDescriptor
         int operator()()
         {
             return fd;
+        }
+
+        operator bool() const
+        {
+            return fd != -1;
+        }
+
+        void set(int descriptor)
+        {
+            fd = descriptor;
         }
 };
 
