@@ -17,4 +17,4 @@ phosphor_gpio_monitor_CXXFLAGS = $(SYSTEMD_CFLAGS) \
                                  $(PHOSPHOR_LOGGING_CFLAGS) \
                                  $(LIBEVDEV_CFLAGS)
 
-SUBDIRS = test
+SUBDIRS = test gpio-util

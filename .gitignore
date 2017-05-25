@@ -36,14 +36,15 @@ Makefile.in
 /texinfo.tex
 
 # Repo specific items
-/*.o
+*.o
 /config.h
 /config.h.in~
 /config.log
 /config.status
 /phosphor-gpio-monitor
-/Makefile
-/.deps
+Makefile
+.deps
 /*-libtool
 /test/.deps
 /test/Makefile
+phosphor-gpio-util
