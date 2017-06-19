@@ -91,10 +91,6 @@ int Monitor::processEvents(sd_event_source* es, int fd,
     log<level::INFO>("GPIO line altered");
     auto monitor = static_cast<Monitor*>(userData);
 
-    // Initialize libevdev for this. Doing it here enables
-    // gtest to use this infrastructure on arbitrary device
-    // than /dev/input/
-    monitor->initEvDev();
     monitor->analyzeEvent();
     return 0;
 }
