@@ -66,13 +66,15 @@ class Monitor
          *  @param[in] event    - sd_event handler
          *  @param[in] handler  - IO callback handler. Defaults to one in this
          *                        class
+         *  @param[in] useEvDev - Whether to use EvDev to retrieve events
          */
         Monitor(const std::string& path,
                 decltype(input_event::code) key,
                 decltype(input_event::value) polarity,
                 const std::string& target,
                 EventPtr& event,
-                sd_event_io_handler_t handler = Monitor::processEvents)
+                sd_event_io_handler_t handler = Monitor::processEvents,
+                bool useEvDev = true)
             : path(path),
               key(key),
               polarity(polarity),
@@ -81,6 +83,12 @@ class Monitor
               callbackHandler(handler),
               fd(openDevice())
         {
+            if (useEvDev)
+            {
+                // If we are asked to use EvDev, do that initialization.
+                initEvDev();
+            }
+
             // And register callback handler when FD has some data
             registerCallback();
         }
