@@ -42,6 +42,7 @@ Makefile.in
 /config.log
 /config.status
 /phosphor-gpio-monitor
+/presence/phosphor-gpio-presence
 Makefile
 .deps
 /*-libtool
