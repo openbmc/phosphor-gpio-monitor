@@ -91,6 +91,7 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "  --name=<name>           Pretty name of the inventory"
               " item\n";
     std::cerr << std::flush;
+    exit(-1);
 }
 } // namespace gpio
 } // namespace phosphor

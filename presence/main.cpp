@@ -5,10 +5,10 @@
 
 using namespace phosphor::logging;
 using namespace phosphor::gpio;
+using namespace phosphor::gpio::presence;
 
 int main(int argc, char* argv[])
 {
-    auto rc = -1;
     auto options = ArgumentParser(argc, argv);
 
     auto objpath = options["path"];
@@ -19,25 +19,26 @@ int main(int argc, char* argv[])
         std::cerr << "Too few arguments\n";
         options.usage(argv);
     }
-    else if (objpath == ArgumentParser::emptyString)
+
+    if (objpath == ArgumentParser::emptyString)
     {
         std::cerr << "Path argument required\n";
         options.usage(argv);
     }
-    else if (key == ArgumentParser::emptyString)
+
+    if (key == ArgumentParser::emptyString)
     {
         std::cerr << "GPIO key argument required\n";
         options.usage(argv);
     }
-    else if (dev == ArgumentParser::emptyString)
+
+    if (dev == ArgumentParser::emptyString)
     {
         std::cerr << "Device argument required\n";
         options.usage(argv);
     }
-    else
-    {
-        rc = 0;
-    }
-    return rc;
+    Presence presence(objpath, dev, std::stoul(key), options["name"]);
+
+    return 0;
 }
 
