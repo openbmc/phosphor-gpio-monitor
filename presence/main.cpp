@@ -5,6 +5,7 @@
 
 using namespace phosphor::logging;
 using namespace phosphor::gpio;
+using namespace phosphor::gpio::presence;
 
 int main(int argc, char* argv[])
 {
@@ -40,6 +41,8 @@ int main(int argc, char* argv[])
     }
     else
     {
+        Presence presence(objpath, dev, std::stoul(key), (options)["name"]);
+
         rc = 0;
     }
     return rc;
