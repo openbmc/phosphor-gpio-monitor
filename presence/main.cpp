@@ -5,6 +5,7 @@
 
 using namespace phosphor::logging;
 using namespace phosphor::gpio;
+using namespace phosphor::gpio::presence;
 
 int main(int argc, char* argv[])
 {
@@ -36,6 +37,7 @@ int main(int argc, char* argv[])
         std::cerr << "Device argument required\n";
         options.usage(argv);
     }
+    Presence presence(objpath, dev, std::stoul(key), options["name"]);
 
     return 0;
 }
