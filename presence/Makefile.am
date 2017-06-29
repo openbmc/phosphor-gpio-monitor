@@ -10,9 +10,13 @@ phosphor_gpio_presence_SOURCES = \
 	gpio_presence.cpp
 
 phosphor_gpio_presence_CXXFLAGS = \
-	$(PHOSPHOR_LOGGING_CFLAGS)
+	$(PHOSPHOR_LOGGING_CFLAGS) \
+	$(PHOSPHOR_DBUS_INTERFACES_CFLAGS) \
+	$(LIBEVDEV_CFLAGS)
 
 phosphor_gpio_presence_LDADD = \
-	$(PHOSPHOR_LOGGING_LIBS)
+	$(PHOSPHOR_LOGGING_LIBS) \
+	$(PHOSPHOR_DBUS_INTERFACES_LIBS) \
+	$(LIBEVDEV_LIBS)
 
 # vim: tabstop=8 noexpandtab

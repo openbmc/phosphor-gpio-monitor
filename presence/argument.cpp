@@ -88,7 +88,7 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "  --dev=<pin>             Device to read for GPIO pin state"
               " to determine presence of inventory item\n";
     std::cerr << "  --key=<key>             Input GPIO key number\n";
-    std::cerr << "  --name=<name>           Pretty name of the inventory"
+    std::cerr << "  --name=<name>           Pretty name of the inventory item"
               " item\n";
     std::cerr << std::flush;
 }
