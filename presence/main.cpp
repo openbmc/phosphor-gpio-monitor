@@ -37,7 +37,10 @@ int main(int argc, char* argv[])
         std::cerr << "Device argument required\n";
         options.usage(argv);
     }
-    Presence presence(objpath, dev, std::stoul(key), options["name"]);
+
+    auto bus = sdbusplus::bus::new_default();
+    auto name = options["name"];
+    Presence presence(bus, objpath, dev, std::stoul(key), name);
 
     return 0;
 }
