@@ -41,7 +41,9 @@ int main(int argc, char* argv[])
     }
     else
     {
-        Presence presence(objpath, dev, std::stoul(key), (options)["name"]);
+        auto bus = sdbusplus::bus::new_default();
+        auto name = (options)["name"];
+        Presence presence(bus, objpath, dev, std::stoul(key), name);
 
         rc = 0;
     }
