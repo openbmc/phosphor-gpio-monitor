@@ -27,6 +27,17 @@ using EvdevPtr = std::unique_ptr<struct libevdev, FreeEvDev>;
 class Presence
 {
 
+        using Property = std::string;
+        using Value = sdbusplus::message::variant<bool, std::string>;
+        // Association between property and its value
+        using PropertyMap = std::map<Property, Value>;
+        using Interface = std::string;
+        // Association between interface and the D-Bus property
+        using InterfaceMap = std::map<Interface, PropertyMap>;
+        using Object = sdbusplus::message::object_path;
+        // Association between object and the interface
+        using ObjectMap = std::map<Object, InterfaceMap>;
+
     public:
         Presence() = delete;
         ~Presence() = default;
@@ -37,6 +48,7 @@ class Presence
 
         /** @brief Constructs Presence object.
          *
+         *  @param[in] bus      - D-Bus bus Object
          *  @param[in] path     - Object path under inventory
                                   to display this inventory item
          *  @param[in] device   - Device to read for GPIO pin state
@@ -44,10 +56,12 @@ class Presence
          *  @param[in] key      - GPIO key to monitor
          *  @param[in] name     - Pretty name of the inventory item
          */
-        Presence(const std::string& path,
+        Presence(sdbusplus::bus::bus& bus,
+                 const std::string& path,
                  const std::string& device,
                  const unsigned int key,
                  const std::string& name) :
+            bus(bus),
             path(path),
             device(device),
             key(key),
@@ -59,6 +73,25 @@ class Presence
         }
 
     private:
+        /**
+         * @brief Update the present property for the inventory item.
+         *
+         * @param[in] present - What the present property should be set to.
+         */
+        void updateInventory(bool present);
+
+        /**
+         * @brief Construct the inventory object map for the inventory item.
+         *
+         * @param[in] present - What the present property should be set to.
+         *
+         * @return The inventory object map to update inventory
+         */
+        ObjectMap getObjectMap(bool present);
+
+        /** @brief Connection for sdbusplus bus */
+        sdbusplus::bus::bus& bus;
+
         /**
          * @brief Read the GPIO device to determine initial presence and set
          *        present property at D-Bus path.
@@ -90,6 +123,20 @@ class Presence
         /** @brief Initializes evdev handle with the fd */
         void initEvDev();
 };
+
+/**
+ * @brief Get the service name from the mapper for the
+ *        interface and path passed in.
+ *
+ * @param[in] path      - The D-Bus path name
+ * @param[in] interface - The D-Bus interface name
+ * @param[in] bus       - The D-Bus bus object
+ *
+ * @return The service name
+ */
+std::string getService(const std::string& path,
+                       const std::string& interface,
+                       sdbusplus::bus::bus& bus);
 
 } // namespace presence
 } // namespace gpio
