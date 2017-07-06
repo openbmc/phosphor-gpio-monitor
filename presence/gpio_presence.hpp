@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <systemd/sd-event.h>
 #include <libevdev/libevdev.h>
 #include "file.hpp"
 
@@ -9,6 +10,26 @@ namespace gpio
 {
 namespace presence
 {
+
+/* Need a custom deleter for freeing up sd_event */
+struct EventDeleter
+{
+    void operator()(sd_event* event) const
+    {
+        event = sd_event_unref(event);
+    }
+};
+using EventPtr = std::unique_ptr<sd_event, EventDeleter>;
+
+/* Need a custom deleter for freeing up sd_event_source */
+struct EventSourceDeleter
+{
+    void operator()(sd_event_source* eventSource) const
+    {
+        eventSource = sd_event_source_unref(eventSource);
+    }
+};
+using EventSourcePtr = std::unique_ptr<sd_event_source, EventSourceDeleter>;
 
 /* Need a custom deleter for freeing up evdev struct */
 struct FreeEvDev
@@ -55,22 +76,45 @@ class Presence
                                   to determine presence of inventory item
          *  @param[in] key      - GPIO key to monitor
          *  @param[in] name     - Pretty name of the inventory item
+         *  @param[in] event    - sd_event handler
+         *  @param[in] handler  - IO callback handler. Defaults to one in this
+         *                        class
          */
         Presence(sdbusplus::bus::bus& bus,
                  const std::string& path,
                  const std::string& device,
                  const unsigned int key,
-                 const std::string& name) :
+                 const std::string& name,
+                 EventPtr& event,
+                 sd_event_io_handler_t handler = Presence::processEvents) :
             bus(bus),
             path(path),
             device(device),
             key(key),
             name(name),
+            event(event),
+            callbackHandler(handler),
             fd(openDevice())
+
         {
             initEvDev();
             determinePresence();
+            // Register callback handler when FD has some data
+            registerCallback();
         }
+
+        /** @brief Callback handler when the FD has some activity on it
+         *
+         *  @param[in] es       - Populated event source
+         *  @param[in] fd       - Associated File descriptor
+         *  @param[in] revents  - Type of event
+         *  @param[in] userData - User data that was passed during registration
+         *
+         *  @return             - 0 or positive number on success and negative
+         *                        errno otherwise
+         */
+        static int processEvents(sd_event_source* es, int fd,
+                                 uint32_t revents, void* userData);
 
     private:
         /**
@@ -114,11 +158,26 @@ class Presence
         /** @brief Event structure */
         EvdevPtr devicePtr;
 
+        /** @brief Monitor to sd_event */
+        EventPtr& event;
+
+        /** @brief Callback handler when the FD has some data */
+        sd_event_io_handler_t callbackHandler;
+
+        /** @brief event source */
+        EventSourcePtr eventSource;
+
         /** @brief Opens the device and populates the descriptor */
         int openDevice();
 
+        /** @brief attaches FD to events and sets up callback handler */
+        void registerCallback();
+
         /** @brief File descriptor manager */
         FileDescriptor fd;
+
+        /** @brief Analyzes the GPIO event and update present property*/
+        void analyzeEvent();
 
         /** @brief Initializes evdev handle with the fd */
         void initEvDev();
