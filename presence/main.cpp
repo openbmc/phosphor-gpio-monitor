@@ -1,4 +1,5 @@
 #include <iostream>
+#include <systemd/sd-event.h>
 #include <phosphor-logging/log.hpp>
 #include "argument.hpp"
 #include "gpio_presence.hpp"
@@ -39,9 +40,31 @@ int main(int argc, char* argv[])
     }
 
     auto bus = sdbusplus::bus::new_default();
-    auto name = options["name"];
-    Presence presence(bus, inventory, path, std::stoul(key), name);
+    auto rc = 0;
+    sd_event* event = nullptr;
+    rc = sd_event_default(&event);
+    if (rc < 0)
+    {
+        log<level::ERR>("Error creating a default sd_event handler");
+        return rc;
+    }
+    EventPtr eventP{event};
+    event = nullptr;
 
-    return 0;
+    auto name = options["name"];
+    Presence presence(bus, inventory, path, std::stoul(key), name, eventP);
+
+    while (true)
+    {
+        // -1 denotes wait forever
+        rc = sd_event_run(eventP.get(), (uint64_t) - 1);
+        if (rc < 0)
+        {
+            log<level::ERR>("Failure in processing request",
+                            entry("ERROR=%s", strerror(-rc)));
+            break;
+        }
+    }
+    return rc;
 }
 

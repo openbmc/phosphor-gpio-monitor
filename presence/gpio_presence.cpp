@@ -119,6 +119,59 @@ void Presence::determinePresence()
     updateInventory(present);
 }
 
+// Callback handler when there is an activity on the FD
+int Presence::processEvents(sd_event_source* es, int fd,
+                            uint32_t revents, void* userData)
+{
+    auto presence = static_cast<Presence*>(userData);
+
+    presence->analyzeEvent();
+    return 0;
+}
+
+
+// Analyzes the GPIO event
+void Presence::analyzeEvent()
+{
+
+    // Data returned
+    struct input_event ev {};
+    int rc = 0;
+
+    // While testing, observed that not having a loop here was leading
+    // into events being missed.
+    while (rc >= 0)
+    {
+        // Wait until no more events are available on the device.
+        rc = libevdev_next_event(devicePtr.get(),
+                                 LIBEVDEV_READ_FLAG_NORMAL, &ev);
+        if (rc < 0)
+        {
+            // There was an error waiting for events, mostly that there are no
+            // events to be read.. So continue waiting...
+            return;
+        }
+
+        if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
+        {
+            if (ev.type == EV_SYN && ev.code == SYN_REPORT)
+            {
+                continue;
+            }
+            else if (ev.code == key)
+            {
+                auto present = false;
+                if (ev.value > 0)
+                {
+                    present = true;
+                }
+                updateInventory(present);
+            }
+        }
+    }
+
+    return;
+}
 
 Presence::ObjectMap Presence::getObjectMap(bool present)
 {
@@ -139,6 +192,10 @@ void Presence::updateInventory(bool present)
 {
     ObjectMap invObj = getObjectMap(present);
 
+    log<level::INFO>("Updating inventory present property",
+                     entry("PRESENT=%d", present),
+                     entry("PATH=%s", inventory));
+
     auto invService = getService(INVENTORY_PATH, INVENTORY_INTF, bus);
 
     // Update inventory
@@ -156,6 +213,21 @@ void Presence::updateInventory(bool present)
     }
 }
 
+// Attaches the FD to event loop and registers the callback handler
+void Presence::registerCallback()
+{
+    decltype(eventSource.get()) sourcePtr = nullptr;
+    auto rc = sd_event_add_io(event.get(), &sourcePtr, (fd)(),
+                              EPOLLIN, callbackHandler, this);
+    eventSource.reset(sourcePtr);
+
+    if (rc < 0)
+    {
+        log<level::ERR>("Failed to register callback handler",
+                        entry("ERROR=%s", strerror(-rc)));
+        elog<InternalFailure>();
+    }
+}
 
 } // namespace presence
 } // namespace gpio
