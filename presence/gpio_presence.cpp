@@ -66,32 +66,49 @@ std::string getService(const std::string& path,
     return mapperResponse.begin()->first;
 }
 
-std::unique_ptr<libevdev, FreeEvDev>  evdevOpen(int fd)
+// Populate the file descriptor for passed in device
+int Presence::openDevice()
 {
-    libevdev* gpioDev = nullptr;
+    using namespace phosphor::logging;
 
-    auto rc = libevdev_new_from_fd(fd, &gpioDev);
-    if (!rc)
+    int fd = open(device.c_str(), O_RDONLY | O_NONBLOCK);
+    if (fd < 0)
     {
-        return decltype(evdevOpen(0))(gpioDev);
+        log<level::ERR>("Failed to open device",
+                        entry("DEVICE=%s", device.c_str()));
+        elog<InternalFailure>();
     }
-
-    log<level::ERR>("Failed to get libevdev from file descriptor",
-                    entry("RC=%d", rc));
-    elog<InternalFailure>();
-
-    return decltype(evdevOpen(0))(nullptr);
+    return fd;
 }
 
+// Initializes the event device with the fd
+void Presence::initEvDev()
+{
+    if (devicePtr)
+    {
+        // Init can be done only once per device
+        return;
+    }
+
+    struct libevdev* evdev = nullptr;
+    auto rc = libevdev_new_from_fd((fd)(), &evdev);
+    if (rc < 0)
+    {
+        log<level::ERR>("Failed to initialize evdev");
+        elog<InternalFailure>();
+        return;
+    }
+
+    // Packing in the unique_ptr
+    devicePtr.reset(evdev);
+    evdev = nullptr;
+}
 
 void Presence::determinePresence()
 {
-    FileDescriptor gpioFd{open(device.c_str(), 0)};
-
-    auto gpioDev = evdevOpen(gpioFd());
     auto present = false;
     auto value = static_cast<int>(0);
-    auto fetch_rc = libevdev_fetch_event_value(gpioDev.get(), EV_KEY,
+    auto fetch_rc = libevdev_fetch_event_value(devicePtr.get(), EV_KEY,
                     key, &value);
     if (0 == fetch_rc)
     {
@@ -100,16 +117,69 @@ void Presence::determinePresence()
         elog<InternalFailure>();
         return;
     }
-    if (value > 0)
+    if (value <= 0)
     {
         present = true;
-
     }
 
     updateInventory(present);
     return;
 }
 
+// Callback handler when there is an activity on the FD
+int Presence::processEvents(sd_event_source* es, int fd,
+                            uint32_t revents, void* userData)
+{
+    log<level::INFO>("GPIO line altered");
+    auto presence = static_cast<Presence*>(userData);
+
+    presence->analyzeEvent();
+    return 0;
+}
+
+
+// Analyzes the GPIO event
+void Presence::analyzeEvent()
+{
+
+    // Data returned
+    struct input_event ev {};
+    int rc = 0;
+
+    // While testing, observed that not having a loop here was leading
+    // into events being missed.
+    while (rc >= 0)
+    {
+        // Wait until no more events are available on the device.
+        rc = libevdev_next_event(devicePtr.get(),
+                                 LIBEVDEV_READ_FLAG_NORMAL, &ev);
+        if (rc < 0)
+        {
+            // There was an error waiting for events, mostly that there are no
+            // events to be read.. So continue waiting...
+            return;
+        }
+
+        if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
+        {
+            if (ev.type == EV_SYN && ev.code == SYN_REPORT)
+            {
+                continue;
+            }
+            else if (ev.code == key)
+            {
+                auto present = false;
+                if (ev.value <= 0)
+                {
+                    present = true;
+                }
+                updateInventory(present);
+            }
+        }
+    }
+
+    return;
+}
 
 Presence::ObjectMap Presence::getObjectMap(bool present)
 {
@@ -128,8 +198,6 @@ Presence::ObjectMap Presence::getObjectMap(bool present)
 
 void Presence::updateInventory(bool present)
 {
-    using namespace phosphor::logging;
-
     ObjectMap invObj = getObjectMap(present);
 
     std::string invService;
@@ -151,6 +219,21 @@ void Presence::updateInventory(bool present)
     }
 }
 
+// Attaches the FD to event loop and registers the callback handler
+void Presence::registerCallback()
+{
+    decltype(eventSource.get()) sourcePtr = nullptr;
+    auto rc = sd_event_add_io(event.get(), &sourcePtr, (fd)(),
+                              EPOLLIN, callbackHandler, this);
+    eventSource.reset(sourcePtr);
+
+    if (rc < 0)
+    {
+        log<level::ERR>("Failed to register callback handler",
+                        entry("ERROR=%s", strerror(-rc)));
+        elog<InternalFailure>();
+    }
+}
 
 } // namespace presence
 } // namespace gpio
