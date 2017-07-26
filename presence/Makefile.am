@@ -7,6 +7,7 @@ sbin_PROGRAMS = \
 phosphor_gpio_presence_SOURCES = \
 	main.cpp \
 	argument.cpp \
+	${top_srcdir}/evdev.cpp \
 	gpio_presence.cpp
 
 phosphor_gpio_presence_CXXFLAGS = \
