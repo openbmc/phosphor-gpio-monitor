@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 #include <systemd/sd-event.h>
-#include <libevdev/libevdev.h>
-#include "file.hpp"
+#include "evdev.hpp"
 
 namespace phosphor
 {
@@ -11,41 +10,12 @@ namespace gpio
 namespace presence
 {
 
-/* Need a custom deleter for freeing up sd_event */
-struct EventDeleter
-{
-    void operator()(sd_event* event) const
-    {
-        event = sd_event_unref(event);
-    }
-};
-using EventPtr = std::unique_ptr<sd_event, EventDeleter>;
-
-/* Need a custom deleter for freeing up sd_event_source */
-struct EventSourceDeleter
-{
-    void operator()(sd_event_source* eventSource) const
-    {
-        eventSource = sd_event_source_unref(eventSource);
-    }
-};
-using EventSourcePtr = std::unique_ptr<sd_event_source, EventSourceDeleter>;
-
-/* Need a custom deleter for freeing up evdev struct */
-struct FreeEvDev
-{
-    void operator()(struct libevdev* device) const
-    {
-        libevdev_free(device);
-    }
-};
-using EvdevPtr = std::unique_ptr<struct libevdev, FreeEvDev>;
-
 /** @class Presence
- *  @brief Responsible for determining and monitoring presence of
- *  inventory items and updating D-Bus accordingly.
+ *  @brief Responsible for determining and monitoring presence,
+ *  by monitoring GPIO state changes, of inventory items and
+ *  updating D-Bus accordingly.
  */
-class Presence
+class Presence : public Evdev
 {
 
         using Property = std::string;
@@ -87,20 +57,12 @@ class Presence
                  const std::string& name,
                  EventPtr& event,
                  sd_event_io_handler_t handler = Presence::processEvents) :
+            Evdev(path, key, event, handler, true),
             bus(bus),
             inventory(inventory),
-            path(path),
-            key(key),
-            name(name),
-            event(event),
-            callbackHandler(handler),
-            fd(openDevice())
-
+            name(name)
         {
-            initEvDev();
             determinePresence();
-            // Register callback handler when FD has some data
-            registerCallback();
         }
 
         /** @brief Callback handler when the FD has some activity on it
@@ -145,42 +107,11 @@ class Presence
         /** @brief Object path under inventory to display this inventory item */
         const std::string inventory;
 
-        /** @brief Device path to read for GPIO pin state
-                   to determine presence of inventory item */
-        const std::string path;
-
-        /** @brief GPIO key to monitor */
-        const unsigned int key;
-
         /** @brief Pretty name of the inventory item*/
         const std::string name;
 
-        /** @brief Event structure */
-        EvdevPtr devicePtr;
-
-        /** @brief Monitor to sd_event */
-        EventPtr& event;
-
-        /** @brief Callback handler when the FD has some data */
-        sd_event_io_handler_t callbackHandler;
-
-        /** @brief event source */
-        EventSourcePtr eventSource;
-
-        /** @brief Opens the device and populates the descriptor */
-        int openDevice();
-
-        /** @brief attaches FD to events and sets up callback handler */
-        void registerCallback();
-
-        /** @brief File descriptor manager */
-        FileDescriptor fd;
-
         /** @brief Analyzes the GPIO event and update present property*/
         void analyzeEvent();
-
-        /** @brief Initializes evdev handle with the fd */
-        void initEvDev();
 };
 
 /**
