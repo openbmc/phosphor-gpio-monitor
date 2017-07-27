@@ -5,6 +5,7 @@
 #include <linux/input.h>
 #include <gtest/gtest.h>
 #include "monitor.hpp"
+#include "evdev.hpp"
 
 using namespace phosphor::gpio;
 

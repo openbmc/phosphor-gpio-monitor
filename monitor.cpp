@@ -31,59 +31,6 @@ constexpr auto SYSTEMD_INTERFACE      = "org.freedesktop.systemd1.Manager";
 
 using namespace phosphor::logging;
 
-// Populate the file descriptor for passed in device
-int Monitor::openDevice()
-{
-    using namespace phosphor::logging;
-
-    int fd = open(path.c_str(), O_RDONLY | O_NONBLOCK);
-    if (fd < 0)
-    {
-        log<level::ERR>("Failed to open device",
-                entry("PATH=%s", path.c_str()));
-        throw std::runtime_error("Failed to open device");
-    }
-    return fd;
-}
-
-// Attaches the FD to event loop and registers the callback handler
-void Monitor::registerCallback()
-{
-    decltype(eventSource.get()) sourcePtr = nullptr;
-    auto r = sd_event_add_io(event.get(), &sourcePtr, (fd)(),
-                             EPOLLIN, callbackHandler, this);
-    eventSource.reset(sourcePtr);
-
-    if (r < 0)
-    {
-        log<level::ERR>("Failed to register callback handler",
-                entry("ERROR=%s", strerror(-r)));
-        throw std::runtime_error("Failed to register callback handler");
-    }
-}
-
-// Initializes the event device with the fd
-void Monitor::initEvDev()
-{
-    if (device)
-    {
-        // Init can be done only once per device
-        return;
-    }
-
-    struct libevdev* evdev = nullptr;
-    auto rc = libevdev_new_from_fd((fd)(), &evdev);
-    if (rc < 0)
-    {
-        log<level::ERR>("Failed to initialize evdev");
-        throw std::runtime_error("Failed to initialize evdev");
-    }
-
-    // Packing in the unique_ptr
-    device.reset(evdev);
-    evdev = nullptr;
-}
-
 // Callback handler when there is an activity on the FD
 int Monitor::processEvents(sd_event_source* es, int fd,
                            uint32_t revents, void* userData)
@@ -107,7 +54,7 @@ void Monitor::analyzeEvent()
     while (rc >= 0)
     {
         // Wait until no more events are available on the device.
-        rc = libevdev_next_event(device.get(),
+        rc = libevdev_next_event(devicePtr.get(),
                                  LIBEVDEV_READ_FLAG_NORMAL, &ev);
         if (rc < 0)
         {
