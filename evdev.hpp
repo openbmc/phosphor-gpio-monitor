@@ -70,8 +70,7 @@ class Evdev
          *  @param[in] path      - Device path to read for GPIO pin state
          *  @param[in] key       - GPIO key to monitor
          *  @param[in] event     - sd_event handler
-         *  @param[in] handler   - IO callback handler. Defaults to one in this
-         *                        class
+         *  @param[in] handler   - IO callback handler.
          *  @param[in] useEvDev  - Whether to use EvDev to retrieve events
          */
         Evdev(const std::string& path,

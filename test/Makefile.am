@@ -10,4 +10,4 @@ utest_CPPFLAGS = -Igtest $(GTEST_CPPFLAGS) $(AM_CPPFLAGS) $(PHOSPHOR_LOGGING_CFL
 utest_CXXFLAGS = $(PTHREAD_CFLAGS)
 utest_LDFLAGS = -lgtest_main -lgtest $(PTHREAD_LIBS) $(OESDK_TESTCASE_FLAGS) $(SYSTEMD_LIBS) $(PHOSPHOR_LOGGING_LIBS) $(LIBEVDEV_LIBS)
 utest_SOURCES = utest.cpp
-utest_LDADD = $(top_builddir)/monitor.o
+utest_LDADD = $(top_builddir)/monitor.o $(top_srcdir)/evdev.cpp

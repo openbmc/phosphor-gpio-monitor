@@ -3,50 +3,20 @@
 #include <unistd.h>
 #include <string>
 #include <linux/input.h>
-#include <libevdev/libevdev.h>
 #include <systemd/sd-event.h>
 #include <sdbusplus/bus.hpp>
-#include "file.hpp"
+#include "evdev.hpp"
+
 namespace phosphor
 {
 namespace gpio
 {
 
-/* Need a custom deleter for freeing up sd_event */
-struct EventDeleter
-{
-    void operator()(sd_event* event) const
-    {
-        event = sd_event_unref(event);
-    }
-};
-using EventPtr = std::unique_ptr<sd_event, EventDeleter>;
-
-/* Need a custom deleter for freeing up sd_event_source */
-struct EventSourceDeleter
-{
-    void operator()(sd_event_source* eventSource) const
-    {
-        eventSource = sd_event_source_unref(eventSource);
-    }
-};
-using EventSourcePtr = std::unique_ptr<sd_event_source, EventSourceDeleter>;
-
-/* Need a custom deleter for freeing up evdev struct */
-struct EvdevDeleter
-{
-    void operator()(struct libevdev* device) const
-    {
-        libevdev_free(device);
-    }
-};
-using EvdevPtr = std::unique_ptr<struct libevdev, EvdevDeleter>;
-
 /** @class Monitor
  *  @brief Responsible for catching GPIO state change
- *  condition and taking actions
+ *  condition and starting systemd targets.
  */
-class Monitor
+class Monitor : public Evdev
 {
     public:
         Monitor() = delete;
@@ -75,23 +45,9 @@ class Monitor
                 EventPtr& event,
                 sd_event_io_handler_t handler = Monitor::processEvents,
                 bool useEvDev = true)
-            : path(path),
-              key(key),
+            : Evdev(path, key, event, handler, useEvDev),
               polarity(polarity),
-              target(target),
-              event(event),
-              callbackHandler(handler),
-              fd(openDevice())
-        {
-            if (useEvDev)
-            {
-                // If we are asked to use EvDev, do that initialization.
-                initEvDev();
-            }
-
-            // And register callback handler when FD has some data
-            registerCallback();
-        }
+              target(target) {};
 
         /** @brief Callback handler when the FD has some activity on it
          *
@@ -113,47 +69,17 @@ class Monitor
         }
 
     private:
-        /** @brief Absolute path of GPIO input device */
-        const std::string& path;
-
-        /** @brief GPIO key code that is of interest */
-        decltype(input_event::code) key;
-
         /** @brief GPIO key value that is of interest */
         decltype(input_event::value) polarity;
 
         /** @brief Systemd unit to be started when the condition is met */
         const std::string& target;
 
-        /** @brief Monitor to sd_event */
-        EventPtr& event;
-
-        /** @brief event source */
-        EventSourcePtr eventSource;
-
-        /** @brief Callback handler when the FD has some data */
-        sd_event_io_handler_t callbackHandler;
-
-        /** @brief File descriptor manager */
-        FileDescriptor fd;
-
-        /** event structure */
-        EvdevPtr device;
-
         /** @brief Completion indicator */
         bool complete = false;
 
-        /** @brief Opens the device and populates the descriptor */
-        int openDevice();
-
-        /** @brief attaches FD to events and sets up callback handler */
-        void registerCallback();
-
         /** @brief Analyzes the GPIO event and starts configured target */
         void analyzeEvent();
-
-        /** @brief Initializes evdev handle with the fd */
-        void initEvDev();
 };
 
 } // namespace gpio
