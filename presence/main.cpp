@@ -39,6 +39,10 @@ int main(int argc, char* argv[])
         options.usage(argv);
     }
 
+    std::vector<Driver> driverList;
+
+    //TODO: next commit, fill in driverList
+
     auto bus = sdbusplus::bus::new_default();
     auto rc = 0;
     sd_event* event = nullptr;
@@ -52,7 +56,8 @@ int main(int argc, char* argv[])
     event = nullptr;
 
     auto name = options["name"];
-    Presence presence(bus, inventory, path, std::stoul(key), name, eventP);
+    Presence presence(
+            bus, inventory, path, std::stoul(key), name, eventP, driverList);
 
     while (true)
     {

@@ -1,4 +1,5 @@
 #pragma once
+#include <experimental/filesystem>
 #include <string>
 #include <systemd/sd-event.h>
 #include "evdev.hpp"
@@ -9,6 +10,12 @@ namespace gpio
 {
 namespace presence
 {
+
+static constexpr auto deviceField = 0;
+static constexpr auto pathField = 1;
+using Device = std::string;
+using Path = std::experimental::filesystem::path;
+using Driver = std::tuple<Device, Path>;
 
 /** @class Presence
  *  @brief Responsible for determining and monitoring presence,
@@ -47,6 +54,7 @@ class Presence : public Evdev
          *  @param[in] key       - GPIO key to monitor
          *  @param[in] name      - Pretty name of the inventory item
          *  @param[in] event     - sd_event handler
+         *  @param[in] drivers   - list of device drivers to bind and unbind
          *  @param[in] handler   - IO callback handler. Defaults to one in this
          *                        class
          */
@@ -56,11 +64,13 @@ class Presence : public Evdev
                  const unsigned int key,
                  const std::string& name,
                  EventPtr& event,
+                 const std::vector<Driver>& drivers,
                  sd_event_io_handler_t handler = Presence::processEvents) :
             Evdev(path, key, event, handler, true),
             bus(bus),
             inventory(inventory),
-            name(name)
+            name(name),
+            drivers(drivers)
         {
             determinePresence();
         }
@@ -101,7 +111,7 @@ class Presence : public Evdev
         /**
          * @brief Read the GPIO device to determine initial presence and set
          *        present property at D-Bus path.
-         **/
+         */
         void determinePresence();
 
         /** @brief Object path under inventory to display this inventory item */
@@ -112,6 +122,23 @@ class Presence : public Evdev
 
         /** @brief Analyzes the GPIO event and update present property*/
         void analyzeEvent();
+
+        /** @brief  Vector of path and device tuples to bind/unbind*/
+        const std::vector<Driver> drivers;
+
+        /**
+         * @brief Binds or unbinds drivers
+         *
+         * Called when a presence change is detected to either
+         * bind the drivers for the new card or unbind them for
+         * the just removed card.  Operates on the drivers vector.
+         *
+         * Writes <device> to <path>/bind (or unbind)
+         *
+         * @param present - when true, will bind the drivers
+         *                  when false, will unbind them
+         */
+        void bindOrUnbindDrivers(bool present);
 };
 
 /**

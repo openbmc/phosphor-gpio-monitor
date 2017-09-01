@@ -16,6 +16,7 @@ phosphor_gpio_presence_CXXFLAGS = \
 	$(LIBEVDEV_CFLAGS)
 
 phosphor_gpio_presence_LDADD = \
+	-lstdc++fs \
 	$(PHOSPHOR_LOGGING_LIBS) \
 	$(PHOSPHOR_DBUS_INTERFACES_LIBS) \
 	$(LIBEVDEV_LIBS)
