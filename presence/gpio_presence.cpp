@@ -1,5 +1,6 @@
-#include <libevdev/libevdev.h>
 #include <fcntl.h>
+#include <fstream>
+#include <libevdev/libevdev.h>
 #include <phosphor-logging/elog.hpp>
 #include <phosphor-logging/log.hpp>
 #include <phosphor-logging/elog-errors.hpp>
@@ -128,6 +129,7 @@ void Presence::analyzeEvent()
                     present = true;
                 }
                 updateInventory(present);
+                bindOrUnbindDrivers(present);
             }
         }
     }
@@ -172,6 +174,57 @@ void Presence::updateInventory(bool present)
         log<level::ERR>(
             "Error in inventory manager call to update inventory");
         elog<InternalFailure>();
+    }
+
+}
+
+void Presence::bindOrUnbindDrivers(bool present)
+{
+    auto action = (present) ? "bind" : "unbind";
+
+    for (auto& driver : drivers)
+    {
+        auto path = std::get<pathField>(driver) / action;
+        auto device = std::get<deviceField>(driver);
+
+        if (present)
+        {
+            log<level::INFO>(
+                    "Binding a device driver",
+                    entry("PATH=%s", path.c_str()),
+                    entry("DEVICE=%s", device.c_str()));
+        }
+        else
+        {
+            log<level::INFO>(
+                    "Unbinding a device driver",
+                    entry("PATH=%s", path.c_str()),
+                    entry("DEVICE=%s", device.c_str()));
+        }
+
+        std::ofstream file;
+
+        file.exceptions(
+                std::ofstream::failbit |
+                std::ofstream::badbit |
+                std::ofstream::eofbit);
+
+        try
+        {
+            file.open(path);
+            file << device;
+            file.close();
+        }
+        catch (std::exception& e)
+        {
+            auto err = errno;
+
+            log<level::ERR>("Failed binding or unbinding a device "
+                            "after a card was removed or added",
+                            entry("PATH=%s", path.c_str()),
+                            entry("DEVICE=%s", device.c_str()),
+                            entry("ERRNO=%d", err));
+        }
     }
 }
 
