@@ -8,6 +8,52 @@ using namespace phosphor::logging;
 using namespace phosphor::gpio;
 using namespace phosphor::gpio::presence;
 
+/**
+ * Pulls out the path,device pairs from the string
+ * passed in
+ *
+ * @param[in] driverString - space separated path,device pairs
+ * @param[out] drivers - vector of device,path tuples filled in
+ *                       from driverString
+ *
+ * @return int - 0 if successful, < 0 else
+ */
+static int getDrivers(const std::string driverString,
+                      std::vector<Driver>& drivers)
+{
+    std::istringstream stream{driverString};
+
+    while (true)
+    {
+        std::string entry;
+
+        //Extract each path,device pair
+        stream >> entry;
+
+        if (entry.empty())
+        {
+            break;
+        }
+
+        //Extract the path and device and save them
+        auto pos = entry.rfind(',');
+        if (pos != std::string::npos)
+        {
+            auto path = entry.substr(0, pos);
+            auto device = entry.substr(pos + 1);
+
+            drivers.emplace_back(device, path);
+        }
+        else
+        {
+            std::cerr << "Invalid path,device combination: " << entry << "\n";
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
 int main(int argc, char* argv[])
 {
     auto options = ArgumentParser(argc, argv);
@@ -15,6 +61,7 @@ int main(int argc, char* argv[])
     auto inventory = options["inventory"];
     auto key = options["key"];
     auto path = options["path"];
+    auto drivers = options["drivers"];
     if (argc < 4)
     {
         std::cerr << "Too few arguments\n";
@@ -41,7 +88,14 @@ int main(int argc, char* argv[])
 
     std::vector<Driver> driverList;
 
-    //TODO: next commit, fill in driverList
+    //Driver list is optional
+    if (drivers != ArgumentParser::emptyString)
+    {
+        if (getDrivers(drivers, driverList) < 0)
+        {
+            options.usage(argv);
+        }
+    }
 
     auto bus = sdbusplus::bus::new_default();
     auto rc = 0;
