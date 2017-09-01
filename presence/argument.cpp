@@ -29,13 +29,14 @@ using namespace std::string_literals;
 const std::string ArgumentParser::trueString = "true"s;
 const std::string ArgumentParser::emptyString = ""s;
 
-const char* ArgumentParser::optionStr = "p:k:n:i:?h";
+const char* ArgumentParser::optionStr = "p:k:n:i:d:?h";
 const option ArgumentParser::options[] =
 {
     { "path",      required_argument,  nullptr,   'p' },
     { "key",       required_argument,  nullptr,   'k' },
     { "name",      required_argument,  nullptr,   'n' },
     { "inventory", required_argument,  nullptr,   'i' },
+    { "drivers",   required_argument,  nullptr,   'd' },
     { "help",      no_argument,        nullptr,   'h' },
     { 0, 0, 0, 0},
 };
@@ -90,6 +91,12 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "  --key=<key>             Input GPIO key number\n";
     std::cerr << "  --name=<name>           Pretty name of the inventory"
               " item\n";
+    std::cerr << "  --drivers=<drivers>     List of drivers to bind when card"
+              " is added and unbind when card is removed\n";
+    std::cerr << "                          Format is a space separated list"
+              " of path,device pairs.  For example:\n";
+    std::cerr << "                          "
+                 "/sys/bus/i2c/drivers/some-driver,3-0068\n";
     std::cerr << std::flush;
     exit(-1);
 }
