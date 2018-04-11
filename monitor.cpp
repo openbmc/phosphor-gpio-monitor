@@ -86,9 +86,12 @@ void Monitor::analyzeEvent()
                     bus.call_noreply(method);
                 }
 
-                // This marks the completion of handling the gpio assertion
-                // and the app can exit
-                complete = true;
+                if (!continueAfterKeyPress)
+                {
+                    // This marks the completion of handling the gpio assertion
+                    // and the app can exit
+                    complete = true;
+                }
                 return;
             }
         }

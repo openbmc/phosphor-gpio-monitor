@@ -71,7 +71,7 @@ TEST_F(GpioTest, noEventIn3Seconds)
 
     const std::string emptyTarget = "";
     Monitor gpio(DEVICE, code, value, emptyTarget,
-                 eventP, callbackHandler, false);
+                 eventP, false, callbackHandler, false);
 
     // Waiting 3 seconds and check if the completion status is set
     int count = 0;
@@ -100,7 +100,7 @@ TEST_F(GpioTest, pumpDataAndExpectCallBack)
 
     const std::string emptyTarget = "";
     Monitor gpio(DEVICE, code, value, emptyTarget,
-                 eventP, callbackHandler, false);
+                 eventP, false, callbackHandler, false);
 
     // Pump the data in the middle
     int count = 0;

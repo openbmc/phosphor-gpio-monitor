@@ -34,6 +34,7 @@ class Monitor : public Evdev
          *  @param[in] target   - systemd unit to be started on GPIO
          *                        value change
          *  @param[in] event    - sd_event handler
+         *  @param[in] continueRun - Whether to continue after key pressed
          *  @param[in] handler  - IO callback handler. Defaults to one in this
          *                        class
          *  @param[in] useEvDev - Whether to use EvDev to retrieve events
@@ -43,11 +44,13 @@ class Monitor : public Evdev
                 decltype(input_event::value) polarity,
                 const std::string& target,
                 EventPtr& event,
+                bool continueRun,
                 sd_event_io_handler_t handler = Monitor::processEvents,
                 bool useEvDev = true)
             : Evdev(path, key, event, handler, useEvDev),
               polarity(polarity),
-              target(target) {};
+              target(target),
+              continueAfterKeyPress(continueRun) {};
 
         /** @brief Callback handler when the FD has some activity on it
          *
@@ -74,6 +77,9 @@ class Monitor : public Evdev
 
         /** @brief Systemd unit to be started when the condition is met */
         const std::string& target;
+
+        /** @brief If the monitor should continue after key press */
+        bool continueAfterKeyPress;
 
         /** @brief Completion indicator */
         bool complete = false;
