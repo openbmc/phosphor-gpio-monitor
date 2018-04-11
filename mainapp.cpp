@@ -62,6 +62,9 @@ int main(int argc, char** argv)
     // on meeting a condition.
     auto target = (options)["target"];
 
+    bool continueRun =
+      (options["continue"] == phosphor::gpio::ArgumentParser::trueString);
+
     sd_event* event = nullptr;
     auto r = sd_event_default(&event);
     if (r < 0)
@@ -73,8 +76,12 @@ int main(int argc, char** argv)
     event = nullptr;
 
     // Create a monitor object and let it do all the rest
-    phosphor::gpio::Monitor monitor(path, std::stoi(key),
-                                    std::stoi(polarity), target, eventP);
+    phosphor::gpio::Monitor monitor(path,
+                                    std::stoi(key),
+                                    std::stoi(polarity),
+                                    target,
+                                    eventP,
+                                    continueRun);
 
     // Wait for client requests until this application has processed
     // at least one expected GPIO state change
