@@ -37,7 +37,7 @@ const option ArgumentParser::options[] =
     { "key",      required_argument,  nullptr,   'k' },
     { "polarity", required_argument,  nullptr,   'r' },
     { "target",   required_argument,  nullptr,   't' },
-    { "continue", optional_argument,  nullptr,   'c' },
+    { "continue", no_argument,        nullptr,   'c' },
     { "help",     no_argument,        nullptr,   'h' },
     { 0, 0, 0, 0},
 };
@@ -94,7 +94,7 @@ void ArgumentParser::usage(char** argv)
                                             " This is 0 / 1 \n";
     std::cerr << "  --target=<systemd unit> Systemd unit to be called on GPIO"
                                             " state change\n";
-    std::cerr << "  --continue=[true]       Whether or not to continue"
+    std::cerr << "  [--continue]            Whether or not to continue"
                                             " after key pressed\n";
 }
 } // namespace gpio
