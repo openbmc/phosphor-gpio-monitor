@@ -58,7 +58,7 @@ void GPIO::requestLine(Value defaultValue)
     {
         auto e = errno;
         log<level::ERR>("Failed opening GPIO device",
-                        entry("DEVICE=%s", device),
+                        entry("DEVICE=%s", device.c_str()),
                         entry("ERRNO=%d", e));
         throw std::runtime_error("Failed opening GPIO device");
     }

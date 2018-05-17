@@ -158,7 +158,7 @@ void Presence::updateInventory(bool present)
 
     log<level::INFO>("Updating inventory present property",
                      entry("PRESENT=%d", present),
-                     entry("PATH=%s", inventory));
+                     entry("PATH=%s", inventory.c_str()));
 
     auto invService = getService(INVENTORY_PATH, INVENTORY_INTF, bus);
 
