@@ -9,6 +9,7 @@ AM_SILENT_RULES([yes])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_INSTALL
+AM_PROG_AR
 
 # Checks for typedefs, structures, and compiler characteristics.
 AX_CXX_COMPILE_STDCXX_14([noext])
@@ -19,7 +20,7 @@ LT_INIT
 
 # Checks for modules
 PKG_CHECK_MODULES([SYSTEMD], [libsystemd >= 221], ,[AC_MSG_ERROR([Could not find systemd...systemd development package required])])
-PKG_CHECK_MODULES([PHOSPHOR_LOGGING], [phosphor-logging],, [AC_MSG_ERROR([Could not find phosphor-logging...openbmc/phosphor-logging package required])])
+AX_PKG_CHECK_MODULES([PHOSPHOR_LOGGING], [phosphor-logging],,, [AC_MSG_ERROR([Could not find phosphor-logging...openbmc/phosphor-logging package required])])
 PKG_CHECK_MODULES([SDBUSPLUS], [sdbusplus],, [AC_MSG_ERROR([Could not find sdbusplus...openbmc/sdbusplus package required])])
 PKG_CHECK_MODULES([PHOSPHOR_DBUS_INTERFACES], [phosphor-dbus-interfaces],, [AC_MSG_ERROR([Could not find phosphor-dbus-interfaces...openbmc/phosphor-dbus-interfaces package required])])
 PKG_CHECK_MODULES([LIBEVDEV], [libevdev],, [AC_MSG_ERROR([Could not find libevdev...libevdev package required])])
@@ -54,4 +55,5 @@ AS_IF([test "x$enable_oe_sdk" == "xyes"],
 
 # Create configured output
 AC_CONFIG_FILES([Makefile gpio-util/Makefile presence/Makefile test/Makefile])
+AC_CONFIG_FILES([phosphor-gpio-monitor.pc])
 AC_OUTPUT

@@ -22,4 +22,7 @@ phosphor_gpio_monitor_CXXFLAGS = \
 	$(PHOSPHOR_LOGGING_CFLAGS) \
 	$(LIBEVDEV_CFLAGS)
 
+pkgconfiglibdir = ${libdir}/pkgconfig
+pkgconfiglib_DATA = phosphor-gpio-monitor.pc
+
 SUBDIRS = test gpio-util presence

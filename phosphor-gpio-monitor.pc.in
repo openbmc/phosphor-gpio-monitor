@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: phosphor-gpio-monitor
+Description: Phosphor GPIO library
+Version: @VERSION@
+Requires: @AX_PACKAGE_REQUIRES@
+Requires.private: @AX_PACKAGE_REQUIRES_PRIVATE@
+Libs: -L@libdir@ -lphosphor_gpio
+Cflags: -I@includedir@

@@ -25,6 +25,22 @@ namespace gpio
 
 using namespace phosphor::logging;
 
+GPIO::Value GPIO::get(void) {
+
+  Value value{};
+  requestLine(value);
+
+  gpiohandle_data data{};
+  data.values[0] = static_cast<gpioValue_t>(value);
+
+  auto rc = ioctl(lineFD(), GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data);
+  if (rc == -1) {
+    auto e = errno;
+    log<level::ERR>("Failed GET_LINE_VALUES ioctl", entry("ERRNO=%d", e));
+  }
+  return data.values[0] ? GPIO::Value::high : GPIO::Value::low;
+}
+
 void GPIO::set(Value value)
 {
     assert(direction == Direction::output);

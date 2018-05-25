@@ -2,6 +2,8 @@
 
 #include <linux/gpio.h>
 #include "file.hpp"
+#include <type_traits>
+#include <string>
 
 namespace phosphor
 {
@@ -65,6 +67,13 @@ class GPIO
             direction(direction)
         {
         }
+
+        /**
+         * Gets the GPIO value
+         *
+         * Requests the GPIO line if it hasn't been done already.
+         */
+        Value get(void);
 
         /**
          * Sets the GPIO value
