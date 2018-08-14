@@ -61,7 +61,7 @@ ArgumentParser::ArgumentParser(int argc, char** argv)
 
         if (i->val)
         {
-            // optinal argument may get nullptr for optarg
+            // optional argument may get nullptr for optarg
             // make it empty string in such case
             auto arg = (optarg == nullptr ? "" : optarg);
             arguments[i->name] = (i->has_arg ? arg : trueString);
