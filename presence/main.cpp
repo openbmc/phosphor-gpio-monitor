@@ -18,7 +18,7 @@ using namespace phosphor::gpio::presence;
  *
  * @return int - 0 if successful, < 0 else
  */
-static int getDrivers(const std::string driverString,
+static int getDrivers(const std::string& driverString,
                       std::vector<Driver>& drivers)
 {
     std::istringstream stream{driverString};
