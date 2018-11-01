@@ -23,14 +23,15 @@
  *   high_low: Set a GPIO high, delay if requested, set it low
  */
 
+#include "argument.hpp"
+#include "gpio.hpp"
+
 #include <algorithm>
 #include <chrono>
 #include <iostream>
 #include <map>
-#include <thread>
 #include <phosphor-logging/log.hpp>
-#include "argument.hpp"
-#include "gpio.hpp"
+#include <thread>
 
 using namespace phosphor::gpio;
 using namespace phosphor::logging;
@@ -49,7 +50,6 @@ void low(GPIO& gpio, unsigned int delayInMS)
     gpio.set(GPIO::Value::low);
 }
 
-
 /**
  * Sets a GPIO high
  *
@@ -60,7 +60,6 @@ void high(GPIO& gpio, unsigned int delayInMS)
 {
     gpio.set(GPIO::Value::high);
 }
-
 
 /**
  * Sets a GPIO high, then delays, then sets it low
@@ -78,7 +77,6 @@ void highLow(GPIO& gpio, unsigned int delayInMS)
     gpio.set(GPIO::Value::low);
 }
 
-
 /**
  * Sets a GPIO low, then delays, then sets it high
  *
@@ -95,18 +93,11 @@ void lowHigh(GPIO& gpio, unsigned int delayInMS)
     gpio.set(GPIO::Value::high);
 }
 
-
 /**
  * The actions supported by this program
  */
-static const gpioFunctionMap functions
-{
-    {"low", low},
-    {"high", high},
-    {"low_high", lowHigh},
-    {"high_low", highLow}
-};
-
+static const gpioFunctionMap functions{
+    {"low", low}, {"high", high}, {"low_high", lowHigh}, {"high_low", highLow}};
 
 /**
  * Prints usage and exits the program
@@ -121,7 +112,6 @@ void exitWithError(const char* err, char** argv)
     exit(EXIT_FAILURE);
 }
 
-
 /**
  * Returns the number value of the argument passed in.
  *
@@ -129,15 +119,13 @@ void exitWithError(const char* err, char** argv)
  * @param[in] parser - the argument parser
  * @param[in] argv - arv from main()
  */
-template<typename T>
-T getValueFromArg(const char* name,
-                  ArgumentParser& parser,
-                  char** argv)
+template <typename T>
+T getValueFromArg(const char* name, ArgumentParser& parser, char** argv)
 {
     char* p = NULL;
     auto val = strtol(parser[name].c_str(), &p, 10);
 
-    //strol sets p on error, also we don't allow negative values
+    // strol sets p on error, also we don't allow negative values
     if (*p || (val < 0))
     {
         using namespace std::string_literals;
@@ -146,7 +134,6 @@ T getValueFromArg(const char* name,
     }
     return static_cast<T>(val);
 }
-
 
 int main(int argc, char** argv)
 {
@@ -171,7 +158,7 @@ int main(int argc, char** argv)
 
     auto gpioNum = getValueFromArg<gpioNum_t>("gpio", args, argv);
 
-    //Not all actions require a delay, so not required
+    // Not all actions require a delay, so not required
     unsigned int delay = 0;
     if (args["delay"] != ArgumentParser::emptyString)
     {

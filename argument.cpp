@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-#include <iostream>
-#include <iterator>
+#include "argument.hpp"
+
 #include <algorithm>
 #include <cassert>
-#include "argument.hpp"
+#include <iostream>
+#include <iterator>
 
 namespace phosphor
 {
@@ -31,21 +32,21 @@ const std::string ArgumentParser::trueString = "true"s;
 const std::string ArgumentParser::emptyString = ""s;
 
 const char* ArgumentParser::optionStr = "p:k:r:t:?h";
-const option ArgumentParser::options[] =
-{
-    { "path",     required_argument,  nullptr,   'p' },
-    { "key",      required_argument,  nullptr,   'k' },
-    { "polarity", required_argument,  nullptr,   'r' },
-    { "target",   required_argument,  nullptr,   't' },
-    { "continue", no_argument,        nullptr,   'c' },
-    { "help",     no_argument,        nullptr,   'h' },
-    { 0, 0, 0, 0},
+const option ArgumentParser::options[] = {
+    {"path", required_argument, nullptr, 'p'},
+    {"key", required_argument, nullptr, 'k'},
+    {"polarity", required_argument, nullptr, 'r'},
+    {"target", required_argument, nullptr, 't'},
+    {"continue", no_argument, nullptr, 'c'},
+    {"help", no_argument, nullptr, 'h'},
+    {0, 0, 0, 0},
 };
 
 ArgumentParser::ArgumentParser(int argc, char** argv)
 {
     int option = 0;
-    while (-1 != (option = getopt_long(argc, argv, optionStr, options, nullptr)))
+    while (-1 !=
+           (option = getopt_long(argc, argv, optionStr, options, nullptr)))
     {
         if ((option == '?') || (option == 'h'))
         {
@@ -88,14 +89,14 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "Options:\n";
     std::cerr << "  --help                  Print this menu\n";
     std::cerr << "  --path=<path>           Path of input device."
-                                            " Ex: /dev/input/event2\n";
+                 " Ex: /dev/input/event2\n";
     std::cerr << "  --key=<key>             Input GPIO key number\n";
     std::cerr << "  --polarity=<polarity>   Asertion polarity to look for."
-                                            " This is 0 / 1 \n";
+                 " This is 0 / 1 \n";
     std::cerr << "  --target=<systemd unit> Systemd unit to be called on GPIO"
-                                            " state change\n";
+                 " state change\n";
     std::cerr << "  [--continue]            Whether or not to continue"
-                                            " after key pressed\n";
+                 " after key pressed\n";
 }
 } // namespace gpio
 } // namespace phosphor

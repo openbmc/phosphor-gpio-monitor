@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include "argument.hpp"
+
+#include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <algorithm>
-#include "argument.hpp"
 
 namespace phosphor
 {
@@ -67,23 +68,22 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "    --help            Print this menu.\n";
     std::cerr << "    --gpio=<gpio>     The GPIO number.  Example: 1\n";
     std::cerr << "    --path=<path>     The path to the GPIO device."
-                                        "  Example: /dev/gpiochip0\n";
+                 "  Example: /dev/gpiochip0\n";
     std::cerr << "    --delay=<delay>   The delay in ms in between a toggle."
-                                        "  Example: 5\n";
+                 "  Example: 5\n";
     std::cerr << "    --action=<action> The action to do.\n";
     std::cerr << "                      Valid actions: low, high, low_high, "
-                                        "high_low\n";
+                 "high_low\n";
     std::cerr << std::flush;
 }
 
-const option ArgumentParser::options[] =
-{
-    { "action", required_argument, NULL, 'a' },
-    { "gpio",   required_argument, NULL, 'g' },
-    { "delay",  required_argument, NULL, 'd' },
-    { "path",   required_argument, NULL, 'p' },
-    { "help",   no_argument,       NULL, 'h' },
-    { 0, 0, 0, 0},
+const option ArgumentParser::options[] = {
+    {"action", required_argument, NULL, 'a'},
+    {"gpio", required_argument, NULL, 'g'},
+    {"delay", required_argument, NULL, 'd'},
+    {"path", required_argument, NULL, 'p'},
+    {"help", no_argument, NULL, 'h'},
+    {0, 0, 0, 0},
 };
 
 const char* ArgumentParser::optionStr = "a:g:d:p:h?";
@@ -91,5 +91,5 @@ const char* ArgumentParser::optionStr = "a:g:d:p:h?";
 const std::string ArgumentParser::trueString = "true";
 const std::string ArgumentParser::emptyString = "";
 
-}
-}
+} // namespace gpio
+} // namespace phosphor

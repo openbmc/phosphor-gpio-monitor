@@ -10,48 +10,48 @@ namespace gpio
  */
 class FileDescriptor
 {
-    private:
-        /** @brief File descriptor for the gpio input device */
-        int fd = -1;
+  private:
+    /** @brief File descriptor for the gpio input device */
+    int fd = -1;
 
-    public:
-        FileDescriptor() = default;
-        FileDescriptor(const FileDescriptor&) = delete;
-        FileDescriptor& operator=(const FileDescriptor&) = delete;
-        FileDescriptor(FileDescriptor&&) = delete;
-        FileDescriptor& operator=(FileDescriptor&&) = delete;
+  public:
+    FileDescriptor() = default;
+    FileDescriptor(const FileDescriptor&) = delete;
+    FileDescriptor& operator=(const FileDescriptor&) = delete;
+    FileDescriptor(FileDescriptor&&) = delete;
+    FileDescriptor& operator=(FileDescriptor&&) = delete;
 
-        /** @brief Saves File descriptor and uses it to do file operation
-         *
-         *  @param[in] fd - File descriptor
-         */
-        FileDescriptor(int fd) : fd(fd)
+    /** @brief Saves File descriptor and uses it to do file operation
+     *
+     *  @param[in] fd - File descriptor
+     */
+    FileDescriptor(int fd) : fd(fd)
+    {
+        // Nothing
+    }
+
+    ~FileDescriptor()
+    {
+        if (fd >= 0)
         {
-            // Nothing
+            close(fd);
         }
+    }
 
-        ~FileDescriptor()
-        {
-            if (fd >=0)
-            {
-                close(fd);
-            }
-        }
+    int operator()()
+    {
+        return fd;
+    }
 
-        int operator()()
-        {
-            return fd;
-        }
+    operator bool() const
+    {
+        return fd != -1;
+    }
 
-        operator bool() const
-        {
-            return fd != -1;
-        }
-
-        void set(int descriptor)
-        {
-            fd = descriptor;
-        }
+    void set(int descriptor)
+    {
+        fd = descriptor;
+    }
 };
 
 } // namespace gpio

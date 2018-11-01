@@ -1,8 +1,13 @@
 #pragma once
-#include <string>
-#include <systemd/sd-event.h>
-#include <libevdev/libevdev.h>
 #include "file.hpp"
+
+#include <libevdev/libevdev.h>
+#include <systemd/sd-event.h>
+
+#include <map>
+#include <memory>
+#include <sdbusplus/message.hpp>
+#include <string>
 
 namespace phosphor
 {
@@ -46,85 +51,79 @@ using EvdevPtr = std::unique_ptr<struct libevdev, FreeEvDev>;
 class Evdev
 {
 
-        using Property = std::string;
-        using Value = sdbusplus::message::variant<bool, std::string>;
-        // Association between property and its value
-        using PropertyMap = std::map<Property, Value>;
-        using Interface = std::string;
-        // Association between interface and the D-Bus property
-        using InterfaceMap = std::map<Interface, PropertyMap>;
-        using Object = sdbusplus::message::object_path;
-        // Association between object and the interface
-        using ObjectMap = std::map<Object, InterfaceMap>;
+    using Property = std::string;
+    using Value = sdbusplus::message::variant<bool, std::string>;
+    // Association between property and its value
+    using PropertyMap = std::map<Property, Value>;
+    using Interface = std::string;
+    // Association between interface and the D-Bus property
+    using InterfaceMap = std::map<Interface, PropertyMap>;
+    using Object = sdbusplus::message::object_path;
+    // Association between object and the interface
+    using ObjectMap = std::map<Object, InterfaceMap>;
 
-    public:
-        Evdev() = delete;
-        ~Evdev() = default;
-        Evdev(const Evdev&) = delete;
-        Evdev& operator=(const Evdev&) = delete;
-        Evdev(Evdev&&) = delete;
-        Evdev& operator=(Evdev&&) = delete;
+  public:
+    Evdev() = delete;
+    ~Evdev() = default;
+    Evdev(const Evdev&) = delete;
+    Evdev& operator=(const Evdev&) = delete;
+    Evdev(Evdev&&) = delete;
+    Evdev& operator=(Evdev&&) = delete;
 
-        /** @brief Constructs Evdev object.
-         *
-         *  @param[in] path      - Device path to read for GPIO pin state
-         *  @param[in] key       - GPIO key to monitor
-         *  @param[in] event     - sd_event handler
-         *  @param[in] handler   - IO callback handler.
-         *  @param[in] useEvDev  - Whether to use EvDev to retrieve events
-         */
-        Evdev(const std::string& path,
-              const unsigned int key,
-              EventPtr& event,
-              sd_event_io_handler_t handler,
-              bool useEvDev = true) :
-            path(path),
-            key(key),
-            event(event),
-            callbackHandler(handler),
-            fd(openDevice())
+    /** @brief Constructs Evdev object.
+     *
+     *  @param[in] path      - Device path to read for GPIO pin state
+     *  @param[in] key       - GPIO key to monitor
+     *  @param[in] event     - sd_event handler
+     *  @param[in] handler   - IO callback handler.
+     *  @param[in] useEvDev  - Whether to use EvDev to retrieve events
+     */
+    Evdev(const std::string& path, const unsigned int key, EventPtr& event,
+          sd_event_io_handler_t handler, bool useEvDev = true) :
+        path(path),
+        key(key), event(event), callbackHandler(handler), fd(openDevice())
 
+    {
+        if (useEvDev)
         {
-            if (useEvDev)
-            {
-                // If we are asked to use EvDev, do that initialization.
-                initEvDev();
-            }
-
-            // Register callback handler when FD has some data
-            registerCallback();
+            // If we are asked to use EvDev, do that initialization.
+            initEvDev();
         }
 
-    protected:
-        /** @brief Device path to read for GPIO pin state */
-        const std::string path;
+        // Register callback handler when FD has some data
+        registerCallback();
+    }
 
-        /** @brief GPIO key to monitor */
-        const unsigned int key;
+  protected:
+    /** @brief Device path to read for GPIO pin state */
+    const std::string path;
 
-        /** @brief Event structure */
-        EvdevPtr devicePtr;
+    /** @brief GPIO key to monitor */
+    const unsigned int key;
 
-        /** @brief Monitor to sd_event */
-        EventPtr& event;
+    /** @brief Event structure */
+    EvdevPtr devicePtr;
 
-        /** @brief Callback handler when the FD has some data */
-        sd_event_io_handler_t callbackHandler;
+    /** @brief Monitor to sd_event */
+    EventPtr& event;
 
-        /** @brief event source */
-        EventSourcePtr eventSource;
+    /** @brief Callback handler when the FD has some data */
+    sd_event_io_handler_t callbackHandler;
 
-        /** @brief Opens the device and populates the descriptor */
-        int openDevice();
+    /** @brief event source */
+    EventSourcePtr eventSource;
 
-        /** @brief attaches FD to events and sets up callback handler */
-        void registerCallback();
+    /** @brief Opens the device and populates the descriptor */
+    int openDevice();
 
-        /** @brief File descriptor manager */
-        FileDescriptor fd;
+    /** @brief attaches FD to events and sets up callback handler */
+    void registerCallback();
 
-        /** @brief Initializes evdev handle with the fd */
-        void initEvDev();
+    /** @brief File descriptor manager */
+    FileDescriptor fd;
+
+    /** @brief Initializes evdev handle with the fd */
+    void initEvDev();
 };
 
 } // namespace gpio

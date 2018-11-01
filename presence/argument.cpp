@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+#include "argument.hpp"
+
+#include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <algorithm>
-#include "argument.hpp"
 
 namespace phosphor
 {
@@ -30,22 +31,21 @@ const std::string ArgumentParser::trueString = "true"s;
 const std::string ArgumentParser::emptyString = ""s;
 
 const char* ArgumentParser::optionStr = "p:k:n:i:d:?h";
-const option ArgumentParser::options[] =
-{
-    { "path",      required_argument,  nullptr,   'p' },
-    { "key",       required_argument,  nullptr,   'k' },
-    { "name",      required_argument,  nullptr,   'n' },
-    { "inventory", required_argument,  nullptr,   'i' },
-    { "drivers",   required_argument,  nullptr,   'd' },
-    { "help",      no_argument,        nullptr,   'h' },
-    { 0, 0, 0, 0},
+const option ArgumentParser::options[] = {
+    {"path", required_argument, nullptr, 'p'},
+    {"key", required_argument, nullptr, 'k'},
+    {"name", required_argument, nullptr, 'n'},
+    {"inventory", required_argument, nullptr, 'i'},
+    {"drivers", required_argument, nullptr, 'd'},
+    {"help", no_argument, nullptr, 'h'},
+    {0, 0, 0, 0},
 };
 
 ArgumentParser::ArgumentParser(int argc, char** argv)
 {
     auto option = 0;
-    while (-1 != (option = getopt_long(argc, argv,
-                                       optionStr, options, nullptr)))
+    while (-1 !=
+           (option = getopt_long(argc, argv, optionStr, options, nullptr)))
     {
         if ((option == '?') || (option == 'h'))
         {
@@ -85,16 +85,16 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "Options:\n";
     std::cerr << "  --help                  Print this menu\n";
     std::cerr << "  --inventory=<inventory> Object path under inventory"
-              " that will be created\n";
+                 " that will be created\n";
     std::cerr << "  --path=<path>           Path of device to read for GPIO pin"
-              " state to determine presence of inventory item\n";
+                 " state to determine presence of inventory item\n";
     std::cerr << "  --key=<key>             Input GPIO key number\n";
     std::cerr << "  --name=<name>           Pretty name of the inventory"
-              " item\n";
+                 " item\n";
     std::cerr << "  --drivers=<drivers>     List of drivers to bind when card"
-              " is added and unbind when card is removed\n";
+                 " is added and unbind when card is removed\n";
     std::cerr << "                          Format is a space separated list"
-              " of path,device pairs.  For example:\n";
+                 " of path,device pairs.  For example:\n";
     std::cerr << "                          "
                  "/sys/bus/i2c/drivers/some-driver,3-0068\n";
     std::cerr << std::flush;

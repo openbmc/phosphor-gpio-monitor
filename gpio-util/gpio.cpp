@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <fcntl.h>
-#include <phosphor-logging/log.hpp>
-#include <sys/ioctl.h>
 #include "gpio.hpp"
+
+#include <fcntl.h>
+#include <sys/ioctl.h>
+
+#include <phosphor-logging/log.hpp>
 
 namespace phosphor
 {
@@ -38,16 +40,14 @@ void GPIO::set(Value value)
     if (rc == -1)
     {
         auto e = errno;
-        log<level::ERR>("Failed SET_LINE_VALUES ioctl",
-                        entry("ERRNO=%d", e));
+        log<level::ERR>("Failed SET_LINE_VALUES ioctl", entry("ERRNO=%d", e));
         throw std::runtime_error("Failed SET_LINE_VALUES ioctl");
     }
 }
 
-
 void GPIO::requestLine(Value defaultValue)
 {
-    //Only need to do this once
+    // Only need to do this once
     if (lineFD)
     {
         return;
@@ -63,15 +63,14 @@ void GPIO::requestLine(Value defaultValue)
         throw std::runtime_error("Failed opening GPIO device");
     }
 
-    //Make an ioctl call to request the GPIO line, which will
-    //return the descriptor to use to access it.
+    // Make an ioctl call to request the GPIO line, which will
+    // return the descriptor to use to access it.
     gpiohandle_request request{};
-    strncpy(request.consumer_label,
-            "phosphor-gpio-util",
+    strncpy(request.consumer_label, "phosphor-gpio-util",
             sizeof(request.consumer_label));
 
-    request.flags = (direction == Direction::output) ?
-        GPIOHANDLE_REQUEST_OUTPUT : GPIOHANDLE_REQUEST_INPUT;
+    request.flags = (direction == Direction::output) ? GPIOHANDLE_REQUEST_OUTPUT
+                                                     : GPIOHANDLE_REQUEST_INPUT;
 
     request.lineoffsets[0] = gpio;
     request.lines = 1;
@@ -85,8 +84,7 @@ void GPIO::requestLine(Value defaultValue)
     if (rc == -1)
     {
         auto e = errno;
-        log<level::ERR>("Failed GET_LINEHANDLE ioctl",
-                        entry("GPIO=%d", gpio),
+        log<level::ERR>("Failed GET_LINEHANDLE ioctl", entry("GPIO=%d", gpio),
                         entry("ERRNO=%d", e));
         throw std::runtime_error("Failed GET_LINEHANDLE ioctl");
     }
@@ -94,5 +92,5 @@ void GPIO::requestLine(Value defaultValue)
     lineFD.set(request.fd);
 }
 
-}
-}
+} // namespace gpio
+} // namespace phosphor

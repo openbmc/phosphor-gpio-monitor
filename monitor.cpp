@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-#include <fcntl.h>
-#include <phosphor-logging/log.hpp>
-#include "monitor.hpp"
 #include "config.h"
+
+#include "monitor.hpp"
+
+#include <fcntl.h>
+
+#include <phosphor-logging/log.hpp>
 
 namespace phosphor
 {
@@ -25,15 +28,15 @@ namespace gpio
 {
 
 // systemd service to kick start a target.
-constexpr auto SYSTEMD_SERVICE        = "org.freedesktop.systemd1";
-constexpr auto SYSTEMD_ROOT           = "/org/freedesktop/systemd1";
-constexpr auto SYSTEMD_INTERFACE      = "org.freedesktop.systemd1.Manager";
+constexpr auto SYSTEMD_SERVICE = "org.freedesktop.systemd1";
+constexpr auto SYSTEMD_ROOT = "/org/freedesktop/systemd1";
+constexpr auto SYSTEMD_INTERFACE = "org.freedesktop.systemd1.Manager";
 
 using namespace phosphor::logging;
 
 // Callback handler when there is an activity on the FD
-int Monitor::processEvents(sd_event_source* es, int fd,
-                           uint32_t revents, void* userData)
+int Monitor::processEvents(sd_event_source* es, int fd, uint32_t revents,
+                           void* userData)
 {
     log<level::INFO>("GPIO line altered");
     auto monitor = static_cast<Monitor*>(userData);
@@ -46,7 +49,9 @@ int Monitor::processEvents(sd_event_source* es, int fd,
 void Monitor::analyzeEvent()
 {
     // Data returned
-    struct input_event ev{};
+    struct input_event ev
+    {
+    };
     int rc = 0;
 
     // While testing, observed that not having a loop here was leading
@@ -54,8 +59,8 @@ void Monitor::analyzeEvent()
     while (rc >= 0)
     {
         // Wait until no more events are available on the device.
-        rc = libevdev_next_event(devicePtr.get(),
-                                 LIBEVDEV_READ_FLAG_NORMAL, &ev);
+        rc = libevdev_next_event(devicePtr.get(), LIBEVDEV_READ_FLAG_NORMAL,
+                                 &ev);
         if (rc < 0)
         {
             // There was an error waiting for events, mostly that there are no
@@ -76,10 +81,9 @@ void Monitor::analyzeEvent()
                 if (!target.empty())
                 {
                     auto bus = sdbusplus::bus::new_default();
-                    auto method = bus.new_method_call(SYSTEMD_SERVICE,
-                                                      SYSTEMD_ROOT,
-                                                      SYSTEMD_INTERFACE,
-                                                      "StartUnit");
+                    auto method =
+                        bus.new_method_call(SYSTEMD_SERVICE, SYSTEMD_ROOT,
+                                            SYSTEMD_INTERFACE, "StartUnit");
                     method.append(target);
                     method.append("replace");
 

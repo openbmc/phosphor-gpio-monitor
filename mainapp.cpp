@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-#include <iostream>
-#include <string>
-#include <systemd/sd-event.h>
-#include <phosphor-logging/log.hpp>
 #include "argument.hpp"
 #include "monitor.hpp"
+
+#include <systemd/sd-event.h>
+
+#include <iostream>
+#include <phosphor-logging/log.hpp>
+#include <string>
 
 using namespace phosphor::logging;
 static void exitWithError(const char* err, char** argv)
@@ -63,7 +65,7 @@ int main(int argc, char** argv)
     auto target = (options)["target"];
 
     bool continueRun =
-      (options["continue"] == phosphor::gpio::ArgumentParser::trueString);
+        (options["continue"] == phosphor::gpio::ArgumentParser::trueString);
 
     sd_event* event = nullptr;
     auto r = sd_event_default(&event);
@@ -76,23 +78,19 @@ int main(int argc, char** argv)
     event = nullptr;
 
     // Create a monitor object and let it do all the rest
-    phosphor::gpio::Monitor monitor(path,
-                                    std::stoi(key),
-                                    std::stoi(polarity),
-                                    target,
-                                    eventP,
-                                    continueRun);
+    phosphor::gpio::Monitor monitor(path, std::stoi(key), std::stoi(polarity),
+                                    target, eventP, continueRun);
 
     // Wait for client requests until this application has processed
     // at least one expected GPIO state change
-    while(!monitor.completed())
+    while (!monitor.completed())
     {
         // -1 denotes wait for ever
         r = sd_event_run(eventP.get(), (uint64_t)-1);
         if (r < 0)
         {
             log<level::ERR>("Failure in processing request",
-                    entry("ERROR=%s", strerror(-r)));
+                            entry("ERROR=%s", strerror(-r)));
             break;
         }
     }

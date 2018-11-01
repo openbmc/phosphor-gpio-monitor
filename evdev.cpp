@@ -1,10 +1,13 @@
-#include <libevdev/libevdev.h>
+#include "evdev.hpp"
+
+#include "xyz/openbmc_project/Common/error.hpp"
+
 #include <fcntl.h>
+#include <libevdev/libevdev.h>
+
+#include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/elog.hpp>
 #include <phosphor-logging/log.hpp>
-#include <phosphor-logging/elog-errors.hpp>
-#include "xyz/openbmc_project/Common/error.hpp"
-#include "evdev.hpp"
 
 namespace phosphor
 {
@@ -56,8 +59,8 @@ void Evdev::initEvDev()
 void Evdev::registerCallback()
 {
     decltype(eventSource.get()) sourcePtr = nullptr;
-    auto rc = sd_event_add_io(event.get(), &sourcePtr, (fd)(),
-                              EPOLLIN, callbackHandler, this);
+    auto rc = sd_event_add_io(event.get(), &sourcePtr, (fd)(), EPOLLIN,
+                              callbackHandler, this);
     eventSource.reset(sourcePtr);
 
     if (rc < 0)

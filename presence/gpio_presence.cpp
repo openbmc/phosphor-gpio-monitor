@@ -1,11 +1,14 @@
+#include "gpio_presence.hpp"
+
+#include "xyz/openbmc_project/Common/error.hpp"
+
 #include <fcntl.h>
-#include <fstream>
 #include <libevdev/libevdev.h>
+
+#include <fstream>
+#include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/elog.hpp>
 #include <phosphor-logging/log.hpp>
-#include <phosphor-logging/elog-errors.hpp>
-#include "xyz/openbmc_project/Common/error.hpp"
-#include "gpio_presence.hpp"
 
 namespace phosphor
 {
@@ -24,14 +27,11 @@ constexpr auto MAPPER_BUSNAME = "xyz.openbmc_project.ObjectMapper";
 constexpr auto MAPPER_PATH = "/xyz/openbmc_project/object_mapper";
 constexpr auto MAPPER_INTERFACE = "xyz.openbmc_project.ObjectMapper";
 
-std::string getService(const std::string& path,
-                       const std::string& interface,
+std::string getService(const std::string& path, const std::string& interface,
                        sdbusplus::bus::bus& bus)
 {
-    auto mapperCall = bus.new_method_call(MAPPER_BUSNAME,
-                                          MAPPER_PATH,
-                                          MAPPER_INTERFACE,
-                                          "GetObject");
+    auto mapperCall = bus.new_method_call(MAPPER_BUSNAME, MAPPER_PATH,
+                                          MAPPER_INTERFACE, "GetObject");
 
     mapperCall.append(path);
     mapperCall.append(std::vector<std::string>({interface}));
@@ -45,16 +45,14 @@ std::string getService(const std::string& path,
         elog<InternalFailure>();
     }
 
-
     std::map<std::string, std::vector<std::string>> mapperResponse;
     mapperResponseMsg.read(mapperResponse);
 
     if (mapperResponse.empty())
     {
-        log<level::ERR>(
-            "Error in mapper response for getting service name",
-            entry("PATH=%s", path.c_str()),
-            entry("INTERFACE=%s", interface.c_str()));
+        log<level::ERR>("Error in mapper response for getting service name",
+                        entry("PATH=%s", path.c_str()),
+                        entry("INTERFACE=%s", interface.c_str()));
         elog<InternalFailure>();
     }
 
@@ -65,8 +63,8 @@ void Presence::determinePresence()
 {
     auto present = false;
     auto value = static_cast<int>(0);
-    auto fetch_rc = libevdev_fetch_event_value(devicePtr.get(), EV_KEY,
-                    key, &value);
+    auto fetch_rc =
+        libevdev_fetch_event_value(devicePtr.get(), EV_KEY, key, &value);
     if (0 == fetch_rc)
     {
         log<level::ERR>("Device does not support event type",
@@ -83,8 +81,8 @@ void Presence::determinePresence()
 }
 
 // Callback handler when there is an activity on the FD
-int Presence::processEvents(sd_event_source* es, int fd,
-                            uint32_t revents, void* userData)
+int Presence::processEvents(sd_event_source* es, int fd, uint32_t revents,
+                            void* userData)
 {
     auto presence = static_cast<Presence*>(userData);
 
@@ -92,13 +90,14 @@ int Presence::processEvents(sd_event_source* es, int fd,
     return 0;
 }
 
-
 // Analyzes the GPIO event
 void Presence::analyzeEvent()
 {
 
     // Data returned
-    struct input_event ev {};
+    struct input_event ev
+    {
+    };
     int rc = 0;
 
     // While testing, observed that not having a loop here was leading
@@ -106,8 +105,8 @@ void Presence::analyzeEvent()
     while (rc >= 0)
     {
         // Wait until no more events are available on the device.
-        rc = libevdev_next_event(devicePtr.get(),
-                                 LIBEVDEV_READ_FLAG_NORMAL, &ev);
+        rc = libevdev_next_event(devicePtr.get(), LIBEVDEV_READ_FLAG_NORMAL,
+                                 &ev);
         if (rc < 0)
         {
             // There was an error waiting for events, mostly that there are no
@@ -145,8 +144,7 @@ Presence::ObjectMap Presence::getObjectMap(bool present)
 
     invProp.emplace("Present", present);
     invProp.emplace("PrettyName", name);
-    invIntf.emplace("xyz.openbmc_project.Inventory.Item",
-                    std::move(invProp));
+    invIntf.emplace("xyz.openbmc_project.Inventory.Item", std::move(invProp));
     invObj.emplace(std::move(inventory), std::move(invIntf));
 
     return invObj;
@@ -163,19 +161,15 @@ void Presence::updateInventory(bool present)
     auto invService = getService(INVENTORY_PATH, INVENTORY_INTF, bus);
 
     // Update inventory
-    auto invMsg = bus.new_method_call(invService.c_str(),
-                                      INVENTORY_PATH,
-                                      INVENTORY_INTF,
-                                      "Notify");
+    auto invMsg = bus.new_method_call(invService.c_str(), INVENTORY_PATH,
+                                      INVENTORY_INTF, "Notify");
     invMsg.append(std::move(invObj));
     auto invMgrResponseMsg = bus.call(invMsg);
     if (invMgrResponseMsg.is_method_error())
     {
-        log<level::ERR>(
-            "Error in inventory manager call to update inventory");
+        log<level::ERR>("Error in inventory manager call to update inventory");
         elog<InternalFailure>();
     }
-
 }
 
 void Presence::bindOrUnbindDrivers(bool present)
@@ -189,25 +183,21 @@ void Presence::bindOrUnbindDrivers(bool present)
 
         if (present)
         {
-            log<level::INFO>(
-                    "Binding a device driver",
-                    entry("PATH=%s", path.c_str()),
-                    entry("DEVICE=%s", device.c_str()));
+            log<level::INFO>("Binding a device driver",
+                             entry("PATH=%s", path.c_str()),
+                             entry("DEVICE=%s", device.c_str()));
         }
         else
         {
-            log<level::INFO>(
-                    "Unbinding a device driver",
-                    entry("PATH=%s", path.c_str()),
-                    entry("DEVICE=%s", device.c_str()));
+            log<level::INFO>("Unbinding a device driver",
+                             entry("PATH=%s", path.c_str()),
+                             entry("DEVICE=%s", device.c_str()));
         }
 
         std::ofstream file;
 
-        file.exceptions(
-                std::ofstream::failbit |
-                std::ofstream::badbit |
-                std::ofstream::eofbit);
+        file.exceptions(std::ofstream::failbit | std::ofstream::badbit |
+                        std::ofstream::eofbit);
 
         try
         {
@@ -228,8 +218,6 @@ void Presence::bindOrUnbindDrivers(bool present)
     }
 }
 
-
 } // namespace presence
 } // namespace gpio
 } // namespace phosphor
-

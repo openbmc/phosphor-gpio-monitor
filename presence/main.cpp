@@ -1,8 +1,10 @@
-#include <iostream>
-#include <systemd/sd-event.h>
-#include <phosphor-logging/log.hpp>
 #include "argument.hpp"
 #include "gpio_presence.hpp"
+
+#include <systemd/sd-event.h>
+
+#include <iostream>
+#include <phosphor-logging/log.hpp>
 
 using namespace phosphor::logging;
 using namespace phosphor::gpio;
@@ -27,7 +29,7 @@ static int getDrivers(const std::string& driverString,
     {
         std::string entry;
 
-        //Extract each path,device pair
+        // Extract each path,device pair
         stream >> entry;
 
         if (entry.empty())
@@ -35,7 +37,7 @@ static int getDrivers(const std::string& driverString,
             break;
         }
 
-        //Extract the path and device and save them
+        // Extract the path and device and save them
         auto pos = entry.rfind(',');
         if (pos != std::string::npos)
         {
@@ -88,7 +90,7 @@ int main(int argc, char* argv[])
 
     std::vector<Driver> driverList;
 
-    //Driver list is optional
+    // Driver list is optional
     if (drivers != ArgumentParser::emptyString)
     {
         if (getDrivers(drivers, driverList) < 0)
@@ -110,13 +112,13 @@ int main(int argc, char* argv[])
     event = nullptr;
 
     auto name = options["name"];
-    Presence presence(
-            bus, inventory, path, std::stoul(key), name, eventP, driverList);
+    Presence presence(bus, inventory, path, std::stoul(key), name, eventP,
+                      driverList);
 
     while (true)
     {
         // -1 denotes wait forever
-        rc = sd_event_run(eventP.get(), (uint64_t) - 1);
+        rc = sd_event_run(eventP.get(), (uint64_t)-1);
         if (rc < 0)
         {
             log<level::ERR>("Failure in processing request",
@@ -126,4 +128,3 @@ int main(int argc, char* argv[])
     }
     return rc;
 }
-
