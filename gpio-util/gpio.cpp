@@ -18,6 +18,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
+#include <cassert>
 #include <phosphor-logging/log.hpp>
 
 namespace phosphor
