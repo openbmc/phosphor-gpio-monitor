@@ -1,4 +1,4 @@
-sbin_PROGRAMS = phosphor-gpio-monitor
+bin_PROGRAMS = phosphor-gpio-monitor
 
 noinst_HEADERS = monitor.hpp
 
