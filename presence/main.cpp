@@ -64,6 +64,7 @@ int main(int argc, char* argv[])
     auto key = options["key"];
     auto path = options["path"];
     auto drivers = options["drivers"];
+    auto ifaces = options["extra-ifaces"];
     if (argc < 4)
     {
         std::cerr << "Too few arguments\n";
@@ -99,6 +100,19 @@ int main(int argc, char* argv[])
         }
     }
 
+    std::vector<Interface> ifaceList;
+
+    // Extra interfaces list is optional
+    if (ifaces != ArgumentParser::emptyString)
+    {
+        std::stringstream ss(ifaces);
+        Interface iface;
+        while (std::getline(ss, iface, ','))
+        {
+            ifaceList.push_back(iface);
+        }
+    }
+
     auto bus = sdbusplus::bus::new_default();
     auto rc = 0;
     sd_event* event = nullptr;
@@ -113,7 +127,7 @@ int main(int argc, char* argv[])
 
     auto name = options["name"];
     Presence presence(bus, inventory, path, std::stoul(key), name, eventP,
-                      driverList);
+                      driverList, ifaceList);
 
     while (true)
     {
