@@ -18,6 +18,7 @@ static constexpr auto pathField = 1;
 using Device = std::string;
 using Path = std::experimental::filesystem::path;
 using Driver = std::tuple<Device, Path>;
+using Interface = std::string;
 
 /** @class Presence
  *  @brief Responsible for determining and monitoring presence,
@@ -57,6 +58,8 @@ class Presence : public Evdev
      *  @param[in] name      - Pretty name of the inventory item
      *  @param[in] event     - sd_event handler
      *  @param[in] drivers   - list of device drivers to bind and unbind
+     *  @param[in] ifaces    - list of extra interfaces to associate with the
+     *                         inventory item
      *  @param[in] handler   - IO callback handler. Defaults to one in this
      *                        class
      */
@@ -64,9 +67,11 @@ class Presence : public Evdev
              const std::string& path, const unsigned int key,
              const std::string& name, EventPtr& event,
              const std::vector<Driver>& drivers,
+             const std::vector<Interface>& ifaces,
              sd_event_io_handler_t handler = Presence::processEvents) :
         Evdev(path, key, event, handler, true),
-        bus(bus), inventory(inventory), name(name), drivers(drivers)
+        bus(bus), inventory(inventory), name(name), drivers(drivers),
+        ifaces(ifaces)
     {
         determinePresence();
     }
@@ -121,6 +126,11 @@ class Presence : public Evdev
 
     /** @brief  Vector of path and device tuples to bind/unbind*/
     const std::vector<Driver> drivers;
+
+    /** @brief  Vector of extra inventory interfaces to associate with the
+     *          inventory item
+     */
+    const std::vector<Interface> ifaces;
 
     /**
      * @brief Binds or unbinds drivers
