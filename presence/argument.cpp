@@ -30,13 +30,14 @@ using namespace std::string_literals;
 const std::string ArgumentParser::trueString = "true"s;
 const std::string ArgumentParser::emptyString = ""s;
 
-const char* ArgumentParser::optionStr = "p:k:n:i:d:?h";
+const char* ArgumentParser::optionStr = "p:k:n:i:d:e:?h";
 const option ArgumentParser::options[] = {
     {"path", required_argument, nullptr, 'p'},
     {"key", required_argument, nullptr, 'k'},
     {"name", required_argument, nullptr, 'n'},
     {"inventory", required_argument, nullptr, 'i'},
     {"drivers", required_argument, nullptr, 'd'},
+    {"extra-ifaces", required_argument, nullptr, 'e'},
     {"help", no_argument, nullptr, 'h'},
     {0, 0, 0, 0},
 };
@@ -97,6 +98,12 @@ void ArgumentParser::usage(char** argv)
                  " of path,device pairs.  For example:\n";
     std::cerr << "                          "
                  "/sys/bus/i2c/drivers/some-driver,3-0068\n";
+    std::cerr << "  --extra-ifaces=<ifaces> List of interfaces to associate to"
+                 " inventory item\n";
+    std::cerr << "                          Format is a comma separated list"
+                 " of interfaces.         For example:\n";
+    std::cerr << "                          "
+                 "/xyz/openbmc_project/.../1,/xyz/openbmc_project/.../2\n";
     std::cerr << std::flush;
     exit(-1);
 }
