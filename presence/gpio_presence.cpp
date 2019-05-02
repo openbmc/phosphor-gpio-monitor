@@ -145,6 +145,11 @@ Presence::ObjectMap Presence::getObjectMap(bool present)
     invProp.emplace("Present", present);
     invProp.emplace("PrettyName", name);
     invIntf.emplace("xyz.openbmc_project.Inventory.Item", std::move(invProp));
+    // Add any extra interfaces we want to associate with the inventory item
+    for (auto & iface : ifaces)
+    {
+        invIntf.emplace(iface, PropertyMap());
+    }
     invObj.emplace(std::move(inventory), std::move(invIntf));
 
     return invObj;
