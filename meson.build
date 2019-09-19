@@ -18,6 +18,27 @@ libsystemd = dependency('libsystemd')
 phosphor_dbus_interfaces = dependency('phosphor-dbus-interfaces')
 phosphor_logging = dependency('phosphor-logging')
 sdbusplus = dependency('sdbusplus')
+systemd = dependency('systemd')
+
+systemd_system_unit_dir = systemd.get_pkgconfig_variable(
+    'systemdsystemunitdir',
+    define_variable: ['prefix', get_option('prefix')])
+
+configure_file(
+    copy: true,
+    input: 'phosphor-gpio-monitor@.service',
+    install: true,
+    install_dir: systemd_system_unit_dir,
+    output: 'phosphor-gpio-monitor@.service'
+)
+
+configure_file(
+    copy: true,
+    input: 'phosphor-gpio-presence@.service',
+    install: true,
+    install_dir: systemd_system_unit_dir,
+    output: 'phosphor-gpio-presence@.service'
+)
 
 libevdev_o = static_library(
     'libevdev_o',
