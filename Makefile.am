@@ -22,4 +22,4 @@ phosphor_gpio_monitor_CXXFLAGS = \
 	$(PHOSPHOR_LOGGING_CFLAGS) \
 	$(LIBEVDEV_CFLAGS)
 
-SUBDIRS = test gpio-util presence
+SUBDIRS = test presence
