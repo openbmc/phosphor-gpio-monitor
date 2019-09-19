@@ -48,4 +48,3 @@ Makefile
 /*-libtool
 /test/.deps
 /test/Makefile
-phosphor-gpio-util
