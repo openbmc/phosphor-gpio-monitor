@@ -53,8 +53,7 @@ class GpioTest : public ::testing::Test
     }
 
     // Callback handler on data
-    static int callbackHandler(sd_event_source* es, int fd, uint32_t revents,
-                               void* userData)
+    static int callbackHandler(sd_event_source*, int, uint32_t, void*)
     {
         std::cout << "Event fired" << std::endl;
         completed = true;
