@@ -33,7 +33,7 @@ constexpr auto SYSTEMD_INTERFACE = "org.freedesktop.systemd1.Manager";
 using namespace phosphor::logging;
 
 // Callback handler when there is an activity on the FD
-int Monitor::processEvents(sd_event_source* es, int fd, uint32_t revents,
+int Monitor::processEvents(sd_event_source*, int, uint32_t,
                            void* userData)
 {
     log<level::INFO>("GPIO line altered");

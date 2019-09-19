@@ -81,7 +81,7 @@ void Presence::determinePresence()
 }
 
 // Callback handler when there is an activity on the FD
-int Presence::processEvents(sd_event_source* es, int fd, uint32_t revents,
+int Presence::processEvents(sd_event_source*, int, uint32_t,
                             void* userData)
 {
     auto presence = static_cast<Presence*>(userData);
