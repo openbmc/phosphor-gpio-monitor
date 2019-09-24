@@ -1,0 +1,11 @@
+Ok-To-Test+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Verified+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Code-Review+1: William A. Kennington III <wak@google.com>
+Code-Review+1: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
+Code-Review+1: Matt Spinler <spinler@us.ibm.com>
+Code-Review+2: Brad Bishop <radsquirrel@gmail.com>
+Submitted-by: Brad Bishop <radsquirrel@gmail.com>
+Submitted-at: Tue, 24 Sep 2019 23:52:09 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-gpio-monitor/+/25390
+Project: openbmc/phosphor-gpio-monitor
+Branch: refs/heads/master
