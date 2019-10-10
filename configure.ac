@@ -23,6 +23,7 @@ PKG_CHECK_MODULES([PHOSPHOR_LOGGING], [phosphor-logging])
 PKG_CHECK_MODULES([SDBUSPLUS], [sdbusplus])
 PKG_CHECK_MODULES([PHOSPHOR_DBUS_INTERFACES], [phosphor-dbus-interfaces])
 PKG_CHECK_MODULES([LIBEVDEV], [libevdev])
+PKG_CHECK_MODULES([LIBGPIOD], [libgpiod])
 
 # Download gpio.h from github if necessary.
 AC_CHECK_HEADER(linux/gpio.h,[HAVE_LINUX_GPIO_H=""],[HAVE_LINUX_GPIO_H="-I linux/gpio.h"])
@@ -30,6 +31,23 @@ AS_IF([test "$HAVE_LINUX_GPIO_H" != ""],
     AC_MSG_WARN([Could not find linux/gpio.h: Attempting to download locally for building from https://raw.githubusercontent.com/torvalds/linux/master/include/uapi/linux/gpio.h])
     AC_SUBST([BT_BMC_DL],[`mkdir -p linux;wget https://raw.githubusercontent.com/torvalds/linux/master/include/uapi/linux/gpio.h -O linux/gpio.h`])
 )
+
+# Check for json header
+AC_CHECK_HEADER(
+    nlohmann/json.hpp,
+    [],
+    [AC_MSG_ERROR([Could not find nlohmann/json.hpp])]
+)
+
+# check for boost headers
+AC_CHECK_HEADER(
+    boost/asio/posix/stream_descriptor.hpp,
+    [],
+    [AC_MSG_ERROR([Could not find boost/asio/posix/stream_descriptor.hpp])]
+)
+AX_APPEND_COMPILE_FLAGS(["-DBOOST_ASIO_DISABLE_THREADS"], [CPPFLAGS])
+AX_APPEND_COMPILE_FLAGS(["-DBOOST_ERROR_CODE_HEADER_ONLY"], [CPPFLAGS])
+AX_APPEND_COMPILE_FLAGS(["-DBOOST_SYSTEM_NO_DEPRECATED"], [CPPFLAGS])
 
 # Check/set gtest specific functions.
 AX_PTHREAD([GTEST_CPPFLAGS="-DGTEST_HAS_PTHREAD=1"],[GTEST_CPPFLAGS="-DGTEST_HAS_PTHREAD=0"])
