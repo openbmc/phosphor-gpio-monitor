@@ -15,10 +15,15 @@ build_tests = get_option('tests')
 cppfs = meson.get_compiler('cpp').find_library('stdc++fs')
 libevdev = dependency('libevdev')
 libsystemd = dependency('libsystemd')
+libgpiod = dependency('libgpiod')
 phosphor_dbus_interfaces = dependency('phosphor-dbus-interfaces')
 phosphor_logging = dependency('phosphor-logging')
 sdbusplus = dependency('sdbusplus')
 systemd = dependency('systemd')
+
+boost_args = ['-DBOOST_ASIO_DISABLE_THREADS',
+              '-DBOOST_ERROR_CODE_HEADER_ONLY',
+              '-DBOOST_SYSTEM_NO_DEPRECATED']
 
 systemd_system_unit_dir = systemd.get_pkgconfig_variable(
     'systemdsystemunitdir',
@@ -78,6 +83,19 @@ phosphor_gpio_monitor = executable(
         libevdev_o,
         libmonitor_o,
     ],
+)
+
+executable(
+   'phosphor-multi-gpio-monitor',
+   'gpioMonMain.cpp',
+   'gpioMon.cpp',
+   dependencies: [
+        phosphor_logging,
+        sdbusplus,
+        libgpiod,
+    ],
+    cpp_args: boost_args,
+    install: true,
 )
 
 subdir('gpio-util')
