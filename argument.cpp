@@ -31,8 +31,9 @@ using namespace std::string_literals;
 const std::string ArgumentParser::trueString = "true"s;
 const std::string ArgumentParser::emptyString = ""s;
 
-const char* ArgumentParser::optionStr = "p:k:r:t:?h";
+const char* ArgumentParser::optionStr = "c:p:k:r:t:?h";
 const option ArgumentParser::options[] = {
+    {"config", required_argument, nullptr, 'c'},
     {"path", required_argument, nullptr, 'p'},
     {"key", required_argument, nullptr, 'k'},
     {"polarity", required_argument, nullptr, 'r'},
@@ -88,6 +89,7 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "Usage: " << argv[0] << " [options]\n";
     std::cerr << "Options:\n";
     std::cerr << "  --help                  Print this menu\n";
+    std::cerr << "  --config                Name of config json file\n";
     std::cerr << "  --path=<path>           Path of input device."
                  " Ex: /dev/input/event2\n";
     std::cerr << "  --key=<key>             Input GPIO key number\n";
