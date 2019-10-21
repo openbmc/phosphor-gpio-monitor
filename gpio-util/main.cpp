@@ -45,7 +45,7 @@ using gpioFunctionMap = std::map<std::string, gpioFunction>;
  * @param[in] gpio - the GPIO object
  * @param[in] delayInMS - Unused in this function
  */
-void low(GPIO& gpio, unsigned int delayInMS)
+void low(GPIO& gpio, unsigned int)
 {
     gpio.set(GPIO::Value::low);
 }
@@ -56,7 +56,7 @@ void low(GPIO& gpio, unsigned int delayInMS)
  * @param[in] gpio - the GPIO object
  * @param[in] delayInMS - Unused in this function
  */
-void high(GPIO& gpio, unsigned int delayInMS)
+void high(GPIO& gpio, unsigned int)
 {
     gpio.set(GPIO::Value::high);
 }
