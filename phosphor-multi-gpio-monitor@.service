@@ -1,0 +1,6 @@
+[Unit]
+Description=Phosphor %I GPIO monitor
+
+[Service]
+Restart=no
+ExecStart=/usr/bin/phosphor-multi-gpio-monitor --config /usr/share/phosphor-gpio-monitor/%I.json
