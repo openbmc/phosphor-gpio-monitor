@@ -39,6 +39,14 @@ configure_file(
 
 configure_file(
     copy: true,
+    input: 'phosphor-multi-gpio-monitor@.service',
+    install: true,
+    install_dir: systemd_system_unit_dir,
+    output: 'phosphor-multi-gpio-monitor@.service'
+)
+
+configure_file(
+    copy: true,
     input: 'phosphor-gpio-presence@.service',
     install: true,
     install_dir: systemd_system_unit_dir,
