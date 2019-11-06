@@ -53,6 +53,24 @@ configure_file(
     output: 'phosphor-gpio-presence@.service'
 )
 
+udev = dependency('udev')
+udev_rules_dir = join_paths(
+    udev.get_pkgconfig_variable(
+        'udevdir',
+        define_variable: ['prefix', get_option('prefix')],
+    ),
+    'rules.d',
+)
+
+configure_file(
+    copy: true,
+    input: '99-gpio-keys.rules',
+    install: true,
+    install_dir: udev_rules_dir,
+    output: '99-gpio-keys.rules'
+)
+
+
 configure_file(
     copy: true,
     input: 'phosphor-multi-gpio-monitor.json',
