@@ -2,6 +2,10 @@
 Description=Phosphor GPIO %I Presence
 Wants=mapper-wait@-xyz-openbmc_project-inventory.service
 After=mapper-wait@-xyz-openbmc_project-inventory.service
+Requires=dev-platform_gpio_keys.device
+After=dev-platform_gpio_keys.device
+Requires=dev-platform_gpio_keys_polled.device
+After=dev-platform_gpio_keys_polled.device
 ConditionPathExists=/etc/default/obmc/gpio/phosphor-power-supply-%i.conf
 
 [Service]
