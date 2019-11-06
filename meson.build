@@ -55,6 +55,15 @@ configure_file(
 
 configure_file(
     copy: true,
+    input: '99-gpio-keys.rules',
+    install: true,
+    install_dir: '/lib/udev/rules.d/',
+    output: '99-gpio-keys.rules'
+)
+
+
+configure_file(
+    copy: true,
     input: 'phosphor-multi-gpio-monitor.json',
     install: true,
     install_dir: '/usr/share/phosphor-gpio-monitor',
