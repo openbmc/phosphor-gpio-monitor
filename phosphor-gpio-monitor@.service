@@ -2,8 +2,6 @@
 Description=Phosphor GPIO %I monitor
 Requires=dev-platform_gpio_keys.device
 After=dev-platform_gpio_keys.device
-Requires=dev-platform_gpio_keys_polled.device
-After=dev-platform_gpio_keys_polled.device
 
 [Service]
 Restart=no
