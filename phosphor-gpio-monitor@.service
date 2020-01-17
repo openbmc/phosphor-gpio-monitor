@@ -2,6 +2,7 @@
 Description=Phosphor GPIO %I monitor
 
 [Service]
-Restart=no
+Restart=always
+RestartSec=5
 EnvironmentFile=/etc/default/obmc/gpio/%I
 ExecStart=/usr/bin/phosphor-gpio-monitor --path=${DEVPATH} --key=${KEY} --polarity=${POLARITY} --target=${TARGET} ${EXTRA_ARGS}
