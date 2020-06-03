@@ -29,7 +29,7 @@ class Presence : public Evdev
 {
 
     using Property = std::string;
-    using Value = sdbusplus::message::variant<bool, std::string>;
+    using Value = std::variant<bool, std::string>;
     // Association between property and its value
     using PropertyMap = std::map<Property, Value>;
     using Interface = std::string;
