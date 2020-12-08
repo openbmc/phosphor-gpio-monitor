@@ -55,6 +55,7 @@ class Presence : public Evdev
      *  @param[in] path      - Device path to read for GPIO pin state
                                to determine presence of inventory item
      *  @param[in] key       - GPIO key to monitor
+     *  @param[in] delay     - Optional presence to bind millisecond delay
      *  @param[in] name      - Pretty name of the inventory item
      *  @param[in] event     - sd_event handler
      *  @param[in] drivers   - list of device drivers to bind and unbind
@@ -65,13 +66,13 @@ class Presence : public Evdev
      */
     Presence(sdbusplus::bus::bus& bus, const std::string& inventory,
              const std::string& path, const unsigned int key,
-             const std::string& name, EventPtr& event,
+             const unsigned int delay, const std::string& name, EventPtr& event,
              const std::vector<Driver>& drivers,
              const std::vector<Interface>& ifaces,
              sd_event_io_handler_t handler = Presence::processEvents) :
         Evdev(path, key, event, handler, true),
-        bus(bus), inventory(inventory), name(name), drivers(drivers),
-        ifaces(ifaces)
+        bus(bus), inventory(inventory), delay(delay), name(name),
+        drivers(drivers), ifaces(ifaces)
     {
         determinePresence();
     }
@@ -117,6 +118,9 @@ class Presence : public Evdev
 
     /** @brief Object path under inventory to display this inventory item */
     const std::string inventory;
+
+    /** @brief Delay in milliseconds from present to bind device driver */
+    unsigned int delay;
 
     /** @brief Pretty name of the inventory item*/
     const std::string name;

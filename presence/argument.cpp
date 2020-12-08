@@ -34,6 +34,7 @@ const char* ArgumentParser::optionStr = "p:k:n:i:d:e:?h";
 const option ArgumentParser::options[] = {
     {"path", required_argument, nullptr, 'p'},
     {"key", required_argument, nullptr, 'k'},
+    {"delay", optional_argument, nullptr, 'D'},
     {"name", required_argument, nullptr, 'n'},
     {"inventory", required_argument, nullptr, 'i'},
     {"drivers", required_argument, nullptr, 'd'},
@@ -90,6 +91,8 @@ void ArgumentParser::usage(char** argv)
     std::cerr << "  --path=<path>           Path of device to read for GPIO pin"
                  " state to determine presence of inventory item\n";
     std::cerr << "  --key=<key>             Input GPIO key number\n";
+    std::cerr << "  --delay=<delay>         Optional presence delay (in "
+                 "milliseconds) to bind argument\n";
     std::cerr << "  --name=<name>           Pretty name of the inventory"
                  " item\n";
     std::cerr << "  --drivers=<drivers>     List of drivers to bind when card"

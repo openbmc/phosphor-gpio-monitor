@@ -4,6 +4,7 @@
 
 #include <fcntl.h>
 #include <libevdev/libevdev.h>
+#include <unistd.h>
 
 #include <fstream>
 #include <phosphor-logging/elog-errors.hpp>
@@ -125,9 +126,15 @@ void Presence::analyzeEvent()
                 if (ev.value > 0)
                 {
                     present = true;
+                    usleep(delay * 1000);
+                    bindOrUnbindDrivers(present);
+                    updateInventory(present);
                 }
-                updateInventory(present);
-                bindOrUnbindDrivers(present);
+                else
+                {
+                    updateInventory(present);
+                    bindOrUnbindDrivers(present);
+                }
             }
         }
     }

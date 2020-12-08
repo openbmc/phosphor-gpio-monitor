@@ -62,8 +62,8 @@ int main(int argc, char* argv[])
 
     auto inventory = options["inventory"];
     auto key = options["key"];
-    auto path = options["path"];
     auto drivers = options["drivers"];
+    auto path = options["path"];
     auto ifaces = options["extra-ifaces"];
     if (argc < 4)
     {
@@ -81,6 +81,15 @@ int main(int argc, char* argv[])
     {
         std::cerr << "GPIO key argument required\n";
         options.usage(argv);
+    }
+
+    std::cout << "Try to snag optional delay argument\n";
+    auto delay = options["delay"];
+    std::cout << "delay: " << delay << '\n';
+    if (delay == ArgumentParser::emptyString)
+    {
+        std::cout << "Empty string, default to 0\n";
+        delay = std::string("0");
     }
 
     if (path == ArgumentParser::emptyString)
@@ -126,8 +135,16 @@ int main(int argc, char* argv[])
     event = nullptr;
 
     auto name = options["name"];
-    Presence presence(bus, inventory, path, std::stoul(key), name, eventP,
-                      driverList, ifaceList);
+    std::cout << "Creating presence object\n";
+    std::cout << "inventory: " << inventory << '\n';
+    std::cout << "path: " << path << '\n';
+    std::cout << "key: " << std::stoul(key) << '\n';
+    std::cout << "delay: " << std::stoul(delay) << '\n';
+    std::cout << "name: " << name << '\n';
+    // std::cout << "driverList: " << driverList << '\n';
+    // std::cout << "ifaceList: " << ifaceList << '\n';
+    Presence presence(bus, inventory, path, std::stoul(key), std::stoul(delay),
+                      name, eventP, driverList, ifaceList);
 
     while (true)
     {
