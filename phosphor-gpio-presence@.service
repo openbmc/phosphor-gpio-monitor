@@ -6,7 +6,11 @@ ConditionPathExists=/etc/default/obmc/gpio/phosphor-power-supply-%i.conf
 
 [Service]
 EnvironmentFile=/etc/default/obmc/gpio/phosphor-power-supply-%i.conf
-ExecStart=/usr/bin/phosphor-gpio-presence --path=${DEVPATH} --inventory=${INVENTORY} --key=${KEY} --name=${NAME} --drivers=${DRIVERS} --extra-ifaces=${EXTRA_IFACES}
+#ExecStart=/usr/bin/phosphor-gpio-presence --path=${DEVPATH} --inventory=${INVENTORY} --key=${KEY} --name=${NAME} --drivers=${DRIVERS} --extra-ifaces=${EXTRA_IFACES}
+# The ${DELAY} parameter is optional. If it is blank/zero, the shell script 
+# should call /usr/bin/phosphor-gpio-presence without the optional --delay 
+# parameter.
+ExecStart=/usr/bin/phosphor-gpio-presence.sh ${DEVPATH} ${INVENTORY} ${KEY} ${DELAY} ${NAME} ${DRIVERS} ${EXTRA_IFACES}
 
 [Install]
 RequiredBy=multi-user.target
