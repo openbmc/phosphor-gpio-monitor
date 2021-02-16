@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5ea0b5b_11dbe146",
+        "filename": "phosphor-gpio-presence@.service",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000085
+      },
+      "writtenOn": "2021-02-16T23:41:46Z",
+      "side": 1,
+      "message": "Definitely WIP. I somehow dropped ${EXTRA_IFACES}.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 103
+      },
+      "revId": "257f5592bff1c93bb6cffd79b65dbcb5da2b3e73",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
