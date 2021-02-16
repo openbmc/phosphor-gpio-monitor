@@ -15,3 +15,11 @@ executable(
         libevdev_o,
     ],
 )
+
+configure_file(
+  copy: true,
+  input: 'phosphor-gpio-presence.sh',
+  install: true,
+  install_dir: get_option('bindir'),
+  output: 'phosphor-gpio-presence.sh',
+)
