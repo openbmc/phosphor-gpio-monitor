@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c11fef9f_6bd65011",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000029
+      },
+      "writtenOn": "2021-02-17T14:42:49Z",
+      "side": 1,
+      "message": "Could you provide examples of how this script is called with and without a delay?",
+      "revId": "ae050ab3d0cb188fc72d643ee1b094814132bc65",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33a0e7d_f9ad17d7",
+        "filename": "presence/phosphor-gpio-presence.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000029
+      },
+      "writtenOn": "2021-02-17T14:42:49Z",
+      "side": 1,
+      "message": "So its not really \"optional\" as it can not be omitted, it looks like it always has to be provided. Just that an empty string given in $4 removes it from the call to phosphor-gpio-presence?\n\nWhat happens when I call it like this? Doesnt \u0027name\u0027 become $4?\n`phospohor-gpio-presence.sh /dev/path/ /inv/path key name drivers extraIfaces`",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 36
+      },
+      "revId": "ae050ab3d0cb188fc72d643ee1b094814132bc65",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f87ffc_d5bae039",
+        "filename": "presence/phosphor-gpio-presence.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000029
+      },
+      "writtenOn": "2021-02-17T14:42:49Z",
+      "side": 1,
+      "message": "Wouldnt it have been better to just default delay \u003d 0 when not provided? and just always provide it to phosphor-gpio-presence.\n\n```\nDELAY\u003d${4:-0}\ncmd\u003d\"/usr/bin/phosphor-gpio-presence --path\u003d$1 --inventory\u003d$2 --key\u003d$3 --delay\u003d${DELAY} --name\u003d$5 --drivers\u003d$6 --extra-ifaces\u003d$7\"\n```\n\nThis may be bash specific so you\u0027d need to change your `#!/bin/sh` to bash specifically, but I think the BMC has /bin/sh -\u003e /bin/bash.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 2
+      },
+      "revId": "ae050ab3d0cb188fc72d643ee1b094814132bc65",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
