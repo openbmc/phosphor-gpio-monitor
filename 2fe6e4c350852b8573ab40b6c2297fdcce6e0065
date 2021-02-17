@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22f345af_5368b32f",
+        "filename": "phosphor-gpio-presence@.service",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000029
+      },
+      "writtenOn": "2021-02-17T15:28:22Z",
+      "side": 1,
+      "message": "Can just remove this now.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 165
+      },
+      "revId": "2fe6e4c350852b8573ab40b6c2297fdcce6e0065",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa249b2_e0ea6b6c",
+        "filename": "phosphor-gpio-presence@.service",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000029
+      },
+      "writtenOn": "2021-02-17T15:28:22Z",
+      "side": 1,
+      "message": "Comment\u0027s not really necessary to be \"DELAY\" specific. Can just comment that a helper script is used to construct the call to phosphor-gpio-presence.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "2fe6e4c350852b8573ab40b6c2297fdcce6e0065",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
