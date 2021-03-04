@@ -4,7 +4,8 @@ project(
     default_options: [
         'warning_level=3',
         'werror=true',
-        'cpp_std=c++17'
+        'cpp_std=c++17',
+        'buildtype=debugoptimized'
     ],
     license: 'Apache-2.0',
     version: '1.0',
@@ -78,6 +79,12 @@ configure_file(
     install_dir: '/usr/share/phosphor-gpio-monitor',
     output: 'phosphor-multi-gpio-monitor.json'
 )
+
+# Disable FORTIFY_SOURCE when compiling with no optimization
+if(get_option('optimization') == '0')
+  add_project_arguments('-U_FORTIFY_SOURCE',language:['cpp','c'])
+  message('Disabling FORTIFY_SOURCE as optimization is set to 0')
+endif
 
 libevdev_o = static_library(
     'libevdev_o',
