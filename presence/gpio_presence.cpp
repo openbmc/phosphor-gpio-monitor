@@ -125,9 +125,16 @@ void Presence::analyzeEvent()
                 if (ev.value > 0)
                 {
                     present = true;
+                    std::this_thread::sleep_for(
+                        std::chrono::milliseconds(delay));
+                    bindOrUnbindDrivers(present);
+                    updateInventory(present);
                 }
-                updateInventory(present);
-                bindOrUnbindDrivers(present);
+                else
+                {
+                    updateInventory(present);
+                    bindOrUnbindDrivers(present);
+                }
             }
         }
     }
