@@ -1,4 +1,5 @@
 #pragma once
+#include "env.hpp"
 #include "evdev.hpp"
 
 #include <systemd/sd-event.h>
@@ -73,6 +74,15 @@ class Presence : public Evdev
         bus(bus), inventory(inventory), name(name), drivers(drivers),
         ifaces(ifaces)
     {
+        // See if the environment (from configuration file?) has a DELAY set.
+        auto envDelay = env::getEnv("DELAY");
+        if (!envDelay.empty())
+        {
+            // DELAY environment variable is set.
+            // Update the bind delay (in milliseconds) to the value from the
+            // environment.
+            delay = std::strtoull(envDelay.c_str(), NULL, 10);
+        }
         determinePresence();
     }
 
@@ -117,6 +127,9 @@ class Presence : public Evdev
 
     /** @brief Object path under inventory to display this inventory item */
     const std::string inventory;
+
+    /** @brief Delay in milliseconds from present to bind device driver */
+    unsigned int delay = 0;
 
     /** @brief Pretty name of the inventory item*/
     const std::string name;

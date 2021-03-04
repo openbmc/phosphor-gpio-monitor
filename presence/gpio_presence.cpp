@@ -125,9 +125,15 @@ void Presence::analyzeEvent()
                 if (ev.value > 0)
                 {
                     present = true;
+                    usleep(delay * 1000);
+                    bindOrUnbindDrivers(present);
+                    updateInventory(present);
                 }
-                updateInventory(present);
-                bindOrUnbindDrivers(present);
+                else
+                {
+                    updateInventory(present);
+                    bindOrUnbindDrivers(present);
+                }
             }
         }
     }

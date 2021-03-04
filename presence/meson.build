@@ -3,6 +3,7 @@ executable(
     'argument.cpp',
     'main.cpp',
     'gpio_presence.cpp',
+    'env.cpp',
     dependencies: [
         cppfs,
         libevdev,
