@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59f749d5_81bce3af",
+        "filename": "presence/env.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2021-03-05T21:59:54Z",
+      "side": 1,
+      "message": "you probably got this from hwmon?  This was a bit of extra stuff so it could be used in unit test. I don\u0027t think you need any of it here.  just call the std::getenv",
+      "revId": "dcaca94ab6fbb19900f30d20a94e96173eb214bf",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218705d9_7969e2f5",
+        "filename": "presence/gpio_presence.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2021-03-05T21:59:54Z",
+      "side": 1,
+      "message": "I believe std::this_thread::sleep_for() is the recommended way to do delays these days",
+      "range": {
+        "startLine": 128,
+        "startChar": 20,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "dcaca94ab6fbb19900f30d20a94e96173eb214bf",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
