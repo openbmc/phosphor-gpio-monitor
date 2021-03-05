@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6e65e43_bee66287",
+        "filename": "presence/env.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000085
+      },
+      "writtenOn": "2021-03-05T22:26:32Z",
+      "side": 1,
+      "message": "Okay, I wasn\u0027t sure if maybe there should be some additional test code added, but I can go with replacing it with straight up std::getenv().",
+      "parentUuid": "59f749d5_81bce3af",
+      "revId": "dcaca94ab6fbb19900f30d20a94e96173eb214bf",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "218705d9_7969e2f5",
         "filename": "presence/gpio_presence.cpp",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2021-03-05T21:59:54Z",
       "side": 1,
       "message": "I believe std::this_thread::sleep_for() is the recommended way to do delays these days",
+      "range": {
+        "startLine": 128,
+        "startChar": 20,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "dcaca94ab6fbb19900f30d20a94e96173eb214bf",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8884528c_b05734e7",
+        "filename": "presence/gpio_presence.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000085
+      },
+      "writtenOn": "2021-03-05T22:26:32Z",
+      "side": 1,
+      "message": "Oh! I had not thought of seeing if there was some kind of C++17 type thing. I can give that a whirl.",
+      "parentUuid": "218705d9_7969e2f5",
       "range": {
         "startLine": 128,
         "startChar": 20,
