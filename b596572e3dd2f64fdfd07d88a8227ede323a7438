@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e2d78a5d_046bc02a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000085
+      },
+      "writtenOn": "2021-03-11T21:08:51Z",
+      "side": 1,
+      "message": "Oops! This is no longer true, noticing it as I amend my commit for the issue Shawn pointed out with std::getenv() potentially returning null pointer.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "b596572e3dd2f64fdfd07d88a8227ede323a7438",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79e00066_47d09b05",
         "filename": "presence/gpio_presence.hpp",
         "patchSetId": 2
