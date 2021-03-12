@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbedbf3a_e174258f",
+        "filename": "meson.build",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000085
+      },
+      "writtenOn": "2021-03-12T20:12:53Z",
+      "side": 1,
+      "message": "Conversation in Discord seems to reveal that we should not be doing this.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 5
+      },
+      "revId": "3838f78f50dc2ba726aa5bddbb885bb702764669",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
