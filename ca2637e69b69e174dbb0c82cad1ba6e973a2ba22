@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "522d16f4_93081486",
+        "filename": "meson.build",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-03-13T01:13:53Z",
+      "side": 1,
+      "message": "I tend to prefer these sorted, but the current ones aren\u0027t.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 34
+      },
+      "revId": "ca2637e69b69e174dbb0c82cad1ba6e973a2ba22",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
