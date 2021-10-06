@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     {
         app.parse(argc, argv);
     }
-    catch (CLI::Error& e)
+    catch (const CLI::Error& e)
     {
         return app.exit(e);
     }
