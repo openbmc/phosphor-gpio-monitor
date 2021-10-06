@@ -216,7 +216,7 @@ void Presence::bindOrUnbindDrivers(bool present)
             file << device;
             file.close();
         }
-        catch (std::exception& e)
+        catch (const std::exception& e)
         {
             auto err = errno;
 

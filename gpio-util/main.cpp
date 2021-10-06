@@ -177,7 +177,7 @@ int main(int argc, char** argv)
     {
         function->second(gpio, delay);
     }
-    catch (std::runtime_error& e)
+    catch (const std::runtime_error& e)
     {
         std::cerr << e.what();
         return -1;
