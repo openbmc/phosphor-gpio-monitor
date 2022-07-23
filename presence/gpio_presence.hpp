@@ -5,6 +5,7 @@
 
 #include <cstdlib>
 #include <experimental/filesystem>
+#include <sdbusplus/bus.hpp>
 #include <string>
 
 namespace phosphor
@@ -64,7 +65,7 @@ class Presence : public Evdev
      *  @param[in] handler   - IO callback handler. Defaults to one in this
      *                        class
      */
-    Presence(sdbusplus::bus::bus& bus, const std::string& inventory,
+    Presence(sdbusplus::bus_t& bus, const std::string& inventory,
              const std::string& path, const unsigned int key,
              const std::string& name, EventPtr& event,
              const std::vector<Driver>& drivers,
@@ -117,7 +118,7 @@ class Presence : public Evdev
     ObjectMap getObjectMap(bool present);
 
     /** @brief Connection for sdbusplus bus */
-    sdbusplus::bus::bus& bus;
+    sdbusplus::bus_t& bus;
 
     /**
      * @brief Read the GPIO device to determine initial presence and set
@@ -171,7 +172,7 @@ class Presence : public Evdev
  * @return The service name
  */
 std::string getService(const std::string& path, const std::string& interface,
-                       sdbusplus::bus::bus& bus);
+                       sdbusplus::bus_t& bus);
 
 } // namespace presence
 } // namespace gpio
