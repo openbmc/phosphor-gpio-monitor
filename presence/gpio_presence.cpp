@@ -28,7 +28,7 @@ constexpr auto MAPPER_PATH = "/xyz/openbmc_project/object_mapper";
 constexpr auto MAPPER_INTERFACE = "xyz.openbmc_project.ObjectMapper";
 
 std::string getService(const std::string& path, const std::string& interface,
-                       sdbusplus::bus::bus& bus)
+                       sdbusplus::bus_t& bus)
 {
     auto mapperCall = bus.new_method_call(MAPPER_BUSNAME, MAPPER_PATH,
                                           MAPPER_INTERFACE, "GetObject");
