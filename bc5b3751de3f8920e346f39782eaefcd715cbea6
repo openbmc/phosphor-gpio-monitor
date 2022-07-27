@@ -1,0 +1,8 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: John Broadbent <jebr@google.com>
+Code-Review+2: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Submitted-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Submitted-at: Wed, 27 Jul 2022 19:29:49 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/phosphor-gpio-monitor/+/55792
+Project: openbmc/phosphor-gpio-monitor
+Branch: refs/heads/master
