@@ -32,9 +32,17 @@
 # data within them will be kept sorted.
 
 owners:
+- spinler@us.ibm.com
+- patrick@stwcx.xyz
 
 reviewers:
 
 matchers:
 
 openbmc:
+- name: Matt Spinler
+  email: spinler@us.ibm.com
+  discord: mspinler
+- name: Patrick Williams
+  email: patrick@stwcx.xyz
+  discord: stwcx
