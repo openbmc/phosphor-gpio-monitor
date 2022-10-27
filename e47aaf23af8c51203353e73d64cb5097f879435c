@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "907c5cff_73cec89e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2022-10-27T13:11:38Z",
+      "side": 1,
+      "message": "Could you add some more text around what this commit does, and why?\n\nAlso some examples showing what D-Bus looks like would be helpful.",
+      "revId": "e47aaf23af8c51203353e73d64cb5097f879435c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
