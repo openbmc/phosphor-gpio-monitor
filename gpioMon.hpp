@@ -4,6 +4,7 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/posix/stream_descriptor.hpp>
+#include <sdbusplus/asio/object_server.hpp>
 
 namespace phosphor
 {
@@ -36,10 +37,13 @@ class GpioMonitor
      */
     GpioMonitor(gpiod_line* line, gpiod_line_request_config& config,
                 boost::asio::io_service& io, const std::string& target,
-                const std::string& lineMsg, bool continueRun) :
+                const std::string& lineMsg, bool continueRun,
+                std::shared_ptr<sdbusplus::asio::dbus_interface> statusInterface,
+                const std::string& gpioName) :
         gpioLine(line),
         gpioConfig(config), gpioEventDescriptor(io), target(target),
-        gpioLineMsg(lineMsg), continueAfterEvent(continueRun)
+        gpioLineMsg(lineMsg), continueAfterEvent(continueRun),
+        gpioStatusInterface(statusInterface), gpioName(gpioName)
     {
         requestGPIOEvents();
     };
@@ -62,6 +66,12 @@ class GpioMonitor
 
     /** @brief If the monitor should continue after event */
     bool continueAfterEvent;
+
+    /** @brief GPIO status interface object */
+    std::shared_ptr<sdbusplus::asio::dbus_interface> gpioStatusInterface;
+
+    /** @brief GPIO name. If name is missing, it will be GPIO number */
+    std::string gpioName;
 
     /** @brief register handler for gpio event
      *
