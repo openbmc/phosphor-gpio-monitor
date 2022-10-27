@@ -67,6 +67,15 @@ void GpioMonitor::gpioEventHandler()
 
     log<level::INFO>(logMessage.c_str());
 
+    if (gpioLineEvent.event_type == GPIOD_LINE_EVENT_RISING_EDGE)
+    {
+        gpioStatusInterface->set_property(gpioName, true);
+    }
+    else
+    {
+        gpioStatusInterface->set_property(gpioName, false);
+    }
+
     /* Execute the target if it is defined. */
     if (!target.empty())
     {
@@ -99,6 +108,9 @@ int GpioMonitor::requestGPIOEvents()
                         entry("GPIO_LINE=%s", gpioLineMsg.c_str()));
         return -1;
     }
+
+    bool status = gpiod_line_get_value(gpioLine);
+    gpioStatusInterface->register_property(gpioName, status);
 
     int gpioLineFd = gpiod_line_event_get_fd(gpioLine);
     if (gpioLineFd < 0)
