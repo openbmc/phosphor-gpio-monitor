@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e3e7f12_51a9268a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-28T11:48:16Z",
+      "side": 1,
+      "message": "As an overall architecture, this has been rejected many times.  Please see the mailing list archives.\n\nWe will now allow direct GPIO presentation on dbus.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 127
+      },
+      "revId": "ac0875973b1a97c566d3627be208934e71a3522e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ebb488b_40989497",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-28T11:48:16Z",
+      "side": 1,
+      "message": "You cannot make up new interfaces that are not documented in phosphor-dbus-interfaces.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 64
+      },
+      "revId": "ac0875973b1a97c566d3627be208934e71a3522e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
