@@ -69,6 +69,30 @@
       },
       "revId": "ac0875973b1a97c566d3627be208934e71a3522e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58997b48_2ff533c7",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2022-10-31T02:03:29Z",
+      "side": 1,
+      "message": "Thank you for your replying, I\u0027ll check phosphor-dbus-interfaces first.",
+      "parentUuid": "0ebb488b_40989497",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 64
+      },
+      "revId": "ac0875973b1a97c566d3627be208934e71a3522e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
