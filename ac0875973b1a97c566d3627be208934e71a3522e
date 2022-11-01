@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "08984a7e_92d3fcfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000866
+      },
+      "writtenOn": "2022-11-01T04:43:21Z",
+      "side": 1,
+      "message": "https://gerrit.openbmc.org/c/openbmc/docs/+/55422",
+      "parentUuid": "01e0e41a_892f7f1b",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 127
+      },
+      "revId": "ac0875973b1a97c566d3627be208934e71a3522e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ebb488b_40989497",
         "filename": "gpioMonMain.cpp",
         "patchSetId": 4
