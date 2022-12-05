@@ -41,6 +41,7 @@ Following are fields in json file
 
 ## Sample config file
 
+```
 [
 	{
 		"Name": "PowerButton",
@@ -62,3 +63,4 @@ Following are fields in json file
 		"ChipId": "0"
 	}
 ]
+```
