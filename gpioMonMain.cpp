@@ -44,6 +44,14 @@ int main(int argc, char** argv)
 {
 
     boost::asio::io_service io;
+    auto bus = std::make_shared<sdbusplus::asio::connection>(
+        io, sdbusplus::bus::new_system().release());
+    bus->request_name("xyz.openbmc_project.GpioMonitor");
+    auto server = sdbusplus::asio::object_server(bus);
+
+    std::shared_ptr<sdbusplus::asio::dbus_interface> statusInterface =
+        server.add_interface("/xyz/openbmc_project/gpio/status",
+                             "xyz.openbmc_project.GpioStatus");
 
     CLI::App app{"Monitor GPIO line for requested state change"};
 
@@ -84,6 +92,7 @@ int main(int argc, char** argv)
 
         /* GPIO Line message */
         std::string lineMsg = "GPIO Line ";
+        std::string gpioName;
 
         /* GPIO line */
         gpiod_line* line = NULL;
@@ -134,6 +143,11 @@ int main(int argc, char** argv)
             line = gpiod_line_find(lineName.c_str());
         }
 
+        if (obj.find("Name") != obj.end())
+        {
+            gpioName = obj["Name"];
+        }
+
         if (line == NULL)
         {
             errMsg = "Failed to find the " + lineMsg;
@@ -175,8 +189,11 @@ int main(int argc, char** argv)
 
         /* Create a monitor object and let it do all the rest */
         gpios.push_back(std::make_unique<phosphor::gpio::GpioMonitor>(
-            line, config, io, target, lineMsg, flag));
+            line, config, io, target, lineMsg, flag, statusInterface,
+            gpioName));
     }
+
+    statusInterface->initialize();
     io.run();
 
     return 0;
