@@ -16,6 +16,24 @@
       "message": "Hi, could you add some example D-Bus output?  And also, what it\u0027s going to be used for.",
       "revId": "6ae36f39b998a5cc47f7cb5e014585e98995f174",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2edf1686_efa0341c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2022-12-09T09:41:19Z",
+      "side": 1,
+      "message": "We add example in commit message.\n\nThe purpose of this Dbus is for those gpios which are needed to be monitored and must be initialized in phosphor-gpio-monitor",
+      "parentUuid": "1b2086c3_7e72973e",
+      "revId": "6ae36f39b998a5cc47f7cb5e014585e98995f174",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
