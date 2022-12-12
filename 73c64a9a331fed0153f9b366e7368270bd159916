@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90cc81f0_0791a822",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2022-12-12T16:28:04Z",
+      "side": 1,
+      "message": "Usually it\u0027s asked that a YAML definition of the D-Bus interface is submitted to phosphor-dbus-interfaces so it can have officially documented types.\n\nHow this is defined now though it can\u0027t be done, since the property names are dynamic.  \n\nCould you instead put the GPIO name into a \u0027Name\u0027 property, and then submit the interface YAML to phosphor-dbus-interfaces for review?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "73c64a9a331fed0153f9b366e7368270bd159916",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
