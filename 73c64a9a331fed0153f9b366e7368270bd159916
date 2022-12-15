@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7b235dad_f986780d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-15T12:47:16Z",
+      "side": 1,
+      "message": "Dynamic property names like this violate dbus conventions anyhow.  The expectation is that any dbus interface (like ...GpioStatus) would be the same in every single object path and process where it exists.",
+      "parentUuid": "b390473b_2e041584",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "73c64a9a331fed0153f9b366e7368270bd159916",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "fa39568c_73c07d9b",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
