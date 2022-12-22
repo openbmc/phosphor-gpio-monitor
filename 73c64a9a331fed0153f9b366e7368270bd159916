@@ -123,6 +123,24 @@
       "parentUuid": "bc65b18f_628887cd",
       "revId": "73c64a9a331fed0153f9b366e7368270bd159916",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0d5978a_7ef8c8ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2022-12-22T06:04:40Z",
+      "side": 1,
+      "message": "Hi Patrick,\n\nAfter survey the phosphor-power repo, we found out that current design couldn\u0027t support multi-host pgood on Dbus in phosphor-power-sequencer.\n\nWe think each pgood information for each slot should be displayed on different Dbus for multi-host architecture.\n\nMoreover, we shuold provide a option in meson file for different projects to use different ways to monitor these pgood gpios.\n\nCurrent design uses call back function in a timer to monitor pgood gpio.\nHowever, the timer polling time is 3 seconds now and maybe too long.\n\nThus, we propose another method that we could register gpio interrupt in phosphor-gpio-monitor for these pgood gpios and start corresponding targets to set pgood property on Dbus.\n\nBy adding this option in meson file, different projects could decide their own method to monitor pgood gpios. \n\nIf some projects insist to use the call back function in timer to monitor pgood state, the function is still workable.\n\nIf some projects disable this option, they could use their own method to monitor pgood state like registering gpio interrupt.",
+      "parentUuid": "a8e40fff_493b1cdb",
+      "revId": "73c64a9a331fed0153f9b366e7368270bd159916",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
