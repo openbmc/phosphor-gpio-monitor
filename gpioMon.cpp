@@ -68,15 +68,35 @@ void GpioMonitor::gpioEventHandler()
     log<level::INFO>(logMessage.c_str());
 
     /* Execute the target if it is defined. */
-    if (!target.empty())
+    std::vector<std::string> targetsToStart;
+    if (gpioLineEvent.event_type == GPIOD_LINE_EVENT_RISING_EDGE)
+    {
+        auto risingFind = target.find("RISING");
+        if (risingFind != target.end())
+        {
+            targetsToStart = risingFind->second;
+        }
+    }
+    else
+    {
+        auto fallingFind = target.find("FALLING");
+        if (fallingFind != target.end())
+        {
+            targetsToStart = fallingFind->second;
+        }
+    }
+
+    /* Execute the target if it is defined. */
+    if (!targetsToStart.empty())
     {
         auto bus = sdbusplus::bus::new_default();
-        auto method = bus.new_method_call(SYSTEMD_SERVICE, SYSTEMD_ROOT,
-                                          SYSTEMD_INTERFACE, "StartUnit");
-        method.append(target);
-        method.append("replace");
-
-        bus.call_noreply(method);
+        for (auto& tar : targetsToStart)
+        {
+            auto method = bus.new_method_call(SYSTEMD_SERVICE, SYSTEMD_ROOT,
+                                              SYSTEMD_INTERFACE, "StartUnit");
+            method.append(tar, "replace");
+            bus.call_noreply(method);
+        }
     }
 
     /* if not required to continue monitoring then return */

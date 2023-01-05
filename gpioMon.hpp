@@ -4,6 +4,14 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/posix/stream_descriptor.hpp>
+#include <map>
+#include <vector>
+
+enum gpio_state
+{
+    GPIO_LOW = 0,
+    GPIO_HIGH = 1,
+};
 
 namespace phosphor
 {
@@ -35,7 +43,8 @@ class GpioMonitor
      *  @param[in] continueRun - Whether to continue after event occur
      */
     GpioMonitor(gpiod_line* line, gpiod_line_request_config& config,
-                boost::asio::io_service& io, const std::string& target,
+                boost::asio::io_service& io,
+                const std::map<std::string, std::vector<std::string>>& target,
                 const std::string& lineMsg, bool continueRun) :
         gpioLine(line),
         gpioConfig(config), gpioEventDescriptor(io), target(target),
@@ -55,7 +64,7 @@ class GpioMonitor
     boost::asio::posix::stream_descriptor gpioEventDescriptor;
 
     /** @brief Systemd unit to be started when the condition is met */
-    const std::string target;
+    std::map<std::string, std::vector<std::string>> target;
 
     /** @brief GPIO line name message */
     std::string gpioLineMsg;

@@ -101,7 +101,7 @@ int main(int argc, char** argv)
         bool flag = false;
 
         /* target to start */
-        std::string target;
+        std::map<std::string, std::vector<std::string>> target;
 
         if (obj.find("LineName") == obj.end())
         {
@@ -170,7 +170,7 @@ int main(int argc, char** argv)
          */
         if (obj.find("Target") != obj.end())
         {
-            target = obj["Target"];
+            obj.at("Target").get_to(target);
         }
 
         /* Create a monitor object and let it do all the rest */
