@@ -79,6 +79,37 @@ void GpioMonitor::gpioEventHandler()
         bus.call_noreply(method);
     }
 
+    std::vector<std::string> targetsToStart;
+    if (gpioLineEvent.event_type == GPIOD_LINE_EVENT_RISING_EDGE)
+    {
+        auto risingFind = targets.find("RISING");
+        if (risingFind != targets.end())
+        {
+            targetsToStart = risingFind->second;
+        }
+    }
+    else
+    {
+        auto fallingFind = targets.find("FALLING");
+        if (fallingFind != targets.end())
+        {
+            targetsToStart = fallingFind->second;
+        }
+    }
+
+    /* Execute the multi targets if it is defined. */
+    if (!targetsToStart.empty())
+    {
+        auto bus = sdbusplus::bus::new_default();
+        for (auto& tar : targetsToStart)
+        {
+            auto method = bus.new_method_call(SYSTEMD_SERVICE, SYSTEMD_ROOT,
+                                              SYSTEMD_INTERFACE, "StartUnit");
+            method.append(tar, "replace");
+            bus.call_noreply(method);
+        }
+    }
+
     /* if not required to continue monitoring then return */
     if (!continueAfterEvent)
     {
