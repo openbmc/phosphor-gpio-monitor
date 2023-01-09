@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54b7baf0_5aac02cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2023-01-09T09:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "881a9007_3b11f5e4",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19b558b0_0dcc6b58",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-01-05T22:13:50Z",
       "side": 1,
       "message": "I\u0027m not really sure what these are for?  Also, since they\u0027re just \u0027none\u0027 you may as well leave them out.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 6
+      },
+      "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f46cbe04_8cd115b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2023-01-09T09:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b558b0_0dcc6b58",
       "range": {
         "startLine": 49,
         "startChar": 0,
@@ -64,6 +112,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6066da2_1424664d",
+        "filename": "gpioMon.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2023-01-09T09:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a59abb4_451b92c1",
+      "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bb7c7f3_b9e34fd8",
@@ -77,6 +143,30 @@
       "writtenOn": "2023-01-05T22:13:50Z",
       "side": 1,
       "message": "this description probably needs updating.",
+      "range": {
+        "startLine": 40,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00f61014_d1c81338",
+        "filename": "gpioMon.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2023-01-09T09:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bb7c7f3_b9e34fd8",
       "range": {
         "startLine": 40,
         "startChar": 33,
@@ -110,6 +200,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb6bc08_1d25a215",
+        "filename": "gpioMon.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2023-01-09T09:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bba0867_1b3c0b07",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 67
+      },
+      "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a089f4d2_753155f6",
@@ -133,6 +247,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5250a27b_5d22fbf3",
+        "filename": "gpioMon.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2023-01-09T09:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a089f4d2_753155f6",
+      "range": {
+        "startLine": 67,
+        "startChar": 51,
+        "endLine": 67,
+        "endChar": 59
+      },
+      "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f0c042b_a1b0f5bb",
@@ -146,6 +284,24 @@
       "writtenOn": "2023-01-05T22:13:50Z",
       "side": 1,
       "message": "Isn\u0027t this going to break all of the current users of this who just use a single target string in the JSON?  I think ideally it would support both the original and the new syntax, though I guess you could change all of the config files checked into master (and add the owners to this review)",
+      "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e3f45bf_8ac55abe",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2023-01-09T09:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f0c042b_a1b0f5bb",
       "revId": "77c7f389b375f0718b677ad5a13c024246d59b9b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
