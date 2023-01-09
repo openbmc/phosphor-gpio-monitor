@@ -4,6 +4,8 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/posix/stream_descriptor.hpp>
+#include <map>
+#include <vector>
 
 namespace phosphor
 {
@@ -31,15 +33,18 @@ class GpioMonitor
      *  @param[in] io          - io service
      *  @param[in] target      - systemd unit to be started on GPIO
      *                           value change
+     *  @param[in] targets     - systemd units to be started on GPIO
+     *                           value change
      *  @param[in] lineMsg     - GPIO line message to be used for log
      *  @param[in] continueRun - Whether to continue after event occur
      */
     GpioMonitor(gpiod_line* line, gpiod_line_request_config& config,
                 boost::asio::io_service& io, const std::string& target,
+                const std::map<std::string, std::vector<std::string>>& targets,
                 const std::string& lineMsg, bool continueRun) :
         gpioLine(line),
         gpioConfig(config), gpioEventDescriptor(io), target(target),
-        gpioLineMsg(lineMsg), continueAfterEvent(continueRun)
+        targets(targets), gpioLineMsg(lineMsg), continueAfterEvent(continueRun)
     {
         requestGPIOEvents();
     };
@@ -56,6 +61,9 @@ class GpioMonitor
 
     /** @brief Systemd unit to be started when the condition is met */
     const std::string target;
+
+    /** @brief Multi systemd units to be started when the condition is met */
+    std::map<std::string, std::vector<std::string>> targets;
 
     /** @brief GPIO line name message */
     std::string gpioLineMsg;

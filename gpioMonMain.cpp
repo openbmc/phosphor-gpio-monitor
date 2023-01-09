@@ -103,6 +103,9 @@ int main(int argc, char** argv)
         /* target to start */
         std::string target;
 
+        /* multi targets to start */
+        std::map<std::string, std::vector<std::string>> targets;
+
         if (obj.find("LineName") == obj.end())
         {
             /* If there is no line Name defined then gpio num nd chip
@@ -173,9 +176,15 @@ int main(int argc, char** argv)
             target = obj["Target"];
         }
 
+        /* Parse out the targets argument if multi-targets are needed.*/
+        if (obj.find("Targets") != obj.end())
+        {
+            obj.at("Targets").get_to(targets);
+        }
+
         /* Create a monitor object and let it do all the rest */
         gpios.push_back(std::make_unique<phosphor::gpio::GpioMonitor>(
-            line, config, io, target, lineMsg, flag));
+            line, config, io, target, targets, lineMsg, flag));
     }
     io.run();
 
