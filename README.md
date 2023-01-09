@@ -40,7 +40,10 @@ Following are fields in json file
 6. Target: This is an optional systemd service which will get started after
    triggering event. A journal entry will be added for every event occurs
    irrespective of this definition.
-7. Continue: This is a optional flag and if it is defined as true then this gpio
+7. Targets: This is an optional systemd service which will get started after
+   triggering corresponding event(RASING or FALLING). A journal entry will be
+   added for every event occurs irrespective of this definition.
+8. Continue: This is a optional flag and if it is defined as true then this gpio
    will be monitored continously. If not defined then monitoring of this gpio
    will stop after first event.
 
@@ -53,13 +56,18 @@ Following are fields in json file
     "LineName": "POWER_BUTTON",
     "GpioNum": 34,
     "ChipId": "gpiochip0",
-    "EventMon": "BOTH",
+    "EventMon": "FALLING",
+    "Target": "PowerButtonDown.service",
     "Continue": true
   },
   {
     "Name": "PowerGood",
     "LineName": "PS_PWROK",
-    "EventMon": "FALLING",
+    "EventMon": "BOTH",
+    "Targets": {
+      "FALLING": ["PowerGoodFalling.service", "PowerOff.service"],
+      "RISING": ["PowerGoodRising.service", "PowerOn.service"]
+    },
     "Continue": false
   },
   { "Name": "SystemReset", "GpioNum": 46, "ChipId": "0" }
