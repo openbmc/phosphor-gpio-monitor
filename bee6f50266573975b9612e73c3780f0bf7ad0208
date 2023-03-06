@@ -33,6 +33,24 @@
       "message": "Are these documented anywhere?  It is hard to know how to create the appropriate JSON when you have to reverse engineer from the code.",
       "revId": "bee6f50266573975b9612e73c3780f0bf7ad0208",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7d86a55_90f95310",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2023-03-06T20:06:39Z",
+      "side": 1,
+      "message": "Yea, I guess these should be constants as you mentioned in your other comment.",
+      "parentUuid": "4baaab50_3b80b1f5",
+      "revId": "bee6f50266573975b9612e73c3780f0bf7ad0208",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
