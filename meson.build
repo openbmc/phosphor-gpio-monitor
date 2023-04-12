@@ -9,7 +9,7 @@ project(
     ],
     license: 'Apache-2.0',
     version: '1.0',
-    meson_version: '>=0.57.0',
+    meson_version: '>=0.58.0',
 )
 
 build_tests = get_option('tests')
@@ -27,7 +27,7 @@ boost_args = ['-DBOOST_ASIO_DISABLE_THREADS',
               '-DBOOST_ERROR_CODE_HEADER_ONLY',
               '-DBOOST_SYSTEM_NO_DEPRECATED']
 
-systemd_system_unit_dir = systemd.get_pkgconfig_variable(
+systemd_system_unit_dir = systemd.get_variable(
     'systemdsystemunitdir',
     define_variable: ['prefix', get_option('prefix')])
 
@@ -57,7 +57,7 @@ configure_file(
 
 udev = dependency('udev')
 udev_rules_dir = join_paths(
-    udev.get_pkgconfig_variable(
+    udev.get_variable(
         'udevdir',
         define_variable: ['prefix', get_option('prefix')],
     ),
