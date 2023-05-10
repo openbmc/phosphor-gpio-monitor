@@ -3,8 +3,9 @@
 
 #include <systemd/sd-event.h>
 
-#include <iostream>
 #include <phosphor-logging/log.hpp>
+
+#include <iostream>
 
 using namespace phosphor::logging;
 using namespace phosphor::gpio;

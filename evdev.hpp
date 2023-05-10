@@ -4,9 +4,10 @@
 #include <libevdev/libevdev.h>
 #include <systemd/sd-event.h>
 
+#include <sdbusplus/message.hpp>
+
 #include <map>
 #include <memory>
-#include <sdbusplus/message.hpp>
 #include <string>
 
 namespace phosphor
@@ -50,7 +51,6 @@ using EvdevPtr = std::unique_ptr<struct libevdev, FreeEvDev>;
  */
 class Evdev
 {
-
     using Property = std::string;
     using Value = std::variant<bool, std::string>;
     // Association between property and its value

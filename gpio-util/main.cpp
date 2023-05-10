@@ -26,11 +26,12 @@
 #include "argument.hpp"
 #include "gpio.hpp"
 
+#include <phosphor-logging/log.hpp>
+
 #include <algorithm>
 #include <chrono>
 #include <iostream>
 #include <map>
-#include <phosphor-logging/log.hpp>
 #include <thread>
 
 using namespace phosphor::gpio;

@@ -18,9 +18,10 @@
 
 #include <CLI/CLI.hpp>
 #include <boost/asio/io_context.hpp>
-#include <fstream>
 #include <nlohmann/json.hpp>
 #include <phosphor-logging/log.hpp>
+
+#include <fstream>
 
 using namespace phosphor::logging;
 
@@ -42,7 +43,6 @@ std::map<std::string, int> polarityMap = {
 
 int main(int argc, char** argv)
 {
-
     boost::asio::io_context io;
 
     CLI::App app{"Monitor GPIO line for requested state change"};
@@ -81,7 +81,6 @@ int main(int argc, char** argv)
 
     for (auto& obj : gpioMonObj)
     {
-
         /* GPIO Line message */
         std::string lineMsg = "GPIO Line ";
 

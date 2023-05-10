@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include <sdbusplus/bus.hpp>
+
 #include <string>
 
 namespace phosphor

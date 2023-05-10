@@ -47,8 +47,7 @@ void Monitor::analyzeEvent()
 {
     // Data returned
     struct input_event ev
-    {
-    };
+    {};
     int rc = 0;
 
     // While testing, observed that not having a loop here was leading

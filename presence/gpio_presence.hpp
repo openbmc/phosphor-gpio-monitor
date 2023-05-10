@@ -3,9 +3,10 @@
 
 #include <systemd/sd-event.h>
 
+#include <sdbusplus/bus.hpp>
+
 #include <cstdlib>
 #include <experimental/filesystem>
-#include <sdbusplus/bus.hpp>
 #include <string>
 
 namespace phosphor
@@ -29,7 +30,6 @@ using Interface = std::string;
  */
 class Presence : public Evdev
 {
-
     using Property = std::string;
     using Value = std::variant<bool, std::string>;
     // Association between property and its value

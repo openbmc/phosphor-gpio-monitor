@@ -19,8 +19,9 @@
 
 #include <systemd/sd-event.h>
 
-#include <iostream>
 #include <phosphor-logging/log.hpp>
+
+#include <iostream>
 #include <string>
 
 using namespace phosphor::logging;

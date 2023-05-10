@@ -5,10 +5,11 @@
 #include <fcntl.h>
 #include <libevdev/libevdev.h>
 
-#include <fstream>
 #include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/elog.hpp>
 #include <phosphor-logging/log.hpp>
+
+#include <fstream>
 
 namespace phosphor
 {
@@ -63,8 +64,8 @@ void Presence::determinePresence()
 {
     auto present = false;
     auto value = static_cast<int>(0);
-    auto fetch_rc =
-        libevdev_fetch_event_value(devicePtr.get(), EV_KEY, key, &value);
+    auto fetch_rc = libevdev_fetch_event_value(devicePtr.get(), EV_KEY, key,
+                                               &value);
     if (0 == fetch_rc)
     {
         log<level::ERR>("Device does not support event type",
@@ -92,11 +93,9 @@ int Presence::processEvents(sd_event_source*, int, uint32_t, void* userData)
 // Analyzes the GPIO event
 void Presence::analyzeEvent()
 {
-
     // Data returned
     struct input_event ev
-    {
-    };
+    {};
     int rc = 0;
 
     // While testing, observed that not having a loop here was leading

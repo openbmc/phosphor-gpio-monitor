@@ -36,18 +36,17 @@ using namespace phosphor::logging;
 
 void GpioMonitor::scheduleEventHandler()
 {
-
     gpioEventDescriptor.async_wait(
         boost::asio::posix::stream_descriptor::wait_read,
         [this](const boost::system::error_code& ec) {
-            if (ec)
-            {
-                std::string msg = gpioLineMsg + "event handler error" +
-                                  std::string(ec.message());
-                log<level::ERR>(msg.c_str());
-                return;
-            }
-            gpioEventHandler();
+        if (ec)
+        {
+            std::string msg = gpioLineMsg + "event handler error" +
+                              std::string(ec.message());
+            log<level::ERR>(msg.c_str());
+            return;
+        }
+        gpioEventHandler();
         });
 }
 
@@ -125,7 +124,6 @@ void GpioMonitor::gpioEventHandler()
 
 int GpioMonitor::requestGPIOEvents()
 {
-
     /* Request an event to monitor for respected gpio line */
     if (gpiod_line_request(gpioLine, &gpioConfig, 0) < 0)
     {
