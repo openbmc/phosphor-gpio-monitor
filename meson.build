@@ -12,6 +12,8 @@ project(
     meson_version: '>=0.58.0',
 )
 
+cxx = meson.get_compiler('cpp')
+
 build_tests = get_option('tests')
 
 libevdev = dependency('libevdev')
@@ -21,6 +23,24 @@ phosphor_dbus_interfaces = dependency('phosphor-dbus-interfaces')
 phosphor_logging = dependency('phosphor-logging')
 sdbusplus = dependency('sdbusplus')
 systemd = dependency('systemd')
+
+if cxx.has_header('nlohmann/json.hpp')
+    nlohmann_json_dep = declare_dependency()
+else
+    subproject('nlohmann', required: false)
+    nlohmann_json_dep = declare_dependency(
+        include_directories: [
+            'subprojects/nlohmann-json/single_include',
+            'subprojects/nlohmann-json/single_include/nlohmann',
+        ]
+    )
+endif
+
+if cxx.has_header('CLI/CLI.hpp')
+    cli11_dep = declare_dependency()
+else
+    cli11_dep = dependency('CLI11')
+endif
 
 boost_args = ['-DBOOST_ASIO_DISABLE_THREADS',
               '-DBOOST_ERROR_CODE_HEADER_ONLY',
@@ -125,9 +145,11 @@ executable(
    'gpioMonMain.cpp',
    'gpioMon.cpp',
    dependencies: [
+        cli11_dep,
+        libgpiod,
+        nlohmann_json_dep,
         phosphor_logging,
         sdbusplus,
-        libgpiod,
     ],
     cpp_args: boost_args,
     install: true,

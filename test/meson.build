@@ -9,6 +9,7 @@ test(
             gmock,
             gtest,
             libevdev,
+            sdbusplus,
         ],
         implicit_include_directories: false,
         include_directories: '..',
