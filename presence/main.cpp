@@ -45,7 +45,7 @@ static int getDrivers(const std::string& driverString,
             auto path = entry.substr(0, pos);
             auto device = entry.substr(pos + 1);
 
-            drivers.emplace_back(device, path);
+            drivers.emplace_back(std::move(device), std::move(path));
         }
         else
         {
