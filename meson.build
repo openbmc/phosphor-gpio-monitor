@@ -14,7 +14,6 @@ project(
 
 build_tests = get_option('tests')
 
-cppfs = meson.get_compiler('cpp').find_library('stdc++fs')
 libevdev = dependency('libevdev')
 libsystemd = dependency('libsystemd')
 libgpiod = dependency('libgpiod')

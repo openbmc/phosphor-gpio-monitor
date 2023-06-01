@@ -4,7 +4,6 @@ executable(
     'main.cpp',
     'gpio_presence.cpp',
     dependencies: [
-        cppfs,
         libevdev,
         phosphor_logging,
     ],
