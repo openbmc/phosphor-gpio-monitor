@@ -37,23 +37,18 @@ std::string getService(const std::string& path, const std::string& interface,
     mapperCall.append(path);
     mapperCall.append(std::vector<std::string>({interface}));
 
-    auto mapperResponseMsg = bus.call(mapperCall);
-    if (mapperResponseMsg.is_method_error())
+    std::map<std::string, std::vector<std::string>> mapperResponse;
+    try
+    {
+        auto mapperResponseMsg = bus.call(mapperCall);
+        mapperResponseMsg.read(mapperResponse);
+    }
+    catch (const sdbusplus::exception_t& e)
     {
         log<level::ERR>("Error in mapper call to get service name",
                         entry("PATH=%s", path.c_str()),
-                        entry("INTERFACE=%s", interface.c_str()));
-        elog<InternalFailure>();
-    }
-
-    std::map<std::string, std::vector<std::string>> mapperResponse;
-    mapperResponseMsg.read(mapperResponse);
-
-    if (mapperResponse.empty())
-    {
-        log<level::ERR>("Error in mapper response for getting service name",
-                        entry("PATH=%s", path.c_str()),
-                        entry("INTERFACE=%s", interface.c_str()));
+                        entry("INTERFACE=%s", interface.c_str()),
+                        entry("ERROR=%s", e.what()));
         elog<InternalFailure>();
     }
 
@@ -174,10 +169,14 @@ void Presence::updateInventory(bool present)
     auto invMsg = bus.new_method_call(invService.c_str(), INVENTORY_PATH,
                                       INVENTORY_INTF, "Notify");
     invMsg.append(std::move(invObj));
-    auto invMgrResponseMsg = bus.call(invMsg);
-    if (invMgrResponseMsg.is_method_error())
+    try
     {
-        log<level::ERR>("Error in inventory manager call to update inventory");
+        auto invMgrResponseMsg = bus.call(invMsg);
+    }
+    catch (const sdbusplus::exception_t& e)
+    {
+        log<level::ERR>("Error in inventory manager call to update inventory",
+                        entry("ERROR=%s", e.what()));
         elog<InternalFailure>();
     }
 }
