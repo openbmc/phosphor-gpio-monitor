@@ -126,7 +126,6 @@ libmonitor_o = static_library(
 
 phosphor_gpio_monitor = executable(
     'phosphor-gpio-monitor',
-    'argument.cpp',
     'mainapp.cpp',
     dependencies: [
         libevdev,
