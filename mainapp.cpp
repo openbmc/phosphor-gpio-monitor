@@ -19,12 +19,11 @@
 
 #include <systemd/sd-event.h>
 
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <iostream>
 #include <string>
 
-using namespace phosphor::logging;
 static void exitWithError(const char* err, char** argv)
 {
     phosphor::gpio::ArgumentParser::usage(argv);
@@ -72,7 +71,7 @@ int main(int argc, char** argv)
     auto r = sd_event_default(&event);
     if (r < 0)
     {
-        log<level::ERR>("Error creating a default sd_event handler");
+        lg2::error("Error creating a default sd_event handler");
         return r;
     }
     phosphor::gpio::EventPtr eventP{event};
@@ -90,8 +89,7 @@ int main(int argc, char** argv)
         r = sd_event_run(eventP.get(), (uint64_t)-1);
         if (r < 0)
         {
-            log<level::ERR>("Failure in processing request",
-                            entry("ERROR=%s", strerror(-r)));
+            lg2::error("Failure in processing request: {ERROR}", "ERROR", r);
             break;
         }
     }

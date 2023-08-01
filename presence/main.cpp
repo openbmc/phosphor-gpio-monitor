@@ -3,11 +3,10 @@
 
 #include <systemd/sd-event.h>
 
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <iostream>
 
-using namespace phosphor::logging;
 using namespace phosphor::gpio;
 using namespace phosphor::gpio::presence;
 
@@ -49,7 +48,8 @@ static int getDrivers(const std::string& driverString,
         }
         else
         {
-            std::cerr << "Invalid path,device combination: " << entry << "\n";
+            lg2::error("Invalid path,device combination: {ENTRY}", "ENTRY",
+                       entry);
             return -1;
         }
     }
@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
     rc = sd_event_default(&event);
     if (rc < 0)
     {
-        log<level::ERR>("Error creating a default sd_event handler");
+        lg2::error("Error creating a default sd_event handler");
         return rc;
     }
     EventPtr eventP{event};
@@ -136,8 +136,7 @@ int main(int argc, char* argv[])
         rc = sd_event_run(eventP.get(), (uint64_t)-1);
         if (rc < 0)
         {
-            log<level::ERR>("Failure in processing request",
-                            entry("ERROR=%s", strerror(-rc)));
+            lg2::error("Failure in processing request: {ERROR}", "ERROR", rc);
             break;
         }
     }

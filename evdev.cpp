@@ -7,7 +7,7 @@
 
 #include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/elog.hpp>
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 namespace phosphor
 {
@@ -20,14 +20,11 @@ using namespace sdbusplus::xyz::openbmc_project::Common::Error;
 // Populate the file descriptor for passed in device
 int Evdev::openDevice()
 {
-    using namespace phosphor::logging;
-
     auto fd = open(path.c_str(), O_RDONLY | O_NONBLOCK);
     if (fd < 0)
     {
-        log<level::ERR>("Failed to open device path",
-                        entry("DEVICEPATH=%s", path.c_str()),
-                        entry("ERRNO=%d", errno));
+        lg2::error("Failed to open {DEVICEPATH}: {ERRNO}", "DEVICEPATH", path,
+                   "ERRNO", errno);
         elog<InternalFailure>();
     }
     return fd;
@@ -46,7 +43,7 @@ void Evdev::initEvDev()
     auto rc = libevdev_new_from_fd((fd)(), &evdev);
     if (rc < 0)
     {
-        log<level::ERR>("Failed to initialize evdev");
+        lg2::error("Failed to initialize evdev");
         elog<InternalFailure>();
         return;
     }
@@ -65,8 +62,7 @@ void Evdev::registerCallback()
 
     if (rc < 0)
     {
-        log<level::ERR>("Failed to register callback handler",
-                        entry("ERROR=%s", strerror(-rc)));
+        lg2::error("Failed to register callback handler: {ERROR}", "ERROR", rc);
         elog<InternalFailure>();
     }
 }

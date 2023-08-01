@@ -7,7 +7,7 @@
 
 #include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/elog.hpp>
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <fstream>
 
@@ -45,10 +45,9 @@ std::string getService(const std::string& path, const std::string& interface,
     }
     catch (const std::exception& e)
     {
-        log<level::ERR>("Error in mapper call to get service name",
-                        entry("PATH=%s", path.c_str()),
-                        entry("INTERFACE=%s", interface.c_str()),
-                        entry("ERROR=%s", e.what()));
+        lg2::error(
+            "Error in mapper call to get service name, path: {PATH}, interface: {INTERFACE}, error: {ERROR}",
+            "PATH", path, "INTERFACE", interface, "ERROR", e);
         elog<InternalFailure>();
     }
 
@@ -63,8 +62,8 @@ void Presence::determinePresence()
                                                &value);
     if (0 == fetch_rc)
     {
-        log<level::ERR>("Device does not support event type",
-                        entry("KEYCODE=%d", key));
+        lg2::error("Device does not support event type, key: {KEYCODE}",
+                   "KEYCODE", key);
         elog<InternalFailure>();
         return;
     }
@@ -159,9 +158,9 @@ void Presence::updateInventory(bool present)
 {
     ObjectMap invObj = getObjectMap(present);
 
-    log<level::INFO>("Updating inventory present property",
-                     entry("PRESENT=%d", present),
-                     entry("PATH=%s", inventory.c_str()));
+    lg2::info(
+        "Updating inventory present property value to {PRESENT}, path: {PATH}",
+        "PRESENT", present, "PATH", inventory);
 
     auto invService = getService(INVENTORY_PATH, INVENTORY_INTF, bus);
 
@@ -175,8 +174,9 @@ void Presence::updateInventory(bool present)
     }
     catch (const std::exception& e)
     {
-        log<level::ERR>("Error in inventory manager call to update inventory",
-                        entry("ERROR=%s", e.what()));
+        lg2::error(
+            "Error in inventory manager call to update inventory: {ERROR}",
+            "ERROR", e);
         elog<InternalFailure>();
     }
 }
@@ -192,15 +192,13 @@ void Presence::bindOrUnbindDrivers(bool present)
 
         if (present)
         {
-            log<level::INFO>("Binding a device driver",
-                             entry("PATH=%s", path.c_str()),
-                             entry("DEVICE=%s", device.c_str()));
+            lg2::info("Binding a {DEVICE} driver: {PATH}", "DEVICE", device,
+                      "PATH", path);
         }
         else
         {
-            log<level::INFO>("Unbinding a device driver",
-                             entry("PATH=%s", path.c_str()),
-                             entry("DEVICE=%s", device.c_str()));
+            lg2::info("Unbinding a {DEVICE} driver: {PATH}", "DEVICE", device,
+                      "PATH", path);
         }
 
         std::ofstream file;
@@ -216,13 +214,9 @@ void Presence::bindOrUnbindDrivers(bool present)
         }
         catch (const std::exception& e)
         {
-            auto err = errno;
-
-            log<level::ERR>("Failed binding or unbinding a device "
-                            "after a card was removed or added",
-                            entry("PATH=%s", path.c_str()),
-                            entry("DEVICE=%s", device.c_str()),
-                            entry("ERRNO=%d", err));
+            lg2::error(
+                "Failed binding or unbinding a {DEVICE} after a card was removed or added, path: {PATH}, error: {ERROR}",
+                "DEVICE", device, "PATH", path, "ERROR", e);
         }
     }
 }

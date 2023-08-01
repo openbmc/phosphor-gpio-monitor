@@ -18,16 +18,15 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <cassert>
+#include <cstring>
 
 namespace phosphor
 {
 namespace gpio
 {
-
-using namespace phosphor::logging;
 
 void GPIO::set(Value value)
 {
@@ -41,8 +40,7 @@ void GPIO::set(Value value)
     auto rc = ioctl(lineFD(), GPIOHANDLE_SET_LINE_VALUES_IOCTL, &data);
     if (rc == -1)
     {
-        auto e = errno;
-        log<level::ERR>("Failed SET_LINE_VALUES ioctl", entry("ERRNO=%d", e));
+        lg2::error("Failed SET_LINE_VALUES ioctl: {ERRNO}", "ERRNO", errno);
         throw std::runtime_error("Failed SET_LINE_VALUES ioctl");
     }
 }
@@ -58,10 +56,8 @@ void GPIO::requestLine(Value defaultValue)
     FileDescriptor fd{open(device.c_str(), 0)};
     if (fd() == -1)
     {
-        auto e = errno;
-        log<level::ERR>("Failed opening GPIO device",
-                        entry("DEVICE=%s", device.c_str()),
-                        entry("ERRNO=%d", e));
+        lg2::error("Failed opening {DEVICE}: {ERRNO}", "DEVICE", device,
+                   "ERRNO", errno);
         throw std::runtime_error("Failed opening GPIO device");
     }
 
@@ -85,9 +81,8 @@ void GPIO::requestLine(Value defaultValue)
     auto rc = ioctl(fd(), GPIO_GET_LINEHANDLE_IOCTL, &request);
     if (rc == -1)
     {
-        auto e = errno;
-        log<level::ERR>("Failed GET_LINEHANDLE ioctl", entry("GPIO=%d", gpio),
-                        entry("ERRNO=%d", e));
+        lg2::error("Failed GET_LINEHANDLE ioctl {GPIO}: {ERRNO}", "GPIO", gpio,
+                   "ERRNO", errno);
         throw std::runtime_error("Failed GET_LINEHANDLE ioctl");
     }
 

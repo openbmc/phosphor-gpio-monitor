@@ -16,7 +16,7 @@
 
 #include "gpioMon.hpp"
 
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 #include <sdbusplus/bus.hpp>
 
 namespace phosphor
@@ -32,8 +32,6 @@ constexpr auto SYSTEMD_INTERFACE = "org.freedesktop.systemd1.Manager";
 constexpr auto falling = "FALLING";
 constexpr auto rising = "RISING";
 
-using namespace phosphor::logging;
-
 void GpioMonitor::scheduleEventHandler()
 {
     gpioEventDescriptor.async_wait(
@@ -41,9 +39,8 @@ void GpioMonitor::scheduleEventHandler()
         [this](const boost::system::error_code& ec) {
         if (ec)
         {
-            std::string msg = gpioLineMsg + "event handler error" +
-                              std::string(ec.message());
-            log<level::ERR>(msg.c_str());
+            lg2::error("{GPIOLINEMSG} event handler error: {ERROR}", "GPIOLINE",
+                       gpioLineMsg, "ERROR", ec.message());
             return;
         }
         gpioEventHandler();
@@ -57,8 +54,8 @@ void GpioMonitor::gpioEventHandler()
     if (gpiod_line_event_read_fd(gpioEventDescriptor.native_handle(),
                                  &gpioLineEvent) < 0)
     {
-        log<level::ERR>("Failed to read gpioLineEvent from fd",
-                        entry("GPIO_LINE=%s", gpioLineMsg.c_str()));
+        lg2::error("Failed to read {GPIOLINE} from fd", "GPIOLINE",
+                   gpioLineMsg);
         return;
     }
 
@@ -67,7 +64,7 @@ void GpioMonitor::gpioEventHandler()
                            ? " Asserted"
                            : " Deasserted");
 
-    log<level::INFO>(logMessage.c_str());
+    lg2::info("gpio message: {LOG_MESSAGE}", "LOG_MESSAGE", logMessage);
 
     /* Execute the target if it is defined. */
     if (!target.empty())
@@ -127,21 +124,18 @@ int GpioMonitor::requestGPIOEvents()
     /* Request an event to monitor for respected gpio line */
     if (gpiod_line_request(gpioLine, &gpioConfig, 0) < 0)
     {
-        log<level::ERR>("Failed to request gpioLineEvent",
-                        entry("GPIO_LINE=%s", gpioLineMsg.c_str()));
+        lg2::error("Failed to request {GPIOLINE}", "GPIOLINE", gpioLineMsg);
         return -1;
     }
 
     int gpioLineFd = gpiod_line_event_get_fd(gpioLine);
     if (gpioLineFd < 0)
     {
-        log<level::ERR>("Failed to get fd for gpioLineEvent",
-                        entry("GPIO_LINE=%s", gpioLineMsg.c_str()));
+        lg2::error("Failed to get fd for {GPIOLINE}", "GPIOLINE", gpioLineMsg);
         return -1;
     }
 
-    std::string logMsg = gpioLineMsg + " monitoring started";
-    log<level::INFO>(logMsg.c_str());
+    lg2::info("{GPIOLINE} monitoring started", "GPIOLINE", gpioLineMsg);
 
     /* Assign line fd to descriptor for monitoring */
     gpioEventDescriptor.assign(gpioLineFd);
