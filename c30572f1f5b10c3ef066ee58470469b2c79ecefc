@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69435135_3ca56324",
+        "filename": "evdev.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "nit: ERRNO or RC, since you removed the strerror call.",
+      "range": {
+        "startLine": 65,
+        "startChar": 58,
+        "endLine": 65,
+        "endChar": 63
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e519390d_36f5ac41",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "This \"GPIOLINE\" / \"GPIOLINEMSG\" notation is sloppy, as it leaks internal implementation out into debug logging.  Let\u0027s just call this the \"GPIO\" as it is either the name given in the config or it is a GPIO identifier created by the code that uniquely points to the GPIO.",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9215cc76_8af0b5b4",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t match the one in the string.",
+      "range": {
+        "startLine": 42,
+        "startChar": 70,
+        "endLine": 42,
+        "endChar": 78
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51470f1a_2e94b624",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "How about we fix this whole thing?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 72
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a30926ee_e3a4a510",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "GPIO also here and throughout the rest.",
+      "range": {
+        "startLine": 127,
+        "startChar": 39,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6b7e5eb_f5920a5d",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "No need for this \"GPIO_\" prefix on these.  They come from the GPIO daemon and there is nothing from phosphor-logging looking for this identifier.\n\nIt can just be \"FILE\" in my opinion.",
+      "range": {
+        "startLine": 69,
+        "startChar": 57,
+        "endLine": 69,
+        "endChar": 70
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd9ec088_028366c9",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "\"FILE\" here too?",
+      "range": {
+        "startLine": 116,
+        "startChar": 63,
+        "endLine": 116,
+        "endChar": 82
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a4036a3_964c8535",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "\"GPIO\"",
+      "range": {
+        "startLine": 139,
+        "startChar": 44,
+        "endLine": 139,
+        "endChar": 52
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2bcac62_f6cfceb4",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "I know this wasn\u0027t on you, but this debug isn\u0027t too helpful.  How about this?\n\n```\nerror(\"{GPIO}: event missing: {EVENT}\", \"GPIO\", lineMsg, \"EVENT\", eventStr)\n```",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 48
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d571a3a_d2a5f5c4",
+        "filename": "mainapp.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "ERRNO or RC.  Reserve \"error\" for exception strings.",
+      "range": {
+        "startLine": 92,
+        "startChar": 56,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efda653f_ce8ee0ef",
+        "filename": "presence/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-01T17:31:46Z",
+      "side": 1,
+      "message": "ERRNO or RC.",
+      "range": {
+        "startLine": 139,
+        "startChar": 56,
+        "endLine": 139,
+        "endChar": 61
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
