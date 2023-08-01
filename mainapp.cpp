@@ -19,44 +19,47 @@
 
 #include <systemd/sd-event.h>
 
+#include <CLI/CLI.hpp>
 #include <phosphor-logging/lg2.hpp>
 
 #include <iostream>
 #include <string>
 
-static void exitWithError(const char* err, char** argv)
+int main(int argc, char** argv)
 {
-    phosphor::gpio::ArgumentParser::usage(argv);
-    std::cerr << "ERROR: " << err << "\n";
-    exit(EXIT_FAILURE);
-}
+    CLI::App app{"Monitor GPIO line for requested state change"};
 
 int main(int argc, char** argv)
 {
     // Read arguments.
-    auto options = phosphor::gpio::ArgumentParser(argc, argv);
+    std::string path{};
+    std::string key{};
+    std::string polarity{};
+    std::string target{};
+    bool continueRun = false;
 
-    // Parse out path argument.
-    auto path = (options)["path"];
-    if (path == phosphor::gpio::ArgumentParser::emptyString)
+    /* Add an input option */
+    app.add_option("-p,--path", path,
+                   "Path of input device. Ex: /dev/input/event2")
+        ->required();
+    app.add_option("-k,--key", key, "Input GPIO key number")->required();
+    app.add_option("-r,--polarity", polarity,
+                   "Asertion polarity to look for. This is 0 / 1 ")
+        ->required();
+    app.add_option("-t,--target", target,
+                   "Systemd unit to be called on GPIO state change")
+        ->required();
+    app.add_option("-c,--continue", continueRun,
+                   "PWhether or not to continue after key pressed");
+
+    /* Parse input parameter */
+    try
     {
-        exitWithError("path not specified.", argv);
+        app.parse(argc, argv);
     }
-
-    // Parse out key number that we are interested in
-    // Its integer mapping to the GPIO key configured by the kernel
-    auto key = (options)["key"];
-    if (key == phosphor::gpio::ArgumentParser::emptyString)
+    catch (const CLI::Error& e)
     {
-        exitWithError("Key not specified.", argv);
-    }
-
-    // Parse out assertion polarity interested in
-    // Its either 1 or 0 for press / release
-    auto polarity = (options)["polarity"];
-    if (polarity == phosphor::gpio::ArgumentParser::emptyString)
-    {
-        exitWithError("Polarity not specified.", argv);
+        return app.exit(e);
     }
 
     // Parse out target argument. It is fine if the caller does not
@@ -90,7 +93,7 @@ int main(int argc, char** argv)
         if (r < 0)
         {
             lg2::error("Failure in processing request: {RC}", "RC", r);
-            break;
+            return r;
         }
     }
 
