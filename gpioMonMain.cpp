@@ -19,11 +19,9 @@
 #include <CLI/CLI.hpp>
 #include <boost/asio/io_context.hpp>
 #include <nlohmann/json.hpp>
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <fstream>
-
-using namespace phosphor::logging;
 
 namespace phosphor
 {
@@ -68,8 +66,8 @@ int main(int argc, char** argv)
     std::ifstream file(gpioFileName);
     if (!file)
     {
-        log<level::ERR>("GPIO monitor config file not found",
-                        entry("GPIO_MON_FILE=%s", gpioFileName.c_str()));
+        lg2::error("GPIO monitor config file not found: {FILE}", "FILE",
+                   gpioFileName);
         return -1;
     }
 
@@ -114,9 +112,8 @@ int main(int argc, char** argv)
             if (obj.find("GpioNum") == obj.end() ||
                 obj.find("ChipId") == obj.end())
             {
-                log<level::ERR>(
-                    "Failed to find line name or gpio number",
-                    entry("GPIO_JSON_FILE_NAME=%s", gpioFileName.c_str()));
+                lg2::error("Failed to find line name or gpio number: {FILE}",
+                           "FILE", gpioFileName);
                 return -1;
             }
 
@@ -138,8 +135,7 @@ int main(int argc, char** argv)
 
         if (line == NULL)
         {
-            errMsg = "Failed to find the " + lineMsg;
-            log<level::ERR>(errMsg.c_str());
+            lg2::error("Failed to find the {GPIO}", "GPIO", errMsg);
             return -1;
         }
 
@@ -152,8 +148,8 @@ int main(int argc, char** argv)
             auto findEvent = phosphor::gpio::polarityMap.find(eventStr);
             if (findEvent == phosphor::gpio::polarityMap.end())
             {
-                errMsg = "Incorrect GPIO monitor event defined " + lineMsg;
-                log<level::ERR>(errMsg.c_str());
+                lg2::error("{GPIO}: event missing: {EVENT}", "GPIO", lineMsg,
+                           "EVENT", eventStr);
                 return -1;
             }
 

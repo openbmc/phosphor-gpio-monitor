@@ -18,7 +18,7 @@
 
 #include <fcntl.h>
 
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 namespace phosphor
 {
@@ -30,12 +30,10 @@ constexpr auto SYSTEMD_SERVICE = "org.freedesktop.systemd1";
 constexpr auto SYSTEMD_ROOT = "/org/freedesktop/systemd1";
 constexpr auto SYSTEMD_INTERFACE = "org.freedesktop.systemd1.Manager";
 
-using namespace phosphor::logging;
-
 // Callback handler when there is an activity on the FD
 int Monitor::processEvents(sd_event_source*, int, uint32_t, void* userData)
 {
-    log<level::INFO>("GPIO line altered");
+    lg2::info("GPIO line altered");
     auto monitor = static_cast<Monitor*>(userData);
 
     monitor->analyzeEvent();

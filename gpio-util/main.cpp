@@ -26,8 +26,6 @@
 #include "argument.hpp"
 #include "gpio.hpp"
 
-#include <phosphor-logging/log.hpp>
-
 #include <algorithm>
 #include <chrono>
 #include <iostream>
@@ -35,7 +33,6 @@
 #include <thread>
 
 using namespace phosphor::gpio;
-using namespace phosphor::logging;
 
 typedef void (*gpioFunction)(GPIO&, unsigned int);
 using gpioFunctionMap = std::map<std::string, gpioFunction>;
