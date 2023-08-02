@@ -1,6 +1,5 @@
 executable(
     'phosphor-gpio-util',
-    'argument.cpp',
     'gpio.cpp',
     'main.cpp',
     dependencies: [
