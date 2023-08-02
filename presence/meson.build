@@ -1,6 +1,5 @@
 executable(
     'phosphor-gpio-presence',
-    'argument.cpp',
     'main.cpp',
     'gpio_presence.cpp',
     dependencies: [
