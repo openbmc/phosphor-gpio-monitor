@@ -1,8 +1,8 @@
-#include "argument.hpp"
 #include "gpio_presence.hpp"
 
 #include <systemd/sd-event.h>
 
+#include <CLI/CLI.hpp>
 #include <phosphor-logging/lg2.hpp>
 
 #include <iostream>
@@ -57,54 +57,66 @@ static int getDrivers(const std::string& driverString,
     return 0;
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-    auto options = ArgumentParser(argc, argv);
+    CLI::App app{"Monitor gpio presence status"};
 
-    auto inventory = options["inventory"];
-    auto key = options["key"];
-    auto path = options["path"];
-    auto drivers = options["drivers"];
-    auto ifaces = options["extra-ifaces"];
-    if (argc < 4)
+    std::string path{};
+    std::string key{};
+    std::string name{};
+    std::string inventory{};
+    std::string drivers{};
+    std::string ifaces{};
+
+    /* Add an input option */
+    app.add_option(
+           "-p,--path", path,
+           " Path of device to read for GPIO pin state to determine presence of inventory item")
+        ->required();
+    app.add_option("-k,--key", key, "Input GPIO key number")->required();
+    app.add_option("-n,--name", name, "Pretty name of the inventory item")
+        ->required();
+    app.add_option("-i,--inventory", inventory,
+                   "Object path under inventory that will be created")
+        ->required();
+    app.add_option(
+        "-d,--drivers", drivers,
+        "List of drivers to bind when card is added and unbind when card is removed\n"
+        "Format is a space separated list of path,device pairs.\n"
+        "For example: /sys/bus/i2c/drivers/some-driver,3-0068");
+    app.add_option(
+        "-e,--extra-ifaces", ifaces,
+        "List of interfaces to associate to inventory item\n"
+        "Format is a comma separated list of interfaces.\n"
+        "For example: /xyz/openbmc_project/.../1,/xyz/openbmc_project/.../2");
+
+    /* Parse input parameter */
+    try
     {
-        std::cerr << "Too few arguments\n";
-        options.usage(argv);
+        app.parse(argc, argv);
     }
-
-    if (inventory == ArgumentParser::emptyString)
+    catch (const CLI::Error& e)
     {
-        std::cerr << "Inventory argument required\n";
-        options.usage(argv);
-    }
-
-    if (key == ArgumentParser::emptyString)
-    {
-        std::cerr << "GPIO key argument required\n";
-        options.usage(argv);
-    }
-
-    if (path == ArgumentParser::emptyString)
-    {
-        std::cerr << "Device path argument required\n";
-        options.usage(argv);
+        return app.exit(e);
     }
 
     std::vector<Driver> driverList;
 
     // Driver list is optional
-    if (drivers != ArgumentParser::emptyString)
+    if (!drivers.empty())
     {
         if (getDrivers(drivers, driverList) < 0)
         {
-            options.usage(argv);
+            lg2::error("Failed to parser drivers: {DRIVERS}", "DRIVERS",
+                       drivers);
+            return -1;
         }
     }
 
     std::vector<Interface> ifaceList;
 
     // Extra interfaces list is optional
-    if (ifaces != ArgumentParser::emptyString)
+    if (!ifaces.empty())
     {
         std::stringstream ss(ifaces);
         Interface iface;
@@ -126,7 +138,6 @@ int main(int argc, char* argv[])
     EventPtr eventP{event};
     event = nullptr;
 
-    auto name = options["name"];
     Presence presence(bus, inventory, path, std::stoul(key), name, eventP,
                       driverList, ifaceList);
 
