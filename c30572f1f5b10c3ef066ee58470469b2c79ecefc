@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca8f8d47_3d977116",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Thanks Patrick",
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69435135_3ca56324",
@@ -14,6 +31,30 @@
       "writtenOn": "2023-08-01T17:31:46Z",
       "side": 1,
       "message": "nit: ERRNO or RC, since you removed the strerror call.",
+      "range": {
+        "startLine": 65,
+        "startChar": 58,
+        "endLine": 65,
+        "endChar": 63
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a261e1a8_87afcffa",
+        "filename": "evdev.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69435135_3ca56324",
       "range": {
         "startLine": 65,
         "startChar": 58,
@@ -70,6 +111,54 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "930c1e13_90faa873",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Oops, it is my mistake",
+      "parentUuid": "9215cc76_8af0b5b4",
+      "range": {
+        "startLine": 42,
+        "startChar": 70,
+        "endLine": 42,
+        "endChar": 78
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a07e3c4b_354e543f",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e519390d_36f5ac41",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51470f1a_2e94b624",
@@ -83,6 +172,30 @@
       "writtenOn": "2023-08-01T17:31:46Z",
       "side": 1,
       "message": "How about we fix this whole thing?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 72
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4092a92d_d2242f39",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51470f1a_2e94b624",
       "range": {
         "startLine": 62,
         "startChar": 0,
@@ -116,6 +229,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fe1d90b_e4f55d02",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a30926ee_e3a4a510",
+      "range": {
+        "startLine": 127,
+        "startChar": 39,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6b7e5eb_f5920a5d",
@@ -129,6 +266,30 @@
       "writtenOn": "2023-08-01T17:31:46Z",
       "side": 1,
       "message": "No need for this \"GPIO_\" prefix on these.  They come from the GPIO daemon and there is nothing from phosphor-logging looking for this identifier.\n\nIt can just be \"FILE\" in my opinion.",
+      "range": {
+        "startLine": 69,
+        "startChar": 57,
+        "endLine": 69,
+        "endChar": 70
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d526a623_399446e0",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b7e5eb_f5920a5d",
       "range": {
         "startLine": 69,
         "startChar": 57,
@@ -162,6 +323,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdf558ab_6fbe33b7",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd9ec088_028366c9",
+      "range": {
+        "startLine": 116,
+        "startChar": 63,
+        "endLine": 116,
+        "endChar": 82
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a4036a3_964c8535",
@@ -175,6 +360,30 @@
       "writtenOn": "2023-08-01T17:31:46Z",
       "side": 1,
       "message": "\"GPIO\"",
+      "range": {
+        "startLine": 139,
+        "startChar": 44,
+        "endLine": 139,
+        "endChar": 52
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83d285f5_0566c5ec",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a4036a3_964c8535",
       "range": {
         "startLine": 139,
         "startChar": 44,
@@ -208,6 +417,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fea841f4_20400d6d",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "c2bcac62_f6cfceb4",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 48
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d571a3a_d2a5f5c4",
@@ -231,6 +464,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fac2cfe0_c3f58d4e",
+        "filename": "mainapp.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d571a3a_d2a5f5c4",
+      "range": {
+        "startLine": 92,
+        "startChar": 56,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efda653f_ce8ee0ef",
@@ -244,6 +501,30 @@
       "writtenOn": "2023-08-01T17:31:46Z",
       "side": 1,
       "message": "ERRNO or RC.",
+      "range": {
+        "startLine": 139,
+        "startChar": 56,
+        "endLine": 139,
+        "endChar": 61
+      },
+      "revId": "c30572f1f5b10c3ef066ee58470469b2c79ecefc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b911761a_2b4c8111",
+        "filename": "presence/main.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-02T03:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efda653f_ce8ee0ef",
       "range": {
         "startLine": 139,
         "startChar": 56,
