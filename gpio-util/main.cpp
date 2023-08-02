@@ -23,8 +23,10 @@
  *   high_low: Set a GPIO high, delay if requested, set it low
  */
 
-#include "argument.hpp"
 #include "gpio.hpp"
+
+#include <CLI/CLI.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <algorithm>
 #include <chrono>
@@ -98,19 +100,6 @@ static const gpioFunctionMap functions{
     {"low", low}, {"high", high}, {"low_high", lowHigh}, {"high_low", highLow}};
 
 /**
- * Prints usage and exits the program
- *
- * @param[in] err - the error message to print
- * @param[in] argv - argv from main()
- */
-void exitWithError(const char* err, char** argv)
-{
-    std::cerr << "ERROR: " << err << "\n";
-    ArgumentParser::usage(argv);
-    exit(EXIT_FAILURE);
-}
-
-/**
  * Returns the number value of the argument passed in.
  *
  * @param[in] name - the argument name
@@ -118,62 +107,74 @@ void exitWithError(const char* err, char** argv)
  * @param[in] argv - arv from main()
  */
 template <typename T>
-T getValueFromArg(const char* name, ArgumentParser& parser, char** argv)
+T getValueFromArg(const char* name, const char* value)
 {
     char* p = NULL;
-    auto val = strtol(parser[name].c_str(), &p, 10);
+    auto val = strtol(value, &p, 10);
 
     // strol sets p on error, also we don't allow negative values
     if (*p || (val < 0))
     {
-        using namespace std::string_literals;
-        std::string msg = "Invalid "s + name + " value passed in";
-        exitWithError(msg.c_str(), argv);
+        lg2::error("Invalid {NAME} value passed in", "NAME", name);
     }
     return static_cast<T>(val);
 }
 
 int main(int argc, char** argv)
 {
-    ArgumentParser args(argc, argv);
+    CLI::App app{"Gpio utils tool"};
 
-    auto path = args["path"];
-    if (path == ArgumentParser::emptyString)
+    // Read arguments.
+    std::string path{};
+    std::string action{};
+    std::string gpio{};
+    std::string delay{};
+
+    /* Add an input option */
+    app.add_option("-p,--path", path,
+                   "The path to the GPIO device. Example: /dev/gpiochip0")
+        ->required();
+    app.add_option(
+           "-a,--action", action,
+           "The action to do. Valid actions: low, high, low_high, high_low")
+        ->required();
+    app.add_option("-g,--gpio", gpio, "he GPIO number.  Example: 1")
+        ->required();
+    app.add_option("-d,--delay", delay,
+                   "The delay in ms in between a toggle. Example: 5");
+
+    /* Parse input parameter */
+    try
     {
-        exitWithError("GPIO device path not specified", argv);
+        app.parse(argc, argv);
+    }
+    catch (const CLI::Error& e)
+    {
+        return app.exit(e);
     }
 
-    auto action = args["action"];
-    if (action == ArgumentParser::emptyString)
-    {
-        exitWithError("Action not specified", argv);
-    }
-
-    if (args["gpio"] == ArgumentParser::emptyString)
-    {
-        exitWithError("GPIO not specified", argv);
-    }
-
-    auto gpioNum = getValueFromArg<gpioNum_t>("gpio", args, argv);
+    auto gpioNum = getValueFromArg<gpioNum_t>("gpio", gpio.c_str());
 
     // Not all actions require a delay, so not required
-    unsigned int delay = 0;
-    if (args["delay"] != ArgumentParser::emptyString)
+    unsigned int delayVal = 0;
+    if (!delay.empty())
     {
-        delay = getValueFromArg<decltype(delay)>("delay", args, argv);
+        delayVal = getValueFromArg<decltype(delayVal)>("delay", delay.c_str());
     }
 
     auto function = functions.find(action);
-    if (function == functions.end())
+    if (!functions.contains(action))
     {
-        exitWithError("Invalid action value passed in", argv);
+        lg2::error("Invalid action value passed in: {ACTION}", "ACTION",
+                   action);
+        return -1;
     }
 
-    GPIO gpio{path, gpioNum, GPIO::Direction::output};
+    GPIO gpioVal{path, gpioNum, GPIO::Direction::output};
 
     try
     {
-        function->second(gpio, delay);
+        function->second(gpioVal, delayVal);
     }
     catch (const std::runtime_error& e)
     {
