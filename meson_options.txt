@@ -1,3 +1,5 @@
 option(
-    'tests', type: 'feature', description: 'Build tests.',
+    'tests', type: 'feature',
+    value: 'enabled',
+    description: 'Build tests.'
 )
