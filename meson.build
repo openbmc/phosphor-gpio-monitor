@@ -14,8 +14,6 @@ project(
 
 cxx = meson.get_compiler('cpp')
 
-build_tests = get_option('tests')
-
 libevdev = dependency('libevdev')
 libsystemd = dependency('libsystemd')
 libgpiod = dependency('libgpiod')
@@ -146,4 +144,8 @@ executable(
 
 subdir('gpio-util')
 subdir('presence')
-subdir('test')
+
+build_tests = get_option('tests')
+if not build_tests.disabled()
+    subdir('test')
+endif
