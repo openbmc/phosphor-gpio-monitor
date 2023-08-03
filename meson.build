@@ -50,28 +50,23 @@ systemd_system_unit_dir = systemd.get_variable(
     'systemdsystemunitdir',
     pkgconfig_define: ['prefix', get_option('prefix')])
 
-configure_file(
-    copy: true,
-    input: 'phosphor-gpio-monitor@.service',
+fs = import('fs')
+fs.copyfile(
+    'phosphor-gpio-monitor@.service',
     install: true,
-    install_dir: systemd_system_unit_dir,
-    output: 'phosphor-gpio-monitor@.service'
+    install_dir: systemd_system_unit_dir
 )
 
-configure_file(
-    copy: true,
-    input: 'phosphor-multi-gpio-monitor.service',
+fs.copyfile(
+    'phosphor-multi-gpio-monitor.service',
     install: true,
-    install_dir: systemd_system_unit_dir,
-    output: 'phosphor-multi-gpio-monitor.service'
+    install_dir: systemd_system_unit_dir
 )
 
-configure_file(
-    copy: true,
-    input: 'phosphor-gpio-presence@.service',
+fs.copyfile(
+    'phosphor-gpio-presence@.service',
     install: true,
-    install_dir: systemd_system_unit_dir,
-    output: 'phosphor-gpio-presence@.service'
+    install_dir: systemd_system_unit_dir
 )
 
 udev = dependency('udev')
@@ -83,21 +78,16 @@ udev_rules_dir = join_paths(
     'rules.d',
 )
 
-configure_file(
-    copy: true,
-    input: '99-gpio-keys.rules',
+fs.copyfile(
+    '99-gpio-keys.rules',
     install: true,
-    install_dir: udev_rules_dir,
-    output: '99-gpio-keys.rules'
+    install_dir: udev_rules_dir
 )
 
-
-configure_file(
-    copy: true,
-    input: 'phosphor-multi-gpio-monitor.json',
+fs.copyfile(
+    'phosphor-multi-gpio-monitor.json',
     install: true,
-    install_dir: '/usr/share/phosphor-gpio-monitor',
-    output: 'phosphor-multi-gpio-monitor.json'
+    install_dir: get_option('datadir') / 'phosphor-gpio-monitor'
 )
 
 libevdev_o = static_library(
