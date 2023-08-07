@@ -22,6 +22,30 @@
       },
       "revId": "8288a6e8e6a7c5933023d38b0b998e725e803be9",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8183ec0a_438c86d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-07T01:07:19Z",
+      "side": 1,
+      "message": "CI will report the following warning message：\n\n```\nmeson.build:53: WARNING: Project targets \u0027\u003e\u003d1.1.1\u0027 but uses feature deprecated since \u00270.64.0\u0027: copy arg in configure_file. Use fs.copyfile instead\nmeson.build:61: WARNING: Project targets \u0027\u003e\u003d1.1.1\u0027 but uses feature deprecated since \u00270.64.0\u0027: copy arg in configure_file. Use fs.copyfile instead\nmeson.build:69: WARNING: Project targets \u0027\u003e\u003d1.1.1\u0027 but uses feature deprecated since \u00270.64.0\u0027: copy arg in configure_file. Use fs.copyfile instead\nRun-time dependency udev found: YES 253\nmeson.build:86: WARNING: Project targets \u0027\u003e\u003d1.1.1\u0027 but uses feature deprecated since \u00270.64.0\u0027: copy arg in configure_file. Use fs.copyfile instead\nmeson.build:95: WARNING: Project targets \u0027\u003e\u003d1.1.1\u0027 but uses feature deprecated since \u00270.64.0\u0027: copy arg in configure_file. Use fs.copyfile instead\n```",
+      "parentUuid": "1ba9f24c_91d8ea5a",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "8288a6e8e6a7c5933023d38b0b998e725e803be9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
