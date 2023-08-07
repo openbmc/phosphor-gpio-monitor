@@ -154,6 +154,5 @@ executable(
     install: true,
 )
 
-subdir('gpio-util')
 subdir('presence')
 subdir('test')
