@@ -52,6 +52,24 @@
       "parentUuid": "70950be2_07a45310",
       "revId": "f4d2ecf53026564024264b19bc3b22f1b13b21e0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a597cba0_1efe5f02",
+        "filename": "meson.build",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-07T03:03:17Z",
+      "side": 1,
+      "message": "Understood, let me update these repoes.",
+      "parentUuid": "6c912cc8_ece10bf1",
+      "revId": "f4d2ecf53026564024264b19bc3b22f1b13b21e0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
