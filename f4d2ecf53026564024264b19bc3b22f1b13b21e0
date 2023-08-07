@@ -16,6 +16,24 @@
       "message": "nit: preference on this now is `build_tests.allowed()` but I know lots of repositories have the \"not disabled\" logic.",
       "revId": "f4d2ecf53026564024264b19bc3b22f1b13b21e0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70950be2_07a45310",
+        "filename": "meson.build",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-07T01:10:51Z",
+      "side": 1,
+      "message": "yes, `build_tests.allowed()` is correct. but TBH, I don\u0027t know why everyone likes to use `if not build_tests.no-allow()`, this can be a legacy issue, I will update this commit and update other repositories in sync 😊",
+      "parentUuid": "ea0f035c_90e5c69b",
+      "revId": "f4d2ecf53026564024264b19bc3b22f1b13b21e0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
