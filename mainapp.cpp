@@ -47,12 +47,16 @@ int main(int argc, char** argv)
                    "Systemd unit to be called on GPIO state change")
         ->required();
     app.add_option("-c,--continue", continueRun,
-                   "PWhether or not to continue after key pressed");
+                   "Whether or not to continue after key pressed");
 
     /* Parse input parameter */
     try
     {
         app.parse(argc, argv);
+    }
+    catch (const CLI::ExtrasError& /* e */)
+    {
+        // gpio supports extended parameters, no error should be thrown here
     }
     catch (const CLI::Error& e)
     {
