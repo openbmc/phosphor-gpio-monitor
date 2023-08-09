@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "902254a1_df824d45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-08-09T00:16:47Z",
+      "side": 1,
+      "message": "Because checkstop[1] does not declare the EXTRA_ARGS environment variable, when executing `systemctl start phosphor-gpio-monitor@checkstop.service`, the CLI will report a parameter error and throw an exception.\n\n[1] https://github.com/openbmc/openbmc/blob/master/meta-openpower/recipes-phosphor/host/checkstop-monitor/obmc/gpio/checkstop\n\nrefer: https://gerrit.openbmc.org/c/openbmc/openbmc/+/65750",
+      "parentUuid": "e877e33e_7de3e285",
+      "revId": "6b85e69a7430a4852bd943918a661737e17b3b5d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "08b5f087_29017b82",
