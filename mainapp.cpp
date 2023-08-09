@@ -46,8 +46,8 @@ int main(int argc, char** argv)
     app.add_option("-t,--target", target,
                    "Systemd unit to be called on GPIO state change")
         ->required();
-    app.add_option("-c,--continue", continueRun,
-                   "PWhether or not to continue after key pressed");
+    app.add_flag("-c,--continue", continueRun,
+                 "Whether or not to continue after key pressed");
 
     /* Parse input parameter */
     try
