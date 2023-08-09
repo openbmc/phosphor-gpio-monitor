@@ -49,6 +49,10 @@ int main(int argc, char** argv)
     app.add_flag("-c,--continue", continueRun,
                  "Whether or not to continue after key pressed");
 
+    /* Due to the way this process is loaded from systemd, we can end up with
+     * an empty extra parameter. Go ahead and ignore it. */
+    app.allow_extras();
+
     /* Parse input parameter */
     try
     {
