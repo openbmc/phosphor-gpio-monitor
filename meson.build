@@ -116,6 +116,7 @@ phosphor_gpio_monitor = executable(
     'phosphor-gpio-monitor',
     'mainapp.cpp',
     dependencies: [
+        cli11_dep,
         libevdev,
         libsystemd,
         phosphor_logging,

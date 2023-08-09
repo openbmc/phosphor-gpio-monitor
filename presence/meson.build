@@ -3,6 +3,7 @@ executable(
     'main.cpp',
     'gpio_presence.cpp',
     dependencies: [
+        cli11_dep,
         libevdev,
         phosphor_logging,
     ],
