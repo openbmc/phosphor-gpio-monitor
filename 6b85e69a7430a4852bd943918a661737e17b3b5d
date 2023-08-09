@@ -69,6 +69,24 @@
       "parentUuid": "08b5f087_29017b82",
       "revId": "6b85e69a7430a4852bd943918a661737e17b3b5d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c66de7e6_47b41549",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-09T16:07:54Z",
+      "side": 1,
+      "message": "Are you sure?  I don\u0027t see it.\n\nWithout: \n\n```\n$ ./presence/phosphor-gpio-presence --bad-option --path\u003d/dev/null --key 1 --name foo --inventory foo\nThe following argument was not expected: --bad-option\nRun with --help for more information.\n```\n\nWith:\n\n```\n$ ./presence/phosphor-gpio-presence --bad-option --path\u003d/dev/null --key 1 --name foo --inventory foo\n\u003c3\u003e Failed to initialize evdev\nterminate called after throwing an instance of \u0027sdbusplus::xyz::openbmc_project::Common::Error::InternalFailure\u0027\n  what():  xyz.openbmc_project.Common.Error.InternalFailure: The operation failed internally.\n```",
+      "parentUuid": "9d75b2e8_b4169300",
+      "revId": "6b85e69a7430a4852bd943918a661737e17b3b5d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
