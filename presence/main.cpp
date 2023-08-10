@@ -80,15 +80,17 @@ int main(int argc, char** argv)
                    "Object path under inventory that will be created")
         ->required();
     app.add_option(
-        "-d,--drivers", drivers,
-        "List of drivers to bind when card is added and unbind when card is removed\n"
-        "Format is a space separated list of path,device pairs.\n"
-        "For example: /sys/bus/i2c/drivers/some-driver,3-0068");
+           "-d,--drivers", drivers,
+           "List of drivers to bind when card is added and unbind when card is removed\n"
+           "Format is a space separated list of path,device pairs.\n"
+           "For example: /sys/bus/i2c/drivers/some-driver,3-0068")
+        ->expected(0, 1);
     app.add_option(
-        "-e,--extra-ifaces", ifaces,
-        "List of interfaces to associate to inventory item\n"
-        "Format is a comma separated list of interfaces.\n"
-        "For example: /xyz/openbmc_project/.../1,/xyz/openbmc_project/.../2");
+           "-e,--extra-ifaces", ifaces,
+           "List of interfaces to associate to inventory item\n"
+           "Format is a comma separated list of interfaces.\n"
+           "For example: /xyz/openbmc_project/.../1,/xyz/openbmc_project/.../2")
+        ->expected(0, 1);
 
     /* Parse input parameter */
     try
