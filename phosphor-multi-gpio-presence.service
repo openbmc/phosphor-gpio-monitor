@@ -1,0 +1,11 @@
+[Unit]
+Description=Phosphor Multi GPIO presence
+Wants=mapper-wait@-xyz-openbmc_project-inventory.service
+After=mapper-wait@-xyz-openbmc_project-inventory.service
+
+[Service]
+Restart=no
+ExecStart=/usr/bin/phosphor-multi-gpio-presence --config /usr/share/phosphor-gpio-monitor/phosphor-multi-gpio-presence.json
+
+[Install]
+RequiredBy=multi-user.target
