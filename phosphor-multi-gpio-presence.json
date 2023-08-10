@@ -1,0 +1,16 @@
+[
+    {
+        "Name": "DIMM A0",
+        "LineName": "POWER_BUTTON",
+        "Inventory": "/system/chassis/motherboard/dimm_a0"
+    },
+    {
+        "Name": "Powersupply 0",
+        "ChipId": "0",
+        "GpioNum": 14,
+        "Inventory": "/system/chassis/motherboard/powersupply0",
+        "ActiveLow": true,
+        "Bias": "PULL_UP",
+        "ExtraInterfaces": ["xyz.openbmc_project.Inventory.Item.PowerSupply"]
+    }
+]
