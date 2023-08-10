@@ -1,0 +1,6 @@
+[Unit]
+Description=Phosphor Multi GPIO presence
+
+[Service]
+Restart=no
+ExecStart=/usr/bin/phosphor-multi-gpio-presence --config /usr/share/phosphor-gpio-monitor/phosphor-multi-gpio-presence.json
