@@ -16,6 +16,24 @@
       "message": "Seems https://grok.openbmc.org/xref/openbmc/openbmc/meta-ibm/recipes-phosphor/power/witherspoon-power-supply-sync/power-supply-sync.service?r\u003d97445ad5 is still using this phosphor-gpio-util application?",
       "revId": "9e8a2ffe85ae936271d482b1963049c5d148d77a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4eca4c22_d1c9ea14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2023-08-14T14:22:40Z",
+      "side": 1,
+      "message": "well shoot.  I\u0027ll deal with it.",
+      "parentUuid": "f8c085b8_52337b23",
+      "revId": "9e8a2ffe85ae936271d482b1963049c5d148d77a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ],
   "submitRequirementResults": []
