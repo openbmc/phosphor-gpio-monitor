@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40db77b7_a6a5f689",
+        "filename": "multi-presence/main.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000238
+      },
+      "writtenOn": "2023-08-15T19:19:25Z",
+      "side": 1,
+      "message": "I assume you want lineMsg (errMsg is never assigned a value and can be removed)",
+      "range": {
+        "startLine": 139,
+        "startChar": 60,
+        "endLine": 139,
+        "endChar": 66
+      },
+      "revId": "ee5bce95631952bb03b35d8765ea2a0603ae7f2a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
