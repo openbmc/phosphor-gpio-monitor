@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd6f3b34_e7b64eca",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2023-08-16T15:16:10Z",
+      "side": 1,
+      "message": "may as well update this line",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aefe7ec_b8c65d17",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2023-08-16T15:16:10Z",
+      "side": 1,
+      "message": "nit:  the docs still want the { } around single line if statements",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28e84a3a_7887af50",
+        "filename": "multi-presence/main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2023-08-16T15:16:10Z",
+      "side": 1,
+      "message": "can be const",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "903d9504_2662ef87",
+        "filename": "multi-presence/main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2023-08-16T15:16:10Z",
+      "side": 1,
+      "message": "I know you just copied this from the other file, but since implicit conversion is recommended against (https://github.com/nlohmann/json#implicit-conversions), and you\u0027re also doing the .get\u003cstd::string\u003e() calls below, may as well change these to all use get\u003c\u003e() to be consistent.",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
