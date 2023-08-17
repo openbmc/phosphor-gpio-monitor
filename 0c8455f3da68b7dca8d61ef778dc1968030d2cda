@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ea1161_965a2aaa",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-08-17T07:03:33Z",
+      "side": 1,
+      "message": "Added 9elements GmbH",
+      "parentUuid": "dd6f3b34_e7b64eca",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9aefe7ec_b8c65d17",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-08-16T15:16:10Z",
       "side": 1,
       "message": "nit:  the docs still want the { } around single line if statements",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4286f149_f6ed3e90",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-08-17T07:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aefe7ec_b8c65d17",
       "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -52,6 +88,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "884ca7f7_b1b35382",
+        "filename": "multi-presence/main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-08-17T07:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28e84a3a_7887af50",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "903d9504_2662ef87",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-08-16T15:16:10Z",
       "side": 1,
       "message": "I know you just copied this from the other file, but since implicit conversion is recommended against (https://github.com/nlohmann/json#implicit-conversions), and you\u0027re also doing the .get\u003cstd::string\u003e() calls below, may as well change these to all use get\u003c\u003e() to be consistent.",
+      "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8469cf07_046eb4ec",
+        "filename": "multi-presence/main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-08-17T07:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "903d9504_2662ef87",
       "revId": "0c8455f3da68b7dca8d61ef778dc1968030d2cda",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
