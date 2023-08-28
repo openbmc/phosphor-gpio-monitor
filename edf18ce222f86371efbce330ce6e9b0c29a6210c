@@ -34,6 +34,24 @@
       "parentUuid": "234088a4_59e02b63",
       "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8ec9949_dd940d8c",
+        "filename": "meson.build",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-08-28T07:01:17Z",
+      "side": 1,
+      "message": "Any update on the issue?",
+      "parentUuid": "c9cce7db_324bcd8c",
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
