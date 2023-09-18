@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "358af4cb_e35fb7b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2023-09-18T13:27:47Z",
+      "side": 1,
+      "message": "I\u0027d like Patrick to review it as well.",
+      "parentUuid": "796ad473_668490bc",
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "234088a4_59e02b63",
