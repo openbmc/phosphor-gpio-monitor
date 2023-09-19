@@ -36,6 +36,23 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c421872e_25ead673",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-19T21:22:45Z",
+      "side": 1,
+      "message": "Some minor suggestions.",
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "234088a4_59e02b63",
@@ -103,6 +120,69 @@
       "side": 1,
       "message": "Was just checking. I agree with your statement.",
       "parentUuid": "a8ec9949_dd940d8c",
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8da44a8_76c060ca",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-19T21:22:45Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we want to know what the error was here?",
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9c627b4_14ed26b4",
+        "filename": "multi-presence/gpio_presence.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-19T21:22:45Z",
+      "side": 1,
+      "message": "It isn\u0027t obvious to me why you need to delete the move operators.  A side-effect of this is that in the main function you end up keeping a vector of unique_ptrs rather than the objects themselves.  Can we enable the move-operator and refrain from using the extra indirection of unique_ptr?",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8bc92c9_1fb4d14d",
+        "filename": "multi-presence/main.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-19T21:22:45Z",
+      "side": 1,
+      "message": "\"file not found\" isn\u0027t the only reason that an open can fail, right?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 33
+      },
       "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
