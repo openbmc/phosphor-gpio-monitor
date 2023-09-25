@@ -141,6 +141,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3ef5ca4_9a718683",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-09-25T09:32:33Z",
+      "side": 1,
+      "message": "Added errno to the error message.",
+      "parentUuid": "e8da44a8_76c060ca",
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9c627b4_14ed26b4",
@@ -164,6 +182,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59fab19a_3188309a",
+        "filename": "multi-presence/gpio_presence.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-09-25T09:32:33Z",
+      "side": 1,
+      "message": "Implemented the move constructor and dropped use of unique_ptrs.",
+      "parentUuid": "f9c627b4_14ed26b4",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8bc92c9_1fb4d14d",
@@ -177,6 +219,30 @@
       "writtenOn": "2023-09-19T21:22:45Z",
       "side": 1,
       "message": "\"file not found\" isn\u0027t the only reason that an open can fail, right?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "edf18ce222f86371efbce330ce6e9b0c29a6210c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d0df5e2_d70e60b5",
+        "filename": "multi-presence/main.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-09-25T09:32:33Z",
+      "side": 1,
+      "message": "Fixed the error message.",
+      "parentUuid": "a8bc92c9_1fb4d14d",
       "range": {
         "startLine": 71,
         "startChar": 0,
