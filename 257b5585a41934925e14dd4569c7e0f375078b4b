@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cd28be9_a84b627c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-29T21:56:40Z",
+      "side": 1,
+      "message": "A few more minor nits.  Sorry for the slow response; been traveling this week.",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "611fa0f3_c39b04c8",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-29T21:56:40Z",
+      "side": 1,
+      "message": "It isn\u0027t obvious to me why the log call got dropped between PS7 and now?",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b71dc9fa_c464c83a",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-29T21:56:40Z",
+      "side": 1,
+      "message": "Generally we use \u0027ERRNO\u0027 for errnos and \u0027ERROR\u0027 for exceptions.",
+      "range": {
+        "startLine": 165,
+        "startChar": 47,
+        "endLine": 165,
+        "endChar": 53
+      },
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
