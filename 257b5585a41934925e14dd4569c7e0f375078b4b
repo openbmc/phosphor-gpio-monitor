@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6479580d_9d3c0b2b",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-10-06T12:33:38Z",
+      "side": 1,
+      "message": "I think you\u0027re saying that in some cases (specifically of cancellation) you expect to get an `ec` but at that point (specifically in the case of cancellation), `this` is no longer valid?  Shouldn\u0027t you look for the `ec` that indicates cancellation then and only skip printing out the log in that case?  Dropping the log for every error seems like we\u0027re missing potentially necessary debug.\n\nAt a minimum, I think you can print out `ec.message()`, right?",
+      "parentUuid": "9d6a5cfc_eefa1a76",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b71dc9fa_c464c83a",
         "filename": "multi-presence/gpio_presence.cpp",
         "patchSetId": 10
