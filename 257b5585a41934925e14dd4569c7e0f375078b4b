@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "395abb07_652bb42d",
+        "filename": "README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000945
+      },
+      "writtenOn": "2023-10-06T07:38:05Z",
+      "side": 1,
+      "message": "I wonder why the DRIVER option does not support?\nI saw that option in phosphor-gpio-presence source:\nhttps://github.com/openbmc/phosphor-gpio-monitor/blob/d1a35410e9ae0e17d00c16b07410f76565dd1dcc/presence/main.cpp#L82\nAnd it is using \nhttps://github.com/openbmc/openbmc/blob/master/meta-ibm/recipes-phosphor/gpio/phosphor-gpio-monitor/obmc/gpio/phosphor-power-supply-0.conf",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "611fa0f3_c39b04c8",
         "filename": "multi-presence/gpio_presence.cpp",
         "patchSetId": 10
