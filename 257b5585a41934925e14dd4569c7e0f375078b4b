@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9d6a5cfc_eefa1a76",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-10-06T07:57:09Z",
+      "side": 1,
+      "message": "The async operation is canceled in the introduced move constructor. The move constructor also moves the strings that were printed here, causing only garbage to appear in the log.",
+      "parentUuid": "611fa0f3_c39b04c8",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b71dc9fa_c464c83a",
         "filename": "multi-presence/gpio_presence.cpp",
         "patchSetId": 10
