@@ -18,6 +18,23 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8268dc82_f8de3d6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000945
+      },
+      "writtenOn": "2023-10-06T07:19:00Z",
+      "side": 1,
+      "message": "I tried to use the phosphor-multi-gpio-presence by get the patch set and add the phosphor-multi-gpio-presence.json.\nBut I got below error and the service stops.\n```\nroot@MB:~# journalctl | grep -i \"multi-gpio-presence\"\nApr 03 20:59:23 MB phosphor-multi-gpio-presence[567]: GPIO Line presence-cpu0 [ ActiveLow] monitoring started\nApr 03 20:59:23 MB phosphor-multi-gpio-presence[567]: Updating inventory present property value to True, path: /system/chassis/motherboard/CPU_1\nApr 03 20:59:26 MB phosphor-multi-gpio-presence[567]: Error in mapper call to get service name, path: /xyz/openbmc_project/inventory, interface: xyz.openbmc_project.Inventory.Manager, error: sd_bus_call: xyz.openbmc_project.Common.Error.ResourceNotFound: The resource is not found.\nApr 03 20:59:26 MB phosphor-multi-gpio-presence[567]: terminate called after throwing an instance of \u0027sdbusplus::xyz::openbmc_project::Common::Error::InternalFailure\u0027\nApr 03 20:59:26 MB phosphor-multi-gpio-presence[567]:   what():  xyz.openbmc_project.Common.Error.InternalFailure: The operation failed internally.\nApr 03 20:59:26 MB phosphor-multi-gpio-presence[567]: The operation failed internally.\nApr 03 20:59:42 MB systemd[1]: phosphor-multi-gpio-presence.service: Main process exited, code\u003ddumped, status\u003d6/ABRT\nApr 03 20:59:42 MB systemd[1]: phosphor-multi-gpio-presence.service: Failed with result \u0027core-dump\u0027.\n```\nI tried to check the existing of the xyz.openbmc_project.Inventory.Manager service.\n```\nroot@MB:~# busctl call xyz.openbmc_project.ObjectMapper /xyz/openbmc_project/object_mapper xyz.openbmc_project.ObjectMapper GetObject sas /xyz/openbmc_project/inventory 1 xyz.openbmc_project.Inventory.Manager\na{sas} 1 \"xyz.openbmc_project.Inventory.Manager\" 5 \"org.freedesktop.DBus.Introspectable\" \"org.freedesktop.DBus.ObjectManager\" \"org.freedesktop.DBus.Peer\" \"org.freedesktop.DBus.Properties\" \"xyz.openbmc_project.Inventory.Manager\"\nroot@MB:~#\n```\nDo I miss any things?",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "611fa0f3_c39b04c8",
