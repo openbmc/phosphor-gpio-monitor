@@ -182,6 +182,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69f5b677_1871de5d",
+        "filename": "multi-presence/gpio_presence.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-10-10T12:40:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b71dc9fa_c464c83a",
+      "range": {
+        "startLine": 165,
+        "startChar": 47,
+        "endLine": 165,
+        "endChar": 53
+      },
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c1db495_35ac7570",
