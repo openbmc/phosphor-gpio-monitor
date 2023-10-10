@@ -162,6 +162,40 @@
       },
       "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c1db495_35ac7570",
+        "filename": "phosphor-multi-gpio-presence.service",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001918
+      },
+      "writtenOn": "2023-10-10T04:24:03Z",
+      "side": 1,
+      "message": "`\nWants\u003dmapper-wait@-xyz-openbmc_project-inventory.service\nAfter\u003dmapper-wait@-xyz-openbmc_project-inventory.service\n`\nshould be added to make sure the service will start after xyz.openbmc_project.inventory.manager.service",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "727637fa_9a7aac0e",
+        "filename": "phosphor-multi-gpio-presence.service",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001918
+      },
+      "writtenOn": "2023-10-10T04:24:03Z",
+      "side": 1,
+      "message": "Should we include\n`\n[Install]\nRequiredBy\u003dmulti-user.target\n`",
+      "revId": "257b5585a41934925e14dd4569c7e0f375078b4b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
