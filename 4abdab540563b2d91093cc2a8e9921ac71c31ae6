@@ -34,6 +34,24 @@
       "parentUuid": "336f8587_7bee11b9",
       "revId": "4abdab540563b2d91093cc2a8e9921ac71c31ae6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7674e462_43b8bf86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000945
+      },
+      "writtenOn": "2023-10-11T11:41:38Z",
+      "side": 1,
+      "message": "Can you share your dbus-monitor command which you used to watch the `notify` and `property changed` signals?\nI\u0027m running\n```\ndbus-monitor --system type\u003dsignal,path\u003d/xyz/openbmc_project/inventory/system/chassis/motherboard,interface\u003dxyz.openbmc_project.Inventory.Item\n```\nwhile calling\n`systemctl start phosphor-multi-gpio-presence.service`\nwith new phosphor-multi-gpio-presence.json to create some new dbus path for PSU. I can see the new D-BUS path in the tree of `xyz.openbmc_project.Inventory.Manager` service. But still does not see the signal in dbus-monitor window.\n\n```\nbusctl tree xyz.openbmc_project.Inventory.Manager\n`-/xyz\n  `-/xyz/openbmc_project\n    `-/xyz/openbmc_project/inventory\n      `-/xyz/openbmc_project/inventory/system\n        `-/xyz/openbmc_project/inventory/system/chassis\n          `-/xyz/openbmc_project/inventory/system/chassis/motherboard\n            |-/xyz/openbmc_project/inventory/system/chassis/motherboard/CPU_1\n            |-/xyz/openbmc_project/inventory/system/chassis/motherboard/CPU_2\n            |-/xyz/openbmc_project/inventory/system/chassis/motherboard/psu_1\n            `-/xyz/openbmc_project/inventory/system/chassis/motherboard/psu_2\n```",
+      "parentUuid": "d290656c_5a13eb38",
+      "revId": "4abdab540563b2d91093cc2a8e9921ac71c31ae6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
