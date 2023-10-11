@@ -52,6 +52,24 @@
       "parentUuid": "d290656c_5a13eb38",
       "revId": "4abdab540563b2d91093cc2a8e9921ac71c31ae6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3532b0c4_a5bc738f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001422
+      },
+      "writtenOn": "2023-10-11T12:51:11Z",
+      "side": 1,
+      "message": "I used `busctl monitor`",
+      "parentUuid": "7674e462_43b8bf86",
+      "revId": "4abdab540563b2d91093cc2a8e9921ac71c31ae6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
