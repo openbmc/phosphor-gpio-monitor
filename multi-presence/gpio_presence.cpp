@@ -131,7 +131,7 @@ void GpioPresence::scheduleEventHandler()
             return;
         }
         gpioEventHandler();
-        });
+    });
 }
 
 void GpioPresence::cancelEventHandler()

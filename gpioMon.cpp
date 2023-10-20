@@ -44,7 +44,7 @@ void GpioMonitor::scheduleEventHandler()
             return;
         }
         gpioEventHandler();
-        });
+    });
 }
 
 void GpioMonitor::gpioEventHandler()
