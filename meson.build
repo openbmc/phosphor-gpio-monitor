@@ -22,17 +22,7 @@ phosphor_logging = dependency('phosphor-logging')
 sdbusplus = dependency('sdbusplus')
 systemd = dependency('systemd')
 
-if cxx.has_header('nlohmann/json.hpp')
-    nlohmann_json_dep = declare_dependency()
-else
-    subproject('nlohmann', required: false)
-    nlohmann_json_dep = declare_dependency(
-        include_directories: [
-            'subprojects/nlohmann-json/single_include',
-            'subprojects/nlohmann-json/single_include/nlohmann',
-        ]
-    )
-endif
+nlohmann_json_dep = dependency('nlohmann_json')
 
 if cxx.has_header('CLI/CLI.hpp')
     cli11_dep = declare_dependency()
