@@ -22,7 +22,7 @@ phosphor_logging = dependency('phosphor-logging')
 sdbusplus = dependency('sdbusplus')
 systemd = dependency('systemd')
 
-nlohmann_json_dep = dependency('nlohmann_json')
+nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
 
 if cxx.has_header('CLI/CLI.hpp')
     cli11_dep = declare_dependency()
