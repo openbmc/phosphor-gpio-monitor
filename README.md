@@ -46,6 +46,8 @@ Following are fields in json file
 8. Continue: This is a optional flag and if it is defined as true then this gpio
    will be monitored continously. If not defined then monitoring of this gpio
    will stop after first event.
+9. ActiveLow: [Optional] Object is present on LOW level
+10. Bias: [Optional] Configure a BIAS on the GPIO line, for example PULL_UP
 
 ## Sample config file
 
