@@ -38,6 +38,14 @@ std::map<std::string, int> gpioPolarityMap = {
     /**< Monitor both types of events. */
     {"BOTH", GPIOD_LINE_REQUEST_EVENT_BOTH_EDGES}};
 
+std::map<std::string, phosphor::gpio::pulseEventMonType> pulsePolarityMap = {
+    /**< Only watch pulse stop events. */
+    {"PULSESTOP", PULSE_STOP},
+    /**< Only watch pulse start events. */
+    {"PULSESTART", PULSE_START},
+    /**< Monitor both types of events. */
+    {"BOTH", PULSE_BOTH}};
+
 const std::map<std::string, int> biasMap = {
     /**< Set bias as is. */
     {"AS_IS", 0},
@@ -114,6 +122,14 @@ int main(int argc, char** argv)
         /* Action performing object */
         std::unique_ptr<phosphor::gpio::Action> actionObj;
 
+        /* Pulse Monitoring Only */
+        /* Timeout interval for pulsing signals in milliseconds */
+        unsigned int timeoutInterval = 0;
+
+        /* Type of pulse events to monitor  */
+        phosphor::gpio::pulseEventMonType pulseRequestType =
+            phosphor::gpio::PULSE_BOTH;
+
         /* Systemd Target Start Action Only */
         /* target to start */
         std::string target;
@@ -188,6 +204,12 @@ int main(int argc, char** argv)
             config.flags |= GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW;
         }
 
+        /* Parse optional timeout used to monitor pulsing signal */
+        if (obj.find("TimeoutInterval") != obj.end())
+        {
+            timeoutInterval = obj["TimeoutInterval"].get<unsigned int>();
+        }
+
         /* If not monitoring inventory presence, default to systemd target
          * action as no target(s) are required to be specified.
          */
@@ -204,17 +226,39 @@ int main(int argc, char** argv)
             {
                 std::string eventStr = obj["EventMon"];
 
-                auto findEvent = phosphor::gpio::gpioPolarityMap.find(eventStr);
-                if (findEvent == phosphor::gpio::gpioPolarityMap.end())
-                {
-                    lg2::error("{GPIO}: event missing: {EVENT}", "GPIO",
-                               lineMsg, "EVENT", eventStr);
-                    return -1;
-                }
-                /* If it is not defined then both rising falling edge will
-                 * be monitored
+                /* Monitored events are different between pulse monitoring and
+                 * GPIO edge monitoring.
                  */
-                config.request_type = findEvent->second;
+                if (timeoutInterval)
+                {
+                    auto findEvent =
+                        phosphor::gpio::pulsePolarityMap.find(eventStr);
+                    if (findEvent == phosphor::gpio::pulsePolarityMap.end())
+                    {
+                        lg2::error("{GPIO}: event missing: {EVENT}", "GPIO",
+                                   lineMsg, "EVENT", eventStr);
+                        return -1;
+                    }
+                    /* If not defined, both pulse start and stop events will be
+                     * monitored.
+                     */
+                    pulseRequestType = findEvent->second;
+                }
+                else
+                {
+                    auto findEvent =
+                        phosphor::gpio::gpioPolarityMap.find(eventStr);
+                    if (findEvent == phosphor::gpio::gpioPolarityMap.end())
+                    {
+                        lg2::error("{GPIO}: event missing: {EVENT}", "GPIO",
+                                   lineMsg, "EVENT", eventStr);
+                        return -1;
+                    }
+                    /* If it is not defined then both rising falling edge will
+                     * be monitored
+                     */
+                    config.request_type = findEvent->second;
+                }
             }
 
             /* Parse out target argument. It is fine if the user does not
@@ -232,7 +276,7 @@ int main(int argc, char** argv)
              */
             if (obj.find("Targets") != obj.end())
             {
-                auto eventType = "RISING";
+                auto eventType = (timeoutInterval) ? "PULSESTART" : "RISING";
                 obj.at("Targets").get_to(targets);
                 auto assertTargets = targets.extract(eventType);
                 if (!assertTargets.empty())
@@ -241,7 +285,7 @@ int main(int argc, char** argv)
                     targets.insert(std::move(assertTargets));
                 }
 
-                eventType = "FALLING";
+                eventType = (timeoutInterval) ? "PULSESTOP" : "FALLING";
                 auto deassertTargets = targets.extract(eventType);
                 if (!deassertTargets.empty())
                 {
@@ -270,8 +314,18 @@ int main(int argc, char** argv)
                 inventory, extraInterfaces, name);
         }
 
-        eventMonObj = std::make_unique<phosphor::gpio::GpioEdgeMonitor>(
-            line, config, io, lineMsg, flag);
+        /* Create a Pulse/GPIO monitor object and let it do all the rest */
+        if (timeoutInterval)
+        {
+            eventMonObj = std::make_unique<phosphor::gpio::PulseMonitor>(
+                line, config, io, lineMsg, flag, timeoutInterval,
+                pulseRequestType);
+        }
+        else
+        {
+            eventMonObj = std::make_unique<phosphor::gpio::GpioEdgeMonitor>(
+                line, config, io, lineMsg, flag);
+        }
 
         gpioHandlers.push_back(std::make_unique<phosphor::gpio::GpioHandler>(
             eventMonObj, actionObj));

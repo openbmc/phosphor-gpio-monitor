@@ -2,6 +2,7 @@
 
 #include "gpioEdgeMon.hpp"
 #include "inventoryAction.hpp"
+#include "pulseMon.hpp"
 #include "systemdAction.hpp"
 
 namespace phosphor
