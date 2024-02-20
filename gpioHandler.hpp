@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gpioEdgeMon.hpp"
+#include "inventoryAction.hpp"
 #include "systemdAction.hpp"
 
 namespace phosphor

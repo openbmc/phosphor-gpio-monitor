@@ -128,6 +128,25 @@ executable(
    'phosphor-multi-gpio-monitor',
    'gpioMonMain.cpp',
    'gpioEdgeMon.cpp',
+   'inventoryAction.cpp',
+   'systemdAction.cpp',
+   dependencies: [
+        cli11_dep,
+        libgpiod,
+        nlohmann_json_dep,
+        phosphor_dbus_interfaces,
+        phosphor_logging,
+        sdbusplus,
+    ],
+    cpp_args: boost_args,
+    install: true,
+)
+
+executable(
+   'phosphor-multi-gpio-presence',
+   'gpioMonMain.cpp',
+   'gpioEdgeMon.cpp',
+   'inventoryAction.cpp',
    'systemdAction.cpp',
    dependencies: [
         cli11_dep,
@@ -142,7 +161,6 @@ executable(
 )
 
 subdir('presence')
-subdir('multi-presence')
 
 build_tests = get_option('tests')
 if build_tests.allowed()

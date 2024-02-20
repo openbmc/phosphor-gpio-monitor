@@ -120,6 +120,16 @@ int main(int argc, char** argv)
         /* multi targets to start */
         std::map<std::string, std::vector<std::string>> targets;
 
+        /* Inventory Presence Monitoring Action Only */
+        /* Pretty name of the inventory object */
+        std::string name;
+
+        /* Object path under inventory that will be created */
+        std::string inventory;
+
+        /* List of interfaces to associate to inventory item */
+        std::vector<std::string> extraInterfaces;
+
         if (obj.find("LineName") == obj.end())
         {
             /* If there is no line Name defined then gpio num nd chip
@@ -177,64 +187,87 @@ int main(int argc, char** argv)
             config.flags |= GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW;
         }
 
-        /* Get flag if monitoring needs to continue after first event */
-        if (obj.find("Continue") != obj.end())
+        /* If not monitoring inventory presence, default to systemd target
+         * action as no target(s) are required to be specified.
+         */
+        if (obj.find("Inventory") == obj.end() || obj.find("Name") == obj.end())
         {
-            flag = obj["Continue"];
-        }
-
-        /* Get event to be monitored */
-        if (obj.find("EventMon") != obj.end())
-        {
-            std::string eventStr = obj["EventMon"];
-
-            auto findEvent = phosphor::gpio::gpioPolarityMap.find(eventStr);
-            if (findEvent == phosphor::gpio::gpioPolarityMap.end())
+            /* Get flag if monitoring needs to continue after first event */
+            if (obj.find("Continue") != obj.end())
             {
-                lg2::error("{GPIO}: event missing: {EVENT}", "GPIO", lineMsg,
-                           "EVENT", eventStr);
-                return -1;
+                flag = obj["Continue"];
             }
-            /* If it is not defined then both rising falling edge will
-             * be monitored
+
+            /* Get event to be monitored */
+            if (obj.find("EventMon") != obj.end())
+            {
+                std::string eventStr = obj["EventMon"];
+
+                auto findEvent = phosphor::gpio::gpioPolarityMap.find(eventStr);
+                if (findEvent == phosphor::gpio::gpioPolarityMap.end())
+                {
+                    lg2::error("{GPIO}: event missing: {EVENT}", "GPIO",
+                               lineMsg, "EVENT", eventStr);
+                    return -1;
+                }
+                /* If it is not defined then both rising falling edge will
+                 * be monitored
+                 */
+                config.request_type = findEvent->second;
+            }
+
+            /* Parse out target argument. It is fine if the user does not
+             * pass this if they are not interested in calling into any target
+             * on meeting a condition.
              */
-            config.request_type = findEvent->second;
-        }
-
-        /* Parse out target argument. It is fine if the user does not
-         * pass this if they are not interested in calling into any target
-         * on meeting a condition.
-         */
-        if (obj.find("Target") != obj.end())
-        {
-            target = obj["Target"];
-        }
-
-        /* Parse out the targets argument if multi-targets are needed.
-         * Change the key to be generic.
-         */
-        if (obj.find("Targets") != obj.end())
-        {
-            auto eventType = "RISING";
-            obj.at("Targets").get_to(targets);
-            auto assertTargets = targets.extract(eventType);
-            if (!assertTargets.empty())
+            if (obj.find("Target") != obj.end())
             {
-                assertTargets.key() = phosphor::gpio::assertedKeyword;
-                targets.insert(std::move(assertTargets));
+                target = obj["Target"];
             }
 
-            eventType = "FALLING";
-            auto deassertTargets = targets.extract(eventType);
-            if (!deassertTargets.empty())
+            /* Parse out the targets argument if multi-targets are needed.
+             * Change the key to be generic regardless of whether pulse or gpio
+             * monitoring.
+             */
+            if (obj.find("Targets") != obj.end())
             {
-                deassertTargets.key() = phosphor::gpio::deassertedKeyword;
-                targets.insert(std::move(deassertTargets));
-            }
-        }
+                auto eventType = "RISING";
+                obj.at("Targets").get_to(targets);
+                auto assertTargets = targets.extract(eventType);
+                if (!assertTargets.empty())
+                {
+                    assertTargets.key() = phosphor::gpio::assertedKeyword;
+                    targets.insert(std::move(assertTargets));
+                }
 
-        actionObj =
-            std::make_unique<phosphor::gpio::SystemdAction>(target, targets);
+                eventType = "FALLING";
+                auto deassertTargets = targets.extract(eventType);
+                if (!deassertTargets.empty())
+                {
+                    deassertTargets.key() = phosphor::gpio::deassertedKeyword;
+                    targets.insert(std::move(deassertTargets));
+                }
+            }
+
+            actionObj = std::make_unique<phosphor::gpio::SystemdAction>(
+                target, targets);
+        }
+        else
+        {
+            /* Always monitor for presence */
+            flag = true;
+            inventory = obj["Inventory"].get<std::string>();
+            name = obj["Name"].get<std::string>();
+
+            /* Parse optional extra interfaces */
+            if (obj.find("ExtraInterfaces") != obj.end())
+            {
+                obj.at("ExtraInterfaces").get_to(extraInterfaces);
+            }
+
+            actionObj = std::make_unique<phosphor::gpio::InventoryAction>(
+                inventory, extraInterfaces, name);
+        }
 
         eventMonObj = std::make_unique<phosphor::gpio::GpioEdgeMonitor>(
             line, config, io, lineMsg, flag);
