@@ -127,7 +127,8 @@ phosphor_gpio_monitor = executable(
 executable(
    'phosphor-multi-gpio-monitor',
    'gpioMonMain.cpp',
-   'gpioMon.cpp',
+   'gpioEdgeMon.cpp',
+   'systemdAction.cpp',
    dependencies: [
         cli11_dep,
         libgpiod,
