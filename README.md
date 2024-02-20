@@ -13,7 +13,7 @@ seperately for each gpio line.
 
 This daemon accepts command line parameter as a well-defined GPIO configuration
 file in json format to monitor list of gpios from config file and take action
-defined in config based on gpio state change. It uses libgpiod library.
+defined in config based on gpio/pulse state change. It uses libgpiod library.
 
 ### Difference
 
@@ -35,19 +35,24 @@ Following are fields in json file
 3. GpioNum: GPIO offset, this field is optional if LineName is defined.
 4. ChipId: This is device name either offset ("0") or complete gpio device
    ("gpiochip0"). This field is not required if LineName is defined.
-5. EventMon: Event of gpio to be monitored. This can be "FALLING", "RISING" OR
-   "BOTH". Default value for this is "BOTH".
+5. EventMon: Event to be monitored. This can be "FALLING", "RISING" OR
+   "BOTH" for gpio event. This can be "PULSESTART". "PULSESTOP", or "BOTH" for
+   pulse event. Default value for this is "BOTH".
 6. Target: This is an optional systemd service which will get started after
    triggering event. A journal entry will be added for every event occurs
    irrespective of this definition.
 7. Targets: This is an optional systemd service which will get started after
-   triggering corresponding event(RASING or FALLING). A journal entry will be
-   added for every event occurs irrespective of this definition.
+   triggering corresponding event(RISING/FALLING or PULSESTART/PULSESTOP).
+   A journal entry will be added for every event occurs irrespective of this
+   definition.
 8. Continue: This is a optional flag and if it is defined as true then this gpio
-   will be monitored continously. If not defined then monitoring of this gpio
+   will be monitored continuously. If not defined then monitoring of this gpio
    will stop after first event.
 9. ActiveLow: [Optional] Object is present on LOW level
 10. Bias: [Optional] Configure a BIAS on the GPIO line, for example PULL_UP
+11. TimeoutInterval: [Optional] Maximum allowed time in milliseconds that the
+    gpio has to change states before the gpio is no longer considered pulsing.
+    Default value for this is 0 which corresponds to no pulse.
 
 ## Sample config file
 
@@ -107,6 +112,9 @@ Following are fields in json file
 6. ExtraInterfaces: [Optional] List of interfaces to associate to inventory item
 7. ActiveLow: [Optional] Object is present on LOW level
 8. Bias: [Optional] Configure a BIAS on the GPIO line, for example PULL_UP
+9. TimeoutInterval: [Optional] Maximum allowed time in milliseconds that the
+   gpio has to change states before the gpio is no longer considered pulsing.
+   Default value for this is 0 which corresponds to no pulse.
 
 ## Sample config file
 

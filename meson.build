@@ -128,6 +128,7 @@ executable(
    'phosphor-multi-gpio-monitor',
    'gpioMonMain.cpp',
    'gpioEdgeMon.cpp',
+   'pulseMon.cpp',
    'inventoryAction.cpp',
    'systemdAction.cpp',
    dependencies: [
@@ -146,6 +147,7 @@ executable(
    'phosphor-multi-gpio-presence',
    'gpioMonMain.cpp',
    'gpioEdgeMon.cpp',
+   'pulseMon.cpp',
    'inventoryAction.cpp',
    'systemdAction.cpp',
    dependencies: [
