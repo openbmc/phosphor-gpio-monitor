@@ -8,6 +8,7 @@ executable(
         nlohmann_json_dep,
         phosphor_logging,
         sdbusplus,
+        boost_dep,
     ],
     cpp_args: boost_args,
     include_directories: '..',

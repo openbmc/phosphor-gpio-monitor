@@ -34,6 +34,8 @@ boost_args = ['-DBOOST_ASIO_DISABLE_THREADS',
               '-DBOOST_ERROR_CODE_HEADER_ONLY',
               '-DBOOST_SYSTEM_NO_DEPRECATED']
 
+boost_dep = dependency('boost')
+
 systemd_system_unit_dir = systemd.get_variable(
     'systemdsystemunitdir',
     pkgconfig_define: ['prefix', get_option('prefix')])
@@ -135,6 +137,7 @@ executable(
         phosphor_dbus_interfaces,
         phosphor_logging,
         sdbusplus,
+        boost_dep
     ],
     cpp_args: boost_args,
     install: true,
