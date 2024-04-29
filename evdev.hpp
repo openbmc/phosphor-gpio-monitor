@@ -80,8 +80,8 @@ class Evdev
      */
     Evdev(const std::string& path, const unsigned int key, EventPtr& event,
           sd_event_io_handler_t handler, bool useEvDev = true) :
-        path(path),
-        key(key), event(event), callbackHandler(handler), fd(openDevice())
+        path(path), key(key), event(event), callbackHandler(handler),
+        fd(openDevice())
 
     {
         if (useEvDev)

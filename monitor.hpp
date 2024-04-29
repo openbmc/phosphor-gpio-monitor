@@ -47,9 +47,8 @@ class Monitor : public Evdev
             EventPtr& event, bool continueRun,
             sd_event_io_handler_t handler = Monitor::processEvents,
             bool useEvDev = true) :
-        Evdev(path, key, event, handler, useEvDev),
-        polarity(polarity), target(target),
-        continueAfterKeyPress(continueRun){};
+        Evdev(path, key, event, handler, useEvDev), polarity(polarity),
+        target(target), continueAfterKeyPress(continueRun){};
 
     /** @brief Callback handler when the FD has some activity on it
      *

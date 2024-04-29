@@ -71,9 +71,8 @@ class Presence : public Evdev
              const std::vector<Driver>& drivers,
              const std::vector<Interface>& ifaces,
              sd_event_io_handler_t handler = Presence::processEvents) :
-        Evdev(path, key, event, handler, true),
-        bus(bus), inventory(inventory), name(name), drivers(drivers),
-        ifaces(ifaces)
+        Evdev(path, key, event, handler, true), bus(bus), inventory(inventory),
+        name(name), drivers(drivers), ifaces(ifaces)
     {
         // See if the environment (from configuration file?) has a
         // DRIVER_BIND_DELAY_MS set.
