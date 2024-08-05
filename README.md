@@ -15,14 +15,14 @@ This daemon accepts command line parameter as a well-defined GPIO configuration
 file in json format to monitor list of gpios from config file and take action
 defined in config based on gpio state change. It uses libgpiod library.
 
-### Difference
+#### Difference
 
 New implementation (phosphor-multi-gpio-monitor) provides multiple gpio line
 monitoring in single instance of phosphor-multi-gpio-monitor running. It is very
 easy to add list of gpios into JSON config file and it also supports of GPIO
 line by name defined in kernel.
 
-## Configuration
+#### Configuration
 
 There is a phosphor-multi-gpio-monitor.json file that defines details of GPIOs
 which is required to be monitored. This file can be replaced with a platform
@@ -47,7 +47,7 @@ Following are fields in json file
    will be monitored continously. If not defined then monitoring of this gpio
    will stop after first event.
 
-## Sample config file
+#### Sample config file
 
 ```json
 [
@@ -81,14 +81,14 @@ file in json format to monitor list of gpios from config file and sets inventory
 presence as defined in config based on gpio state change. It uses libgpiod
 library.
 
-### Difference
+#### Difference
 
 New implementation (phosphor-multi-gpio-presence) provides multiple gpio line
 monitoring in single instance of phosphor-multi-gpio-presence running. It is
 very easy to add list of gpios into JSON config file and it also supports of
 GPIO line by name defined in kernel.
 
-## Configuration
+#### Configuration
 
 There is a phosphor-multi-gpio-presence.json file that defines details of GPIOs
 which is required to be monitored. This file can be replaced with a platform
@@ -106,7 +106,7 @@ Following are fields in json file
 7. ActiveLow: [Optional] Object is present on LOW level
 8. Bias: [Optional] Configure a BIAS on the GPIO line, for example PULL_UP
 
-## Sample config file
+#### Sample config file
 
 ```json
 [
