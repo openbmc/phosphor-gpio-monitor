@@ -37,14 +37,14 @@ void GpioMonitor::scheduleEventHandler()
     gpioEventDescriptor.async_wait(
         boost::asio::posix::stream_descriptor::wait_read,
         [this](const boost::system::error_code& ec) {
-        if (ec)
-        {
-            lg2::error("{GPIO} event handler error: {ERROR}", "GPIO",
-                       gpioLineMsg, "ERROR", ec.message());
-            return;
-        }
-        gpioEventHandler();
-    });
+            if (ec)
+            {
+                lg2::error("{GPIO} event handler error: {ERROR}", "GPIO",
+                           gpioLineMsg, "ERROR", ec.message());
+                return;
+            }
+            gpioEventHandler();
+        });
 }
 
 void GpioMonitor::gpioEventHandler()

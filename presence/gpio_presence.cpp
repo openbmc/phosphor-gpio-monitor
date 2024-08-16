@@ -58,8 +58,8 @@ void Presence::determinePresence()
 {
     auto present = false;
     auto value = static_cast<int>(0);
-    auto fetch_rc = libevdev_fetch_event_value(devicePtr.get(), EV_KEY, key,
-                                               &value);
+    auto fetch_rc =
+        libevdev_fetch_event_value(devicePtr.get(), EV_KEY, key, &value);
     if (0 == fetch_rc)
     {
         lg2::error("Device does not support event type, key: {KEYCODE}",

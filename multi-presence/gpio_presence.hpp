@@ -64,9 +64,9 @@ class GpioPresence
                  boost::asio::io_context& io, const std::string& inventory,
                  const std::vector<std::string>& extraInterfaces,
                  const std::string& name, const std::string& lineMsg) :
-        gpioLine(line),
-        gpioConfig(config), gpioEventDescriptor(io), inventory(inventory),
-        interfaces(extraInterfaces), name(name), gpioLineMsg(lineMsg)
+        gpioLine(line), gpioConfig(config), gpioEventDescriptor(io),
+        inventory(inventory), interfaces(extraInterfaces), name(name),
+        gpioLineMsg(lineMsg)
     {
         requestGPIOEvents();
     };

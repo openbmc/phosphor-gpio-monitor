@@ -119,19 +119,19 @@ void GpioPresence::scheduleEventHandler()
     gpioEventDescriptor.async_wait(
         boost::asio::posix::stream_descriptor::wait_read,
         [this, gpio](const boost::system::error_code& ec) {
-        if (ec == boost::asio::error::operation_aborted)
-        {
-            // we were cancelled
-            return;
-        }
-        if (ec)
-        {
-            lg2::error("{GPIO} event handler error: {ERROR}", "GPIO", gpio,
-                       "ERROR", ec.message());
-            return;
-        }
-        gpioEventHandler();
-    });
+            if (ec == boost::asio::error::operation_aborted)
+            {
+                // we were cancelled
+                return;
+            }
+            if (ec)
+            {
+                lg2::error("{GPIO} event handler error: {ERROR}", "GPIO", gpio,
+                           "ERROR", ec.message());
+                return;
+            }
+            gpioEventHandler();
+        });
 }
 
 void GpioPresence::cancelEventHandler()

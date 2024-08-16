@@ -43,9 +43,9 @@ class GpioMonitor
                 boost::asio::io_context& io, const std::string& target,
                 const std::map<std::string, std::vector<std::string>>& targets,
                 const std::string& lineMsg, bool continueRun) :
-        gpioLine(line),
-        gpioConfig(config), gpioEventDescriptor(io), target(target),
-        targets(targets), gpioLineMsg(lineMsg), continueAfterEvent(continueRun)
+        gpioLine(line), gpioConfig(config), gpioEventDescriptor(io),
+        target(target), targets(targets), gpioLineMsg(lineMsg),
+        continueAfterEvent(continueRun)
     {
         requestGPIOEvents();
     };
