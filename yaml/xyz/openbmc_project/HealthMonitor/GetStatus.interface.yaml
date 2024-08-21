@@ -1,0 +1,32 @@
+description: >
+    An interface will be provided in all object of 'xyz.openbmc_project.Health'
+methods:
+    - name: set_healthy
+      flags:
+          - unprivileged
+          - no_reply
+      description: >
+          Toggle the status and increase the toggle_count by '1'.
+properties:
+    - name: healthy
+      type: boolean
+      description: >
+          Property indicating healthy status, 'true' is good, 'false' is bad. Upon status property change the service will emit signal 'statusPropertyChanged'.
+    - name: toggle_count
+      type: uint64
+      default: 0
+      description: >
+          Property indicating count of state change events. The purpose is to identify flaky signals.
+signals:
+    - name: healthyPropertyChanged
+      properties:
+        - type: string
+      description: >
+          Signal indicating the health property changes.
+paths:
+    - instance: /xyz/openbmc_project/HealthMonitor
+      description: Expected path of the instance.
+
+service_names:
+    - default: xyz.openbmc_project.HealthMonitor
+      description: Expected service name for the instance.
