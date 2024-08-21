@@ -23,12 +23,31 @@ sdbusplus = dependency('sdbusplus')
 systemd = dependency('systemd')
 
 nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
+sdbusplusplus_depfiles = files()
+sdbusplusplus_prog = find_program('sdbus++', native: true)
+sdbuspp_gen_meson_prog = find_program('sdbus++-gen-meson', native: true)
+if sdbusplus.type_name() == 'internal'
+    sdbusplusplus_depfiles = subproject('sdbusplus').get_variable('sdbusplusplus_depfiles')
+endif
+
+has_asio = meson.get_compiler('cpp').has_header_symbol(
+  'boost/asio.hpp',
+  'boost::asio::io_context',
+  required: false)
+asio_dep = sdbusplus
+if not has_asio
+  asio_dep = disabler()
+endif
 
 if cxx.has_header('CLI/CLI.hpp')
     cli11_dep = declare_dependency()
 else
     cli11_dep = dependency('CLI11')
 endif
+
+generated_sources = []
+generated_others = []
+yaml_sources = []
 
 boost_args = ['-DBOOST_ASIO_DISABLE_THREADS',
               '-DBOOST_ERROR_CODE_HEADER_ONLY',
@@ -142,6 +161,36 @@ executable(
     cpp_args: boost_args,
     install: true,
 )
+
+subdir('gen')
+subdir('gen/xyz')
+
+executable(
+   'phosphor-health-gpio-monitor',
+   'gpioHealthMonMain.cpp',
+   'gpioHealthMon.cpp',
+   generated_sources,
+   implicit_include_directories: false,
+   include_directories: include_directories('gen'),
+   dependencies: [
+        cli11_dep,
+        libgpiod,
+        nlohmann_json_dep,
+        phosphor_dbus_interfaces,
+        phosphor_logging,
+        sdbusplus,
+        asio_dep,
+        dependency(
+             'boost',
+             modules: ['coroutine', 'context'],
+             disabler: true,
+             required: false,
+        ),
+    ],
+    cpp_args: boost_args,
+    install: true,
+)
+
 
 subdir('presence')
 subdir('multi-presence')
