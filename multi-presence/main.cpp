@@ -134,7 +134,7 @@ int main(int argc, char** argv)
         if (line == NULL)
         {
             lg2::error("Failed to find the {GPIO}", "GPIO", lineMsg);
-            return -1;
+            continue;
         }
 
         /* Parse out inventory argument. */
