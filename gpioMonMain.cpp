@@ -135,8 +135,8 @@ int main(int argc, char** argv)
 
         if (line == NULL)
         {
-            lg2::error("Failed to find the {GPIO}", "GPIO", errMsg);
-            return -1;
+            lg2::error("Failed to find the {GPIO}", "GPIO", lineMsg);
+            continue;
         }
 
         /* Get event to be monitored, if it is not defined then
