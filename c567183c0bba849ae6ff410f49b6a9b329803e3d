@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f83ceffa_928268c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001896
+      },
+      "writtenOn": "2024-11-08T01:55:00Z",
+      "side": 1,
+      "message": "Thanks for your suggestion. I change the commit message title, please help review it again.",
+      "parentUuid": "d127b1a6_8ec2a623",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "c567183c0bba849ae6ff410f49b6a9b329803e3d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08a770fd_25982a46",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-07T18:12:05Z",
       "side": 1,
       "message": "Unused variable to remove now?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 27
+      },
+      "revId": "c567183c0bba849ae6ff410f49b6a9b329803e3d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9917bc0_ec4e5a44",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001896
+      },
+      "writtenOn": "2024-11-08T01:55:00Z",
+      "side": 1,
+      "message": "Thanks. I remove the unused variable. Please help review it again.",
+      "parentUuid": "08a770fd_25982a46",
       "range": {
         "startLine": 88,
         "startChar": 0,
