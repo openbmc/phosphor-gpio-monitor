@@ -33,6 +33,24 @@
       "message": "I\u0027m fine either way.  If this is just a bug in config, I\u0027d rather we make it a hard failure (as it is).",
       "revId": "38cd74c88d7be550bb022572891f3037061460d5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0efa969d_f9d3e3de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001896
+      },
+      "writtenOn": "2024-11-11T06:24:00Z",
+      "side": 1,
+      "message": "Hi Matt,\nThere are no configuration bugs in my case. Several GPIOs on I/O expanders are monitored on our platform to log events and create presence states on D-Bus objects. Some I/O expanders are located on separate boards. If an I/O expander driver probe fails (board not plug-in or i2c failed), the line names aren’t generated, causing the GPIO monitor/presence function to exit. I want to ensure each GPIO operates independently so that a failure on one GPIO won’t terminate the entire process.",
+      "parentUuid": "dee30435_864449e8",
+      "revId": "38cd74c88d7be550bb022572891f3037061460d5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
