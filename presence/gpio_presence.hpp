@@ -81,7 +81,7 @@ class Presence : public Evdev
             // DRIVER_BIND_DELAY_MS environment variable is set.
             // Update the bind delay (in milliseconds) to the value from the
             // environment.
-            delay = std::strtoull(envDelay, NULL, 10);
+            delay = std::strtoull(envDelay, nullptr, 10);
         }
         determinePresence();
     }

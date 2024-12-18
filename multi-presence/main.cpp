@@ -84,7 +84,7 @@ int main(int argc, char** argv)
         std::string lineMsg = "GPIO Line ";
 
         /* GPIO line */
-        gpiod_line* line = NULL;
+        gpiod_line* line = nullptr;
 
         /* GPIO line configuration, default to monitor both edge */
         struct gpiod_line_request_config config
@@ -131,7 +131,7 @@ int main(int argc, char** argv)
             line = gpiod_line_find(lineName.c_str());
         }
 
-        if (line == NULL)
+        if (line == nullptr)
         {
             lg2::error("Failed to find the {GPIO}", "GPIO", lineMsg);
             continue;
