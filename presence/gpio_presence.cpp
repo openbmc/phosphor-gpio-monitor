@@ -88,8 +88,7 @@ int Presence::processEvents(sd_event_source*, int, uint32_t, void* userData)
 void Presence::analyzeEvent()
 {
     // Data returned
-    struct input_event ev
-    {};
+    struct input_event ev{};
     int rc = 0;
 
     // While testing, observed that not having a loop here was leading
