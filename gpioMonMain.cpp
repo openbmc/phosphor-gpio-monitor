@@ -86,10 +86,8 @@ int main(int argc, char** argv)
         gpiod_line* line = nullptr;
 
         /* GPIO line configuration, default to monitor both edge */
-        struct gpiod_line_request_config config
-        {
-            "gpio_monitor", GPIOD_LINE_REQUEST_EVENT_BOTH_EDGES, 0
-        };
+        struct gpiod_line_request_config config{
+            "gpio_monitor", GPIOD_LINE_REQUEST_EVENT_BOTH_EDGES, 0};
 
         /* flag to monitor */
         bool flag = false;
