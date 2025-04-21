@@ -41,10 +41,12 @@ Following are fields in json file
    triggering event. A journal entry will be added for every event occurs
    irrespective of this definition.
 7. Targets: This is an optional systemd service which will get started after
-   triggering corresponding event(RASING or FALLING). A journal entry will be
+   triggering corresponding event(RISING or FALLING). A journal entry will be
    added for every event occurs irrespective of this definition.
+   Upon start up, depending on the current GPIO value, the systemd services
+   for INIT_HIGH and INIT_LOW will be called (if defined).
 8. Continue: This is a optional flag and if it is defined as true then this gpio
-   will be monitored continously. If not defined then monitoring of this gpio
+   will be monitored continuously. If not defined then monitoring of this gpio
    will stop after first event.
 
 #### Sample config file
