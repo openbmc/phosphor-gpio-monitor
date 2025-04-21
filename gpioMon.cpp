@@ -31,6 +31,8 @@ constexpr auto SYSTEMD_INTERFACE = "org.freedesktop.systemd1.Manager";
 
 constexpr auto falling = "FALLING";
 constexpr auto rising = "RISING";
+constexpr auto init_high = "INIT_HIGH";
+constexpr auto init_low = "INIT_LOW";
 
 void GpioMonitor::scheduleEventHandler()
 {
@@ -120,6 +122,30 @@ void GpioMonitor::gpioEventHandler()
     scheduleEventHandler();
 }
 
+void GpioMonitor::gpioValueHandler(int value)
+{
+    std::vector<std::string> targetsToStart;
+    if (value && targets.find(init_high) != targets.end())
+    {
+        targetsToStart = targets[init_high];
+    }
+    else if (!value && targets.find(init_low) != targets.end())
+    {
+        targetsToStart = targets[init_low];
+    }
+    if (!targetsToStart.empty())
+    {
+        auto bus = sdbusplus::bus::new_default();
+        for (const auto& tar : targetsToStart)
+        {
+            auto method = bus.new_method_call(SYSTEMD_SERVICE, SYSTEMD_ROOT,
+                                              SYSTEMD_INTERFACE, "StartUnit");
+            method.append(tar, "replace");
+            bus.call_noreply(method);
+        }
+    }
+}
+
 int GpioMonitor::requestGPIOEvents()
 {
     /* Request an event to monitor for respected gpio line */
@@ -127,6 +153,17 @@ int GpioMonitor::requestGPIOEvents()
     {
         lg2::error("Failed to request {GPIO}", "GPIO", gpioLineMsg);
         return -1;
+    }
+
+    int value = gpiod_line_get_value(gpioLine);
+    if (value < 0)
+    {
+        lg2::error("Failed to get value for {GPIO} Error: {ERROR}", "GPIO",
+                   gpioLineMsg, "ERROR", strerror(errno));
+    }
+    else
+    {
+        gpioValueHandler(value);
     }
 
     int gpioLineFd = gpiod_line_event_get_fd(gpioLine);
