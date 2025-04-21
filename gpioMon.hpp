@@ -83,6 +83,9 @@ class GpioMonitor
 
     /** @brief Handle the GPIO event and starts configured target */
     void gpioEventHandler();
+
+    /** @brief handle current gpio value */
+    void gpioHandleInitialState(bool value);
 };
 
 } // namespace gpio
