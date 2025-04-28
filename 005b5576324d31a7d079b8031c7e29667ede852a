@@ -16,6 +16,24 @@
       "message": "How do you handle an initial start up of the BMC vs a restart of the service (such as when it crashes)?",
       "revId": "005b5576324d31a7d079b8031c7e29667ede852a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bfe55b4_aeb09872",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2025-04-28T19:01:06Z",
+      "side": 1,
+      "message": "It should be the same work. The init handlers would need some logic to avoid duplication. For example the following condition:\n1. stuff broken. active high GPIO asserts.\n2. RISING handling calls the assert sd service.\n3. stuff continues to be broken. BMC restarts or someone restarts gpiod service.\n4. INIT_HIGH gets called, calls the new target.\n\nThe new target has to ensure that the new condition is not already reported/handled. Else if it does the not-so-smart-stuff. Unless we want to through those smarts into PGM?",
+      "parentUuid": "6a340c21_9d8f87f9",
+      "revId": "005b5576324d31a7d079b8031c7e29667ede852a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
