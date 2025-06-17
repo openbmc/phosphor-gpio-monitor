@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6638d5_e798c406",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-06-17T18:58:04Z",
+      "side": 1,
+      "message": "gpioValueHandler doesn\u0027t seem ideal here as a name?  This is just handling the initial state, right?",
+      "range": {
+        "startLine": 125,
+        "startChar": 18,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "917ce6866af3d37274f23a0c357fc026f4bc0698",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02a44a2b_99bc8a43",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-06-17T18:58:04Z",
+      "side": 1,
+      "message": "Can this be a bool?",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "917ce6866af3d37274f23a0c357fc026f4bc0698",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b275d467_1d0c154c",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-06-17T18:58:04Z",
+      "side": 1,
+      "message": "```suggestion\n    if (auto itr \u003d targets.find(init_high); value \u0026\u0026 itr !\u003d targets.end())\n    {\n        targetsToStart \u003d *itr;\n```\n\nThis makes it so you don\u0027t need to search twice.  If you weren\u0027t going to do this, at least use `targets.contains(init_high)` instead of the iterator checking.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 44
+      },
+      "revId": "917ce6866af3d37274f23a0c357fc026f4bc0698",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cc30329_d7ff191c",
+        "filename": "gpioMon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-06-17T18:58:04Z",
+      "side": 1,
+      "message": "1. Isn\u0027t there a race condition here?  We look at a value and then get the event fd.\n\n2. Should we be early-exiting if we get an error on line 159?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 55
+      },
+      "revId": "917ce6866af3d37274f23a0c357fc026f4bc0698",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
