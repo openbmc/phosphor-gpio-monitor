@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright 2018 OpenBMC maintainer
+
 #include "gpio_presence.hpp"
 
 #include "xyz/openbmc_project/Common/error.hpp"
