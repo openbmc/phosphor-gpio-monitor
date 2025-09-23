@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright OpenBMC Authors
+
 #include "evdev.hpp"
 
 #include "xyz/openbmc_project/Common/error.hpp"
