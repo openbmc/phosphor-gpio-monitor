@@ -36,6 +36,7 @@ owners:
 - patrick@stwcx.xyz
 
 reviewers:
+- christopher.meis@9elements.com
 
 matchers:
 
@@ -46,3 +47,6 @@ openbmc:
 - name: Patrick Williams
   email: patrick@stwcx.xyz
   discord: stwcx
+- name: Christopher Meis
+  email: christopher.meis@9elements.com
+  discord: chrimarme_12525
