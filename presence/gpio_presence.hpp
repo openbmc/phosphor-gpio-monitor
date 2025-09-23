@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// SPDX-FileCopyrightText: Copyright 2025 OpenBMC maintainer
+
 #pragma once
 #include "evdev.hpp"
 
