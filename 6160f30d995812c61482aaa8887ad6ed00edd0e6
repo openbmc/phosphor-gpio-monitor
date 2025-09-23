@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b4e226c_68fb7b51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "This is a good change! Thank you for the contribution!\n\nI have some nits, but nothing to serious. \n\n\nLet me know, if you plan to continue the work on this change or not.",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fe68ac5_af16c909",
+        "filename": "act.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "You can go with the SPDX-Idendifier.\n\n```\n// SPDX-License-Identifier: Apache-2.0\n// SPDX-FileCopyrightText: Copyright 2025 \u003cCOPYWRITE_HOLDER\u003e\n```",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6532b1c_4a2a7229",
+        "filename": "gpioEdgeMon.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "Use the SPDX-Identifier here 😊",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4ac4a73_1e0f45bd",
+        "filename": "gpioEdgeMon.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "Use the SPDX-Identifier here 😊",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9523eb21_863e6cd5",
+        "filename": "gpioHandler.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "Use the SPDX-Identifier here 😊",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2e36034_c867bb15",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "Use the SPDX-Identifier here 😊",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad0a67d0_80fa02a8",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "While the code itself looks good, I dont like the length of the main function. It\u0027s a little hard to follow. Can you break it up into seperate functions?",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "959e1360_be47b3ee",
+        "filename": "gpioMonMain.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "It looks like something is created in this loop. Can you make it a separate function?",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aa35f17_f1bef9f9",
+        "filename": "mon.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "Put the SPDX-Identifier here 😊",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 1
+      },
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deee5313_eafd4157",
+        "filename": "systemdAction.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "Put the SPDX-Identifier here 😊",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1420154a_fe9c11d1",
+        "filename": "systemdAction.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "According to https://github.com/openbmc/docs/blob/master/cpp-style-and-conventions.md#constants\n\n`Constants and enum members should be named like variables in lowerCamelCase.`",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 70
+      },
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b66c963f_c34beb81",
+        "filename": "systemdAction.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-23T10:18:13Z",
+      "side": 1,
+      "message": "Put the SPDX-Identifier here 😊",
+      "revId": "6160f30d995812c61482aaa8887ad6ed00edd0e6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
