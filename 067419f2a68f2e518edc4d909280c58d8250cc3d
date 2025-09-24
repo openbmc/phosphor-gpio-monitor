@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d89d117_277acfb7",
+        "filename": "evdev.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001712
+      },
+      "writtenOn": "2025-09-24T09:23:21Z",
+      "side": 1,
+      "message": "```suggestion\n// SPDX-FileCopyrightText: Copyright OpenBMC Authors\n```\n\nThis is how they write it in bmcweb.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 2
+      },
+      "revId": "067419f2a68f2e518edc4d909280c58d8250cc3d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
