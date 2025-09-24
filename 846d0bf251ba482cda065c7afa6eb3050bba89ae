@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7c924c2_e454f901",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-09-24T19:35:52Z",
+      "side": 1,
+      "message": "This is one of a few different SPDX/copyright related changes I\u0027ve seen.  Before we merge this, I\u0027d like to get consensus on how we should handle these at a project level and then make sure this commit aligns with it.\n\nhttps://gerrit.openbmc.org/c/openbmc/docs/+/83998",
+      "revId": "846d0bf251ba482cda065c7afa6eb3050bba89ae",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
