@@ -1,9 +1,9 @@
 [wrap-file]
-directory = boost_1_84_0
+directory = boost_1_89_0
 
-source_url = https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2
-source_hash = cc4b893acf645c9d4b698e9a0f08ca8846aa5d6c68275c14c3e7949c24109454
-source_filename = 1_84_0.tar.bz2
+source_url = https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.tar.gz
+source_hash = 954a01219bf818c7fb850fa610c2c8c71a4fa28fa32a1900056bcb6ff58cf908
+source_filename = 1_89_0.tar.gz
 
 patch_directory = boost
 
