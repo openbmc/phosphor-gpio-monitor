@@ -16,6 +16,23 @@
       "message": "No CI was triggered.  Are you serious about this code?",
       "revId": "a3ed437928fa37de3ac2e88d203963e0e229a630",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ddf068_9b0c8f6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-25T06:32:59Z",
+      "side": 1,
+      "message": "Is this change stale or active? @kpjhan@google.com\n\nIf there is no more action within the next 4 weeks, I would assume its stale and we could abandon the change to reduce review overload. What do you think @patrick@stwcx.xyz ?",
+      "revId": "a3ed437928fa37de3ac2e88d203963e0e229a630",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
