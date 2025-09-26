@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1824bfe7_77d51360",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-26T04:40:17Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "d8fb0bc7_413030d9",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "4cee76f2dd857f72e4c86ca2a0e9bf5ab7f85c85",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d010547_1df7bc5e",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-09-25T20:41:40Z",
       "side": 1,
       "message": "It seems we have a lot of differences on how to do this...\n\n```\n$ rg boostorg.jfrog       \nphosphor-sel-logger/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2\n\nbios-settings-mgr/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2\n\nphosphor-gpio-monitor/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2\n\nhost-error-monitor/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2\n\nphosphor-power/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2\n\nobmc-ikvm/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2\n\nlibpeci/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2\n\nx86-power-control/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2\n\nsmbios-mdr/subprojects/boost.wrap\n4:source_url \u003d https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2\n```\n\n```\n$ rg archives.boost.io\nphosphor-bmc-code-mgmt/subprojects/boost.wrap\n4:source_url \u003d https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.bz2\n\ntelemetry/subprojects/boost.wrap\n2:source_url \u003d https://archives.boost.io/release/1.80.0/source/boost_1_80_0.tar.bz2\n```\n\n```\n$ rg \"source_url \u003d https://github.com/boostorg\"\nssifbridge/subprojects/boost.wrap\n4:source_url \u003d https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.tar.gz\n\nipmbbridge/subprojects/boost.wrap\n4:source_url \u003d https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.gz\n\nphosphor-host-ipmid/subprojects/boost.wrap\n4:source_url \u003d https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.gz\n\ndbus-sensors/subprojects/boost-meson.wrap\n4:source_url \u003d https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.tar.gz\n\nbmcweb/subprojects/boost.wrap\n4:source_url \u003d https://github.com/boostorg/boost/releases/download/boost-1.87.0/boost-1.87.0-cmake.tar.gz\n\nphosphor-objmgr/subprojects/boost.wrap\n4:source_url \u003d https://github.com/boostorg/boost/releases/download/boost-1.87.0/boost-1.87.0-cmake.tar.gz\n```\n\nIt sounds like jfrog.io is deprecated.  Can we move to use the github archive for consistency?",
+      "revId": "4cee76f2dd857f72e4c86ca2a0e9bf5ab7f85c85",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbedb7b9_fd693ea1",
+        "filename": "subprojects/boost.wrap",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2025-09-26T04:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d010547_1df7bc5e",
       "revId": "4cee76f2dd857f72e4c86ca2a0e9bf5ab7f85c85",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
