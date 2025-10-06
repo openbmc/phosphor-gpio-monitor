@@ -16,6 +16,23 @@
       "message": "This is a good thing to have :) Thank you for your contribution.",
       "revId": "e7066710a80bf4f9a478dd95ea480b2353b8b24f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ddef86e_6cdf15c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-10-06T23:34:50Z",
+      "side": 1,
+      "message": "Please refactor this according to our latest direction w.r.t. clang-tidy.",
+      "revId": "e7066710a80bf4f9a478dd95ea480b2353b8b24f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
