@@ -52,6 +52,24 @@
       "parentUuid": "01b4b347_5e1a2e7e",
       "revId": "846d0bf251ba482cda065c7afa6eb3050bba89ae",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a513310_40cca1f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-10-10T22:12:30Z",
+      "side": 1,
+      "message": "Please convert the IBM ones as-is to SPDX.  You can convert the Facebook and 9elements ones to OpenBMC Authors and after you do that, I will amend your commit with my signed-off-by to give indication that Meta(Facebook) is authorizing the removal of our copyright indicator.",
+      "parentUuid": "73ec1c75_179b3a3e",
+      "revId": "846d0bf251ba482cda065c7afa6eb3050bba89ae",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
