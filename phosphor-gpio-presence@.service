@@ -9,4 +9,4 @@ EnvironmentFile=/etc/default/obmc/gpio/phosphor-power-supply-%i.conf
 ExecStart=/usr/bin/phosphor-gpio-presence --path=${DEVPATH} --inventory=${INVENTORY} --key=${KEY} --name=${NAME} --drivers=${DRIVERS} --extra-ifaces=${EXTRA_IFACES}
 
 [Install]
-RequiredBy=multi-user.target
+# Handled by bitbake recipes that instantiate this service
