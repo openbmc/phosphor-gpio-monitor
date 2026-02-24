@@ -28,7 +28,7 @@ int main(int argc, char** argv)
         ->required();
     app.add_option("-k,--key", key, "Input GPIO key number")->required();
     app.add_option("-r,--polarity", polarity,
-                   "Asertion polarity to look for. This is 0 / 1")
+                   "Assertion polarity to look for. This is 0 / 1")
         ->required();
     app.add_option("-t,--target", target,
                    "Systemd unit to be called on GPIO state change")

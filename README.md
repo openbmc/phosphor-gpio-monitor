@@ -7,7 +7,7 @@
 This daemon accepts a command line parameter for monitoring single gpio line and
 take action if requested. This implementation uses GPIO keys and only supports
 monitoring single GPIO line, for multiple lines, user has to run this daemon
-seperately for each gpio line.
+separately for each gpio line.
 
 ### `phosphor-multi-gpio-monitor`
 
