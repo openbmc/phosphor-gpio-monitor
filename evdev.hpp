@@ -61,7 +61,7 @@ class Evdev
     using Interface = std::string;
     // Association between interface and the D-Bus property
     using InterfaceMap = std::map<Interface, PropertyMap>;
-    using Object = sdbusplus::message::object_path;
+    using Object = sdbusplus::object_path;
     // Association between object and the interface
     using ObjectMap = std::map<Object, InterfaceMap>;
 
