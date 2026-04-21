@@ -48,6 +48,12 @@ Following are fields in json file
 8. Continue: This is a optional flag and if it is defined as true then this gpio
    will be monitored continuously. If not defined then monitoring of this gpio
    will stop after first event.
+9. ActiveLow: This is an optional flag. If it is defined as true then the signal
+   is asserted when the hardware level is LOW. If not defined then the line
+   defaults to active-high.
+10. Bias: This is an optional field to configure internal bias on the GPIO line.
+    Possible values are "AS_IS", "DISABLE", "PULL_UP", "PULL_DOWN". If not
+    defined then the existing line bias is left unchanged.
 
 #### Sample config file
 
