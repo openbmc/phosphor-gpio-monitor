@@ -23,7 +23,16 @@ std::map<std::string, int> polarityMap = {
     /**< Monitor both types of events. */
     {"BOTH", GPIOD_LINE_REQUEST_EVENT_BOTH_EDGES}};
 
-}
+const std::map<std::string, int> biasMap = {
+    /**< Set bias as is. */
+    {"AS_IS", 0},
+    /**< Disable bias. */
+    {"DISABLE", GPIOD_LINE_REQUEST_FLAG_BIAS_DISABLE},
+    /**< Enable pull-up. */
+    {"PULL_UP", GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP},
+    /**< Enable pull-down. */
+    {"PULL_DOWN", GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_DOWN}};
+} // namespace gpio
 } // namespace phosphor
 
 int main(int argc, char** argv)
@@ -157,6 +166,27 @@ int main(int argc, char** argv)
         if (obj.find("Targets") != obj.end())
         {
             obj.at("Targets").get_to(targets);
+        }
+
+        /* Parse optional bias */
+        if (obj.find("Bias") != obj.end())
+        {
+            std::string biasName = obj["Bias"].get<std::string>();
+            auto findBias = phosphor::gpio::biasMap.find(biasName);
+            if (findBias == phosphor::gpio::biasMap.end())
+            {
+                lg2::error("{GPIO}: Bias unknown: {BIAS}", "GPIO", lineMsg,
+                           "BIAS", biasName);
+                return -1;
+            }
+
+            config.flags = findBias->second;
+        }
+
+        /* Parse optional active level */
+        if (obj.find("ActiveLow") != obj.end() && obj["ActiveLow"].get<bool>())
+        {
+            config.flags |= GPIOD_LINE_REQUEST_FLAG_ACTIVE_LOW;
         }
 
         /* Create a monitor object and let it do all the rest */
