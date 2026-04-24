@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a485ca6_344dfafc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2026-04-24T06:58:20Z",
+      "side": 1,
+      "message": "The contribution guideline requires the change to be tested and a `Tested` section in the commit message.\nhttps://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#testing",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 70
+      },
+      "revId": "2dd157c97a1a3d00595320faff8d355adf037049",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "719610a4_e957f317",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2026-04-24T06:58:20Z",
+      "side": 1,
+      "message": "From what I see, the code looks good, but the commit needs to be tested. \n\nPlease describe the testing process and the test results in the commit message. When done, I can give +1.",
+      "revId": "2dd157c97a1a3d00595320faff8d355adf037049",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
