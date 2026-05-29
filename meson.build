@@ -27,7 +27,11 @@ nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
 if cxx.has_header('CLI/CLI.hpp')
     cli11_dep = declare_dependency()
 else
-    cli11_dep = dependency('CLI11')
+    cli11_dep = dependency(
+        'CLI11',
+        include_type: 'system',
+        default_options: ['tests=disabled'],
+    )
 endif
 
 boost_args = [
