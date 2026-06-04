@@ -1,0 +1,7 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+2: Patrick Williams <patrick@stwcx.xyz>
+Submitted-by: Patrick Williams <patrick@stwcx.xyz>
+Submitted-at: Thu, 04 Jun 2026 19:22:04 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/phosphor-gpio-monitor/+/90687
+Project: openbmc/phosphor-gpio-monitor
+Branch: refs/heads/master
