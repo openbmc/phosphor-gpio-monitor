@@ -61,7 +61,9 @@ using NextEventFn = std::function<int(unsigned int flags, input_event& ev)>;
 using EventHandler = std::function<bool(const input_event& ev)>;
 
 /** @brief Reads events until none are left or the handler asks to stop.
- *         SYN_REPORT markers are not passed to the handler.
+ *         SYN_REPORT markers are not passed to the handler. If the
+ *         kernel reports dropped events (SYN_DROPPED), the state changes
+ *         that were missed are replayed to the handler as events.
  *
  *  @param[in] next    - Reads the next event
  *  @param[in] handler - Called for each event read

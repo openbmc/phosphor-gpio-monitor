@@ -12,6 +12,8 @@
 #include <phosphor-logging/elog.hpp>
 #include <phosphor-logging/lg2.hpp>
 
+#include <cerrno>
+
 namespace phosphor
 {
 namespace gpio
@@ -22,18 +24,36 @@ using namespace sdbusplus::xyz::openbmc_project::Common::Error;
 
 void drainEvents(const NextEventFn& next, const EventHandler& handler)
 {
+    unsigned int flags = LIBEVDEV_READ_FLAG_NORMAL;
+
     while (true)
     {
         struct input_event ev{};
-        int rc = next(LIBEVDEV_READ_FLAG_NORMAL, ev);
+        int rc = next(flags, ev);
+
+        if (rc == -EAGAIN && flags == LIBEVDEV_READ_FLAG_SYNC)
+        {
+            // All missed changes have been replayed, back to live events.
+            flags = LIBEVDEV_READ_FLAG_NORMAL;
+            continue;
+        }
+
         if (rc < 0)
         {
             // Mostly -EAGAIN: no more events to read for now.
             return;
         }
 
-        if (rc != LIBEVDEV_READ_STATUS_SUCCESS)
+        if (rc == LIBEVDEV_READ_STATUS_SYNC &&
+            flags == LIBEVDEV_READ_FLAG_NORMAL)
         {
+            // SYN_DROPPED: the kernel buffer overflowed and events were
+            // lost. Ask libevdev to replay the state changes we missed,
+            // otherwise they are absorbed into its internal state and
+            // never reach the handler. See the SYN_DROPPED handling
+            // section of the libevdev documentation.
+            lg2::warning("Input events were dropped, resynchronizing");
+            flags = LIBEVDEV_READ_FLAG_SYNC;
             continue;
         }
 

@@ -63,6 +63,7 @@ class FakeDevice
 };
 
 constexpr auto success = LIBEVDEV_READ_STATUS_SUCCESS;
+constexpr auto resync = LIBEVDEV_READ_STATUS_SYNC;
 constexpr uint16_t key = 41;
 
 } // namespace
@@ -117,4 +118,37 @@ TEST(DrainEvents, stopsOnError)
     });
 
     EXPECT_EQ(calls, 0);
+}
+
+TEST(DrainEvents, replaysMissedChangesAfterSynDropped)
+{
+    // The key went down, events were dropped (during which it was
+    // released), then it was pressed again. libevdev reports SYN_DROPPED,
+    // then in sync mode replays the release as a delta, then signals the
+    // end of the sync with -EAGAIN.
+    FakeDevice dev({
+        {success, makeEvent(EV_KEY, key, 1)},
+        {resync, makeEvent(EV_SYN, SYN_DROPPED, 0)},
+        {resync, makeEvent(EV_KEY, key, 0)},
+        {resync, makeEvent(EV_SYN, SYN_REPORT, 0)},
+        {-EAGAIN, {}},
+        {success, makeEvent(EV_KEY, key, 1)},
+    });
+
+    std::vector<int32_t> values;
+    drainEvents(dev.fn(), [&](const input_event& ev) {
+        values.push_back(ev.value);
+        return true;
+    });
+
+    EXPECT_EQ(values, (std::vector<int32_t>{1, 0, 1}));
+    EXPECT_TRUE(dev.script.empty());
+
+    // Reads after SYN_DROPPED use sync mode until libevdev says it is done.
+    EXPECT_EQ(dev.flagsSeen,
+              (std::vector<unsigned int>{
+                  LIBEVDEV_READ_FLAG_NORMAL, LIBEVDEV_READ_FLAG_NORMAL,
+                  LIBEVDEV_READ_FLAG_SYNC, LIBEVDEV_READ_FLAG_SYNC,
+                  LIBEVDEV_READ_FLAG_SYNC, LIBEVDEV_READ_FLAG_NORMAL,
+                  LIBEVDEV_READ_FLAG_NORMAL}));
 }
