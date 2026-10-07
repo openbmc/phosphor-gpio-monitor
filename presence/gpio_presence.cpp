@@ -90,51 +90,27 @@ int Presence::processEvents(sd_event_source*, int, uint32_t, void* userData)
 // Analyzes the GPIO event
 void Presence::analyzeEvent()
 {
-    // Data returned
-    struct input_event ev{};
-    int rc = 0;
-
-    // While testing, observed that not having a loop here was leading
-    // into events being missed.
-    while (rc >= 0)
-    {
-        // Wait until no more events are available on the device.
-        rc = libevdev_next_event(devicePtr.get(), LIBEVDEV_READ_FLAG_NORMAL,
-                                 &ev);
-        if (rc < 0)
+    readEvents([this](const input_event& ev) {
+        if (ev.code != key)
         {
-            // There was an error waiting for events, mostly that there are no
-            // events to be read.. So continue waiting...
-            return;
+            return true;
         }
 
-        if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
+        auto present = false;
+        if (ev.value > 0)
         {
-            if (ev.type == EV_SYN && ev.code == SYN_REPORT)
-            {
-                continue;
-            }
-            else if (ev.code == key)
-            {
-                auto present = false;
-                if (ev.value > 0)
-                {
-                    present = true;
-                    std::this_thread::sleep_for(
-                        std::chrono::milliseconds(delay));
-                    bindOrUnbindDrivers(present);
-                    updateInventory(present);
-                }
-                else
-                {
-                    updateInventory(present);
-                    bindOrUnbindDrivers(present);
-                }
-            }
+            present = true;
+            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+            bindOrUnbindDrivers(present);
+            updateInventory(present);
         }
-    }
-
-    return;
+        else
+        {
+            updateInventory(present);
+            bindOrUnbindDrivers(present);
+        }
+        return true;
+    });
 }
 
 Presence::ObjectMap Presence::getObjectMap(bool present)

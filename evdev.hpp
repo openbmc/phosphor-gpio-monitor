@@ -9,6 +9,7 @@
 
 #include <sdbusplus/message.hpp>
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>
@@ -47,6 +48,25 @@ struct FreeEvDev
     }
 };
 using EvdevPtr = std::unique_ptr<struct libevdev, FreeEvDev>;
+
+/** @brief Reads the next input event, with the same contract as
+ *         libevdev_next_event(): takes the read flags, fills in the event
+ *         and returns a LIBEVDEV_READ_STATUS_* value or a negative errno.
+ *         Passed in rather than calling libevdev directly so the read loop
+ *         can be unit tested without an input device.
+ */
+using NextEventFn = std::function<int(unsigned int flags, input_event& ev)>;
+
+/** @brief Handles one input event. Returns false to stop reading. */
+using EventHandler = std::function<bool(const input_event& ev)>;
+
+/** @brief Reads events until none are left or the handler asks to stop.
+ *         SYN_REPORT markers are not passed to the handler.
+ *
+ *  @param[in] next    - Reads the next event
+ *  @param[in] handler - Called for each event read
+ */
+void drainEvents(const NextEventFn& next, const EventHandler& handler);
 
 /** @class Evdev
  *  @brief Responsible for catching GPIO state changes conditions and taking
@@ -127,6 +147,12 @@ class Evdev
 
     /** @brief Initializes evdev handle with the fd */
     void initEvDev();
+
+    /** @brief Reads all pending events from the device
+     *
+     *  @param[in] handler - Called for each event read
+     */
+    void readEvents(const EventHandler& handler);
 };
 
 } // namespace gpio

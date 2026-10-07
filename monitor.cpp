@@ -30,58 +30,33 @@ int Monitor::processEvents(sd_event_source*, int, uint32_t, void* userData)
 // Analyzes the GPIO event
 void Monitor::analyzeEvent()
 {
-    // Data returned
-    struct input_event ev{};
-    int rc = 0;
-
-    // While testing, observed that not having a loop here was leading
-    // into events being missed.
-    while (rc >= 0)
-    {
-        // Wait until no more events are available on the device.
-        rc = libevdev_next_event(devicePtr.get(), LIBEVDEV_READ_FLAG_NORMAL,
-                                 &ev);
-        if (rc < 0)
+    readEvents([this](const input_event& ev) {
+        if (ev.code != key || ev.value != polarity)
         {
-            // There was an error waiting for events, mostly that there are no
-            // events to be read.. So continue waiting...
-            return;
-        };
-
-        if (rc == LIBEVDEV_READ_STATUS_SUCCESS)
-        {
-            if (ev.type == EV_SYN && ev.code == SYN_REPORT)
-            {
-                continue;
-            }
-            else if (ev.code == key && ev.value == polarity)
-            {
-                // If the code/value is what we are interested in, declare done.
-                // User supplied systemd unit
-                if (!target.empty())
-                {
-                    auto bus = sdbusplus::bus::new_default();
-                    auto method =
-                        bus.new_method_call(SYSTEMD_SERVICE, SYSTEMD_ROOT,
-                                            SYSTEMD_INTERFACE, "StartUnit");
-                    method.append(target);
-                    method.append("replace");
-
-                    bus.call_noreply(method);
-                }
-
-                if (!continueAfterKeyPress)
-                {
-                    // This marks the completion of handling the gpio assertion
-                    // and the app can exit
-                    complete = true;
-                }
-                return;
-            }
+            return true;
         }
-    };
 
-    return;
+        // If the code/value is what we are interested in, declare done.
+        // User supplied systemd unit
+        if (!target.empty())
+        {
+            auto bus = sdbusplus::bus::new_default();
+            auto method = bus.new_method_call(SYSTEMD_SERVICE, SYSTEMD_ROOT,
+                                              SYSTEMD_INTERFACE, "StartUnit");
+            method.append(target);
+            method.append("replace");
+
+            bus.call_noreply(method);
+        }
+
+        if (!continueAfterKeyPress)
+        {
+            // This marks the completion of handling the gpio assertion
+            // and the app can exit
+            complete = true;
+        }
+        return false;
+    });
 }
 
 } // namespace gpio

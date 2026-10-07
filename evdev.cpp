@@ -20,6 +20,35 @@ namespace gpio
 using namespace phosphor::logging;
 using namespace sdbusplus::xyz::openbmc_project::Common::Error;
 
+void drainEvents(const NextEventFn& next, const EventHandler& handler)
+{
+    while (true)
+    {
+        struct input_event ev{};
+        int rc = next(LIBEVDEV_READ_FLAG_NORMAL, ev);
+        if (rc < 0)
+        {
+            // Mostly -EAGAIN: no more events to read for now.
+            return;
+        }
+
+        if (rc != LIBEVDEV_READ_STATUS_SUCCESS)
+        {
+            continue;
+        }
+
+        if (ev.type == EV_SYN && ev.code == SYN_REPORT)
+        {
+            continue;
+        }
+
+        if (!handler(ev))
+        {
+            return;
+        }
+    }
+}
+
 // Populate the file descriptor for passed in device
 int Evdev::openDevice()
 {
@@ -53,6 +82,15 @@ void Evdev::initEvDev()
 
     // Packing in the unique_ptr
     devicePtr.reset(evdev);
+}
+
+void Evdev::readEvents(const EventHandler& handler)
+{
+    drainEvents(
+        [this](unsigned int flags, input_event& ev) {
+            return libevdev_next_event(devicePtr.get(), flags, &ev);
+        },
+        handler);
 }
 
 // Attaches the FD to event loop and registers the callback handler

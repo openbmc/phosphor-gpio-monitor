@@ -35,3 +35,15 @@ test(
         link_with: [libevdev_o, libmonitor_o],
     ),
 )
+
+test(
+    'drain_events',
+    executable(
+        'drain_events',
+        'drain_events.cpp',
+        dependencies: [gtest_dep, libevdev, sdbusplus],
+        implicit_include_directories: false,
+        include_directories: '..',
+        link_with: [libevdev_o],
+    ),
+)
