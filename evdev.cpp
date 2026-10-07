@@ -22,7 +22,7 @@ namespace gpio
 using namespace phosphor::logging;
 using namespace sdbusplus::xyz::openbmc_project::Common::Error;
 
-void drainEvents(const NextEventFn& next, const EventHandler& handler)
+int drainEvents(const NextEventFn& next, const EventHandler& handler)
 {
     unsigned int flags = LIBEVDEV_READ_FLAG_NORMAL;
 
@@ -38,10 +38,15 @@ void drainEvents(const NextEventFn& next, const EventHandler& handler)
             continue;
         }
 
+        if (rc == -EAGAIN)
+        {
+            // No more events to read for now.
+            return 0;
+        }
+
         if (rc < 0)
         {
-            // Mostly -EAGAIN: no more events to read for now.
-            return;
+            return rc;
         }
 
         if (rc == LIBEVDEV_READ_STATUS_SYNC &&
@@ -64,7 +69,7 @@ void drainEvents(const NextEventFn& next, const EventHandler& handler)
 
         if (!handler(ev))
         {
-            return;
+            return 0;
         }
     }
 }
@@ -106,11 +111,19 @@ void Evdev::initEvDev()
 
 void Evdev::readEvents(const EventHandler& handler)
 {
-    drainEvents(
+    auto rc = drainEvents(
         [this](unsigned int flags, input_event& ev) {
             return libevdev_next_event(devicePtr.get(), flags, &ev);
         },
         handler);
+    if (rc < 0)
+    {
+        // The fd stays readable after an error, so returning here would
+        // just call us again in a busy loop.
+        lg2::error("Failed to read events from {DEVICEPATH}: {RC}",
+                   "DEVICEPATH", path, "RC", rc);
+        sd_event_exit(event.get(), rc);
+    }
 }
 
 // Attaches the FD to event loop and registers the callback handler

@@ -67,8 +67,12 @@ using EventHandler = std::function<bool(const input_event& ev)>;
  *
  *  @param[in] next    - Reads the next event
  *  @param[in] handler - Called for each event read
+ *
+ *  @return 0 once there is nothing left to read or the handler stopped,
+ *          or a negative errno if reading failed (for example -ENODEV
+ *          when the device has gone away)
  */
-void drainEvents(const NextEventFn& next, const EventHandler& handler);
+int drainEvents(const NextEventFn& next, const EventHandler& handler);
 
 /** @class Evdev
  *  @brief Responsible for catching GPIO state changes conditions and taking
@@ -150,7 +154,9 @@ class Evdev
     /** @brief Initializes evdev handle with the fd */
     void initEvDev();
 
-    /** @brief Reads all pending events from the device
+    /** @brief Reads all pending events from the device. If the device
+     *         fails, asks the event loop to exit so systemd can restart
+     *         the service.
      *
      *  @param[in] handler - Called for each event read
      */

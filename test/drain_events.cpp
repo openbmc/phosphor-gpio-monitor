@@ -112,12 +112,36 @@ TEST(DrainEvents, stopsOnError)
     });
 
     int calls = 0;
-    drainEvents(dev.fn(), [&](const input_event&) {
+    auto rc = drainEvents(dev.fn(), [&](const input_event&) {
         ++calls;
         return true;
     });
 
+    EXPECT_EQ(rc, -ENODEV);
     EXPECT_EQ(calls, 0);
+}
+
+TEST(DrainEvents, returnsZeroWhenNothingLeft)
+{
+    FakeDevice dev({
+        {success, makeEvent(EV_KEY, key, 1)},
+    });
+
+    auto rc = drainEvents(dev.fn(), [](const input_event&) { return true; });
+
+    EXPECT_EQ(rc, 0);
+}
+
+TEST(DrainEvents, returnsErrorDuringResync)
+{
+    FakeDevice dev({
+        {resync, makeEvent(EV_SYN, SYN_DROPPED, 0)},
+        {-ENODEV, {}},
+    });
+
+    auto rc = drainEvents(dev.fn(), [](const input_event&) { return true; });
+
+    EXPECT_EQ(rc, -ENODEV);
 }
 
 TEST(DrainEvents, replaysMissedChangesAfterSynDropped)
