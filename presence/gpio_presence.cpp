@@ -96,21 +96,49 @@ void Presence::analyzeEvent()
             return true;
         }
 
-        auto present = false;
         if (ev.value > 0)
         {
-            present = true;
-            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
-            bindOrUnbindDrivers(present);
-            updateInventory(present);
+            if (delay == 0)
+            {
+                setPresent();
+                return true;
+            }
+
+            // A repeated insertion while a bind is pending keeps the
+            // original timer.
+            auto rc = delayedBind.schedule(std::chrono::milliseconds(delay));
+            if (rc < 0)
+            {
+                lg2::error("Failed to start driver bind timer: {RC}", "RC", rc);
+                setPresent();
+            }
+        }
+        else if (delayedBind.cancel())
+        {
+            // Removed again before the bind delay expired, so the drivers
+            // were never bound and must not be unbound. Inventory was not
+            // set present either, but write it anyway so the reported state
+            // always follows the latest GPIO event.
+            updateInventory(false);
         }
         else
         {
-            updateInventory(present);
-            bindOrUnbindDrivers(present);
+            setAbsent();
         }
         return true;
     });
+}
+
+void Presence::setPresent()
+{
+    bindOrUnbindDrivers(true);
+    updateInventory(true);
+}
+
+void Presence::setAbsent()
+{
+    updateInventory(false);
+    bindOrUnbindDrivers(false);
 }
 
 Presence::ObjectMap Presence::getObjectMap(bool present)
