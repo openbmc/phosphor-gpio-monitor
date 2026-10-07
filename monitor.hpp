@@ -51,7 +51,10 @@ class Monitor : public Evdev
             sd_event_io_handler_t handler = Monitor::processEvents,
             bool useEvDev = true) :
         Evdev(path, key, event, handler, useEvDev), polarity(polarity),
-        target(target), continueAfterKeyPress(continueRun) {};
+        target(target), continueAfterKeyPress(continueRun)
+    {
+        checkKeySupported();
+    };
 
     /** @brief Callback handler when the FD has some activity on it
      *
@@ -87,6 +90,11 @@ class Monitor : public Evdev
 
     /** @brief Analyzes the GPIO event and starts configured target */
     void analyzeEvent();
+
+    /** @brief Logs an error if the device cannot report the configured
+     *         key, since no event would ever match.
+     */
+    void checkKeySupported() const;
 };
 
 } // namespace gpio

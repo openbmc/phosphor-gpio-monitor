@@ -5,6 +5,7 @@
 #include "file.hpp"
 
 #include <libevdev/libevdev.h>
+#include <linux/input.h>
 #include <systemd/sd-event.h>
 
 #include <sdbusplus/message.hpp>
@@ -59,6 +60,16 @@ using NextEventFn = std::function<int(unsigned int flags, input_event& ev)>;
 
 /** @brief Handles one input event. Returns false to stop reading. */
 using EventHandler = std::function<bool(const input_event& ev)>;
+
+/** @brief Checks whether an event is a key event for the given key code.
+ *
+ *  gpio-keys reports GPIOs as EV_KEY events. Codes are only unique within
+ *  an event type, so the type has to be checked as well as the code.
+ */
+inline bool isKeyEvent(const input_event& ev, unsigned int key)
+{
+    return ev.type == EV_KEY && ev.code == key;
+}
 
 /** @brief Reads events until none are left or the handler asks to stop.
  *         SYN_REPORT markers are not passed to the handler. If the

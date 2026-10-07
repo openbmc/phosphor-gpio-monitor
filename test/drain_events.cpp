@@ -176,3 +176,13 @@ TEST(DrainEvents, replaysMissedChangesAfterSynDropped)
                   LIBEVDEV_READ_FLAG_SYNC, LIBEVDEV_READ_FLAG_NORMAL,
                   LIBEVDEV_READ_FLAG_NORMAL}));
 }
+
+TEST(IsKeyEvent, matchesOnlyKeyEventsWithTheCode)
+{
+    EXPECT_TRUE(isKeyEvent(makeEvent(EV_KEY, key, 1), key));
+    EXPECT_FALSE(isKeyEvent(makeEvent(EV_KEY, key + 1, 1), key));
+
+    // Same code number, different event type.
+    EXPECT_FALSE(isKeyEvent(makeEvent(EV_SW, key, 1), key));
+    EXPECT_FALSE(isKeyEvent(makeEvent(EV_MSC, key, 1), key));
+}

@@ -27,11 +27,21 @@ int Monitor::processEvents(sd_event_source*, int, uint32_t, void* userData)
     return 0;
 }
 
+void Monitor::checkKeySupported() const
+{
+    if (devicePtr && !libevdev_has_event_code(devicePtr.get(), EV_KEY, key))
+    {
+        lg2::error("{DEVICEPATH} does not report EV_KEY code {KEY}, the "
+                   "configured GPIO will never be seen",
+                   "DEVICEPATH", path, "KEY", key);
+    }
+}
+
 // Analyzes the GPIO event
 void Monitor::analyzeEvent()
 {
     readEvents([this](const input_event& ev) {
-        if (ev.code != key || ev.value != polarity)
+        if (!isKeyEvent(ev, key) || ev.value != polarity)
         {
             return true;
         }

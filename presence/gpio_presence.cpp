@@ -91,7 +91,7 @@ int Presence::processEvents(sd_event_source*, int, uint32_t, void* userData)
 void Presence::analyzeEvent()
 {
     readEvents([this](const input_event& ev) {
-        if (ev.code != key)
+        if (!isKeyEvent(ev, key))
         {
             return true;
         }
