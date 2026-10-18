@@ -2,6 +2,7 @@
 // SPDX-FileCopyrightText: Copyright OpenBMC Authors
 
 #pragma once
+#include "delayed_action.hpp"
 #include "evdev.hpp"
 
 #include <systemd/sd-event.h>
@@ -75,7 +76,8 @@ class Presence : public Evdev
              const std::vector<Interface>& ifaces,
              sd_event_io_handler_t handler = Presence::processEvents) :
         Evdev(path, key, event, handler, true), bus(bus), inventory(inventory),
-        name(name), drivers(drivers), ifaces(ifaces)
+        name(name), drivers(drivers), ifaces(ifaces),
+        delayedBind(event.get(), [this] { setPresent(); })
     {
         // See if the environment (from configuration file?) has a
         // DRIVER_BIND_DELAY_MS set.
@@ -140,6 +142,12 @@ class Presence : public Evdev
     /** @brief Analyzes the GPIO event and update present property*/
     void analyzeEvent();
 
+    /** @brief Binds the drivers and marks the inventory item present */
+    void setPresent();
+
+    /** @brief Marks the inventory item absent and unbinds the drivers */
+    void setAbsent();
+
     /** @brief  Vector of path and device tuples to bind/unbind*/
     const std::vector<Driver> drivers;
 
@@ -161,6 +169,11 @@ class Presence : public Evdev
      *                  when false, will unbind them
      */
     void bindOrUnbindDrivers(bool present);
+
+    /** @brief Runs setPresent() once the driver bind delay has passed,
+     *         without blocking the event loop while waiting.
+     */
+    DelayedAction delayedBind;
 };
 
 /**
