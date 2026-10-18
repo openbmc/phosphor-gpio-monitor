@@ -47,3 +47,14 @@ test(
         link_with: [libevdev_o],
     ),
 )
+
+test(
+    'delayed_action',
+    executable(
+        'delayed_action',
+        'delayed_action.cpp',
+        dependencies: [gtest_dep, libsystemd],
+        implicit_include_directories: false,
+        include_directories: '..',
+    ),
+)
