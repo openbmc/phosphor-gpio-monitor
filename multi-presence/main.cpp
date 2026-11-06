@@ -87,7 +87,7 @@ int main(int argc, char** argv)
 
         if (obj.find("LineName") == obj.end())
         {
-            /* If there is no line Name defined then gpio num nd chip
+            /* If there is no line Name defined then gpio num and chip
              * id must be defined. GpioNum is integer mapping to the
              * GPIO key configured by the kernel
              */
